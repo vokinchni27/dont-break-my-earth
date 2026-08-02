@@ -1,0 +1,12 @@
+# planches de contact des coordonnees : regenerables a tout moment
+#   python tools/coord-sheets.py
+tools/_coords/
+
+# scories systeme
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# NOTE : images/ est volontairement suivi — l'archive EST l'oeuvre.
+# images/manifest.json et manifest.js sont generes mais suivis aussi :
+# ils permettent d'ouvrir index.html en double-clic, sans rien lancer.

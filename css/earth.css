@@ -1,0 +1,220 @@
+/* ============================================================
+   EARTH — css/earth.css
+   ------------------------------------------------------------
+   Blanc. Des images posees dessus. Rien d'autre.
+   Aucune decoration : pas de cadre, pas d'ombre, pas de coin
+   arrondi, pas de degrade. Le vide fait la composition.
+   ============================================================ */
+
+:root {
+  --fond: #ffffff;
+  --encre: #111111;
+  --gris: #9a9a9a;
+  --opacite: 1;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--fond);
+}
+
+body {
+  font: 400 11px/1.5 ui-monospace, "SFMono-Regular", "Consolas", "Menlo", monospace;
+  color: var(--encre);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   LA SCENE
+   ============================================================ */
+
+#scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* un plan : position et taille. Jamais anime. */
+.plate {
+  position: absolute;
+  left: calc(var(--x) * 100%);
+  top: calc(var(--y) * 100%);
+  width: calc(var(--w) * 100vmin);
+  transform: translate(-50%, -50%) rotate(calc(var(--rot, 0) * 1deg));
+  pointer-events: none;
+}
+
+/* la couche animee : opacite et transform y vivent seules */
+.plate-motion {
+  opacity: 0;
+  transform-origin: 50% 50%;
+  will-change: opacity, transform;
+}
+
+/* la fenetre de recadrage : elle porte le rapport de l'image
+   APRES coupe, l'interface de Google Earth reste dehors */
+.plate-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ar, 2.7);
+  overflow: hidden;
+  background: var(--fond);
+}
+
+.plate-frame.filet { outline: 1px solid rgba(0, 0, 0, .18); outline-offset: 0; }
+
+.plate-frame > img,
+.plate-frame > video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% * var(--zoom, 1));
+  height: auto;
+  display: block;
+  transform: translate(calc(var(--cl, 0) * -100%), calc(var(--ct, 0) * -100%));
+}
+
+/* ============================================================
+   NOTE DE DIAGNOSTIC (le seul texte de la piece)
+   ============================================================ */
+
+.note {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 34em;
+  text-align: center;
+  line-height: 1.9;
+  color: var(--encre);
+}
+.note code {
+  display: inline-block;
+  margin-top: .4em;
+  padding: .4em .7em;
+  background: #f2f2f2;
+}
+
+/* ============================================================
+   LE BAC A SABLE
+   Ferme par defaut. Ouvert : une colonne sobre, a droite.
+   ============================================================ */
+
+#panneau {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 274px;
+  height: 100%;
+  z-index: 9999;
+  background: rgba(255, 255, 255, .94);
+  border-left: 1px solid #e6e6e6;
+  overflow-y: auto;
+  padding: 14px 16px 40px;
+  transform: translateX(100%);
+  transition: transform .28s cubic-bezier(.22, .61, .36, 1);
+  backdrop-filter: blur(3px);
+}
+body.panneau-ouvert #panneau { transform: none; }
+
+/* poignee toujours accessible quand le panneau est ferme */
+body:not(.panneau-ouvert) #panneau::after { content: none; }
+
+.pan-tete {
+  display: flex; justify-content: space-between; align-items: baseline;
+  letter-spacing: .14em; font-size: 10px; color: var(--encre);
+  padding-bottom: 10px; border-bottom: 1px solid #ededed;
+}
+.pan-fermer { cursor: pointer; font-size: 14px; line-height: 1; color: var(--gris); }
+.pan-fermer:hover { color: var(--encre); }
+
+.pan-etat {
+  font-size: 10px; line-height: 1.7; color: #444;
+  padding: 10px 0; border-bottom: 1px solid #ededed;
+}
+.pan-etat b { font-weight: 700; }
+
+.pan-bloc { padding: 12px 0 4px; border-bottom: 1px solid #ededed; }
+.pan-bloc h2 {
+  font-size: 9px; font-weight: 400; letter-spacing: .16em;
+  color: var(--gris); margin-bottom: 8px;
+}
+
+/* --- une ligne de reglage --- */
+.pan-ligne {
+  display: grid;
+  grid-template-columns: 78px 1fr 46px;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  font-size: 10px;
+}
+.pan-ligne--bascule { grid-template-columns: 78px 1fr; }
+.pan-nom { color: #333; }
+.pan-valeur { text-align: right; color: var(--gris); font-variant-numeric: tabular-nums; }
+
+.pan-ligne input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 1px; background: #cfcfcf; cursor: pointer;
+}
+.pan-ligne input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 9px; height: 9px; border-radius: 50%; background: var(--encre); cursor: pointer;
+}
+.pan-ligne input[type="range"]::-moz-range-thumb {
+  width: 9px; height: 9px; border: 0; border-radius: 50%; background: var(--encre);
+}
+.pan-ligne select {
+  font: inherit; font-size: 10px; padding: 2px 4px;
+  border: 1px solid #dcdcdc; background: #fff; color: var(--encre); width: 100%;
+}
+.pan-ligne input[type="checkbox"] { accent-color: #111; justify-self: start; }
+
+/* --- les partitions --- */
+.pan-partitions { display: flex; flex-direction: column; gap: 1px; }
+.pan-partition { display: grid; grid-template-columns: 16px 1fr; align-items: center; }
+.pan-partition input { accent-color: #111; }
+.pan-lien {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font: inherit; font-size: 10px; color: var(--encre);
+  background: none; border: 0; padding: 3px 4px;
+}
+.pan-lien:hover { background: #f1f1f1; }
+.pan-lien em { display: block; font-style: normal; color: var(--gris); font-size: 9px; }
+.pan-num { display: inline-block; width: 12px; color: var(--gris); }
+
+/* --- actions --- */
+.pan-actions { display: flex; flex-direction: column; gap: 5px; padding: 12px 0; }
+.pan-bouton {
+  font: inherit; font-size: 10px; letter-spacing: .06em;
+  padding: 6px 8px; cursor: pointer;
+  background: #fff; color: var(--encre); border: 1px solid #dcdcdc;
+}
+.pan-bouton:hover { background: #111; color: #fff; border-color: #111; }
+
+.pan-aide { font-size: 9px; line-height: 1.9; color: var(--gris); padding-top: 6px; }
+.pan-aide b { color: #333; font-weight: 400; }
+
+#pan-flash {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+  background: #111; color: #fff; padding: 6px 12px; font-size: 10px;
+  letter-spacing: .08em; opacity: 0; transition: opacity .2s; z-index: 10000;
+  pointer-events: none;
+}
+#pan-flash.visible { opacity: 1; }
+
+/* indice minuscule, en bas a gauche, quand le panneau est ferme */
+body:not(.panneau-ouvert)::after {
+  content: "P";
+  position: fixed; left: 14px; bottom: 12px;
+  font-size: 9px; letter-spacing: .1em; color: #d8d8d8;
+  z-index: 9998; pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #panneau { transition: none; }
+}

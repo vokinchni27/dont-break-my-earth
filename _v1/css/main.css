@@ -1,0 +1,272 @@
+/* ============================================================
+   EARTH MEMORY — main.css
+   White editorial aesthetic. Images live on white space.
+   No terminal. Almost no interface.
+   ============================================================ */
+
+:root {
+  --bg:   #f7f6f4;
+  --fg:   #141413;
+  --dim:  #a3a19c;
+  --hair: #dcdad5;
+  --mono: "Space Mono", ui-monospace, "Cascadia Mono", "Courier New", monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 12px;
+  overflow: hidden;
+  cursor: crosshair;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+.hidden { display: none !important; }
+
+/* ---------------- stage & frames ---------------- */
+
+#stage { position: fixed; inset: 0; }
+
+/* a frame is a window onto one archive image */
+.frame {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.frame.on { opacity: 1; }
+
+/* full view : the Google Earth toolbar is hidden by shifting
+   the image up (crop amount set from js/config.js) */
+.frame img {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+
+/* fragment : a small window showing a random region of an image */
+.frame .frag-inner {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+}
+
+/* two images occupying the same space — multiply on white paper */
+.frame.blend { mix-blend-mode: multiply; }
+.frame.blend.on { opacity: .6; }
+
+/* immense view slowly drifts — the planet never sits still */
+.frame.drift img { animation: drift 70s ease-in-out infinite alternate; }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-2.5%, -1.5%, 0) scale(1.04); }
+}
+
+/* strips & tiles (decoupage reveals) */
+.strip, .tile {
+  position: absolute;
+  opacity: 0;
+  background-repeat: no-repeat;
+}
+.strip.on, .tile.on { opacity: 1; }
+
+/* scan : the image exists only behind the line */
+.scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(20, 20, 19, .85);
+  box-shadow: 0 0 10px rgba(20, 20, 19, .3);
+}
+
+.pixel-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+/* glitch — raw cuts, no easing design */
+.glitch-in { animation: glitchIn .6s steps(1) both; }
+@keyframes glitchIn {
+  0%   { clip-path: inset(10% 0 62% 0); transform: translateX(-14px); filter: invert(1); }
+  18%  { clip-path: inset(52% 0 8% 0);  transform: translateX(9px);   filter: none; }
+  36%  { clip-path: inset(2% 0 84% 0);  transform: translateX(-6px); }
+  54%  { clip-path: inset(38% 0 30% 0); transform: translateX(12px);  filter: invert(.8); }
+  72%  { clip-path: inset(70% 0 2% 0);  transform: translateX(-3px);  filter: none; }
+  100% { clip-path: inset(0 0 0 0);     transform: none; }
+}
+
+.glitch-out { animation: glitchOut .45s steps(1) both; }
+@keyframes glitchOut {
+  0%   { clip-path: inset(0 0 0 0); }
+  30%  { clip-path: inset(20% 0 40% 0); transform: translateX(10px);  filter: invert(1); }
+  60%  { clip-path: inset(60% 0 5% 0);  transform: translateX(-12px); filter: none; }
+  100% { clip-path: inset(48% 0 48% 0); transform: translateX(4px);   opacity: 0; }
+}
+
+/* ---------------- the local signal (webcam) ---------------- */
+
+#webcam-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* ---------------- breathing phrases ---------------- */
+
+#text-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+}
+
+.phrase {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(13px, 1.6vw, 20px);
+  letter-spacing: .12em;
+  color: var(--fg);
+  background: var(--bg);
+  padding: .2em .5em;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+  white-space: nowrap;
+}
+.phrase.on { opacity: 1; }
+
+/* ---------------- grain — barely a paper texture ---------------- */
+
+#grain {
+  position: fixed;
+  inset: -60%;
+  z-index: 80;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  opacity: .028;
+  animation: grain 900ms steps(4) infinite;
+}
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2%, 3%); }
+  50%  { transform: translate(3%, -2%); }
+  75%  { transform: translate(-3%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------------- instrument chrome ---------------- */
+
+#ui {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  transition: opacity .6s ease;
+  /* stays legible on white paper and on full-bleed images alike */
+  mix-blend-mode: difference;
+  color: #fff;
+}
+body.ui-hidden #ui { opacity: 0; }
+
+.ui-corner {
+  position: absolute;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.7;
+  color: #fff;
+}
+.ui-tl { top: 18px; left: 20px; }
+.ui-tr { top: 18px; right: 20px; text-align: right; }
+.ui-bl { bottom: 18px; left: 20px; }
+.ui-br { bottom: 18px; right: 20px; text-align: right; }
+
+#ui .dim { color: #b0b0b0; }
+.dim { color: var(--dim); }
+
+/* composition name — bottom center, like a plate caption */
+#ui-compo {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #b0b0b0;
+}
+
+/* ---------------- intro ---------------- */
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  transition: opacity 1.2s ease;
+}
+#intro.off { opacity: 0; pointer-events: none; }
+
+.intro-inner { text-align: center; }
+.intro-inner p { margin: 1.4em 0; letter-spacing: .18em; line-height: 2; }
+.intro-inner p:first-child { font-size: 15px; letter-spacing: .5em; }
+
+.blink { animation: blink 1.6s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------------- ending ---------------- */
+
+#ending {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  opacity: 0;
+  transition: opacity 2.5s ease;
+}
+#ending.on { opacity: 1; }
+
+.ending-inner { text-align: center; max-width: 560px; padding: 0 24px; }
+.ending-inner p { letter-spacing: .1em; line-height: 2.1; }
+
+.ending-note {
+  margin-top: 2.6em;
+  color: var(--dim);
+  font-size: 10px;
+}
+
+/* not a call-to-action — the last gesture of the piece */
+.donate {
+  margin-top: 3em;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--dim);
+  padding: 10px 4px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .2em;
+  color: var(--fg);
+  cursor: pointer;
+}
+.donate:hover { color: #000; border-color: var(--fg); }

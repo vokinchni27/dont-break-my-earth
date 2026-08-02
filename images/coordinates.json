@@ -1,0 +1,772 @@
+{
+  "AFRIQUE/opera_21ZJitIwS4.jpg": {
+    "lat": "5°59'49.71\"S",
+    "lon": "35°15'00.44\"E",
+    "camera": "6 607 m",
+    "sol": "827 m",
+    "echelle": "700 m"
+  },
+  "AFRIQUE/opera_3Ex93eZUkS.jpg": {
+    "lat": "6°42'24.21\"N",
+    "lon": "47°27'59.17\"E",
+    "camera": "2 728 m",
+    "sol": "280 m",
+    "echelle": "300 m"
+  },
+  "AFRIQUE/opera_53lt9KnBQk.jpg": {
+    "lat": "6°48'57.83\"S",
+    "lon": "36°24'15.18\"E",
+    "camera": "3 941 m",
+    "sol": "1 341 m",
+    "echelle": "300 m"
+  },
+  "AFRIQUE/opera_61cy0auLAd.jpg": {
+    "lat": "6°25'35.40\"N",
+    "lon": "48°40'38.87\"E",
+    "camera": "6 938 m",
+    "sol": "26 m",
+    "echelle": "800 m"
+  },
+  "AFRIQUE/opera_6R4GUie8Jx.jpg": {
+    "lat": "6°35'52.20\"N",
+    "lon": "47°29'59.96\"E",
+    "camera": "49 km",
+    "sol": "273 m",
+    "echelle": "6 000 m"
+  },
+  "AFRIQUE/opera_8omdkeFzOu.jpg": {
+    "lat": "31°02'45.52\"S",
+    "lon": "23°52'01.63\"E",
+    "camera": "48 km",
+    "sol": "1 370 m",
+    "echelle": "6 000 m"
+  },
+  "AFRIQUE/opera_9jqJXFmub4.jpg": {
+    "lat": "6°39'55.94\"S",
+    "lon": "36°18'51.77\"E",
+    "camera": "3 252 m",
+    "sol": "2 041 m",
+    "echelle": "100 m"
+  },
+  "AFRIQUE/opera_GbtR9sSwf7.jpg": {
+    "lat": "6°38'54.35\"S",
+    "lon": "36°18'24.21\"E",
+    "camera": "2 618 m",
+    "sol": "1 897 m",
+    "echelle": "90 m"
+  },
+  "AFRIQUE/opera_gYbR7kUsCG.jpg": {
+    "lat": "5°46'09.82\"N",
+    "lon": "48°48'45.14\"E",
+    "camera": "564 m",
+    "sol": "29 m",
+    "echelle": "60 m"
+  },
+  "AFRIQUE/opera_hgf6OEFaZU.jpg": {
+    "lat": "13°15'58.48\"S",
+    "lon": "18°29'16.83\"E",
+    "camera": "2 276 m",
+    "sol": "1 311 m",
+    "echelle": "100 m"
+  },
+  "AFRIQUE/opera_iur16LoPlS.jpg": {
+    "lat": "6°06'18.49\"S",
+    "lon": "35°35'01.90\"E",
+    "camera": "2 397 m",
+    "sol": "1 191 m",
+    "echelle": "100 m"
+  },
+  "AFRIQUE/opera_krRD7PrvF6.jpg": {
+    "lat": "6°42'31.20\"S",
+    "lon": "36°18'34.16\"E",
+    "camera": "2 144 m",
+    "sol": "1 860 m",
+    "echelle": "30 m"
+  },
+  "AFRIQUE/opera_KVaz0NJOon.jpg": {
+    "lat": "6°25'07.29\"N",
+    "lon": "48°40'26.76\"E",
+    "camera": "9 543 m",
+    "sol": "25 m",
+    "echelle": "1 000 m"
+  },
+  "AFRIQUE/opera_lDlucei8Cm.jpg": {
+    "lat": "6°34'49.14\"N",
+    "lon": "47°56'09.77\"E",
+    "camera": "1 470 m",
+    "sol": "216 m",
+    "echelle": "100 m"
+  },
+  "AFRIQUE/opera_lFLYTJyriv.jpg": {
+    "lat": "3°22'27.05\"S",
+    "lon": "33°13'10.48\"E",
+    "camera": "7 993 m",
+    "sol": "1 173 m",
+    "echelle": "900 m"
+  },
+  "AFRIQUE/opera_LqdDkvq8IB.jpg": {
+    "lat": "6°45'14.01\"N",
+    "lon": "47°29'33.01\"E",
+    "camera": "14 974 m",
+    "sol": "283 m",
+    "echelle": "1 000 m"
+  },
+  "AFRIQUE/opera_Mv3KItCFef.jpg": {
+    "lat": "3°22'29.41\"S",
+    "lon": "33°12'42.54\"E",
+    "camera": "1 625 m",
+    "sol": "1 173 m",
+    "echelle": "60 m"
+  },
+  "AFRIQUE/opera_PA7F6tJGYX.jpg": {
+    "lat": "4°03'12.31\"S",
+    "lon": "34°14'06.28\"E",
+    "camera": "6 985 m",
+    "sol": "1 042 m",
+    "echelle": "700 m"
+  },
+  "AFRIQUE/opera_pCwCsPK2Yl.jpg": {
+    "lat": "13°16'10.88\"S",
+    "lon": "18°29'11.13\"E",
+    "camera": "12 018 m",
+    "sol": "1 307 m",
+    "echelle": "1 000 m"
+  },
+  "AFRIQUE/opera_Q6CYlmrr87.jpg": {
+    "lat": "6°42'28.23\"N",
+    "lon": "47°29'46.23\"E",
+    "camera": "1 108 m",
+    "sol": "272 m",
+    "echelle": "100 m"
+  },
+  "AFRIQUE/opera_rSqjKlcDBT.jpg": {
+    "lat": "6°42'27.14\"N",
+    "lon": "47°29'56.15\"E",
+    "camera": "729 m",
+    "sol": "271 m",
+    "echelle": "40 m"
+  },
+  "AFRIQUE/opera_UU4S5NIkDH.jpg": {
+    "lat": "31°02'24.87\"S",
+    "lon": "23°59'57.52\"E",
+    "camera": "3 436 m",
+    "sol": "1 357 m",
+    "echelle": "200 m"
+  },
+  "AFRIQUE/opera_WdkjXoGy0h.png": {
+    "lat": "1°18'52.22\"S",
+    "lon": "32°53'52.58\"E",
+    "camera": "49 km",
+    "sol": "1 134 m",
+    "echelle": "6 000 m"
+  },
+  "AFRIQUE/opera_ZlNpQVahN6.jpg": {
+    "lat": "13°25'48.52\"S",
+    "lon": "18°48'30.47\"E",
+    "camera": "270 km",
+    "sol": "1 486 m",
+    "echelle": "30 km"
+  },
+  "AFRIQUE/opera_zwbBD1MSow.jpg": {
+    "lat": "6°42'30.15\"N",
+    "lon": "47°30'32.08\"E",
+    "camera": "1 132 m",
+    "sol": "268 m",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_01DsVdg7yC.jpg": {
+    "lat": "29°23'32.07\"N",
+    "lon": "96°55'41.04\"E",
+    "camera": "123 km",
+    "sol": "5 246 m",
+    "echelle": "10 km"
+  },
+  "CHINE/opera_1nZhNWvQHa.jpg": {
+    "lat": "39°16'25.15\"N",
+    "lon": "118°26'16.81\"E",
+    "camera": "9 305 m",
+    "sol": "2 m",
+    "echelle": "1 000 m"
+  },
+  "CHINE/opera_3IR1RMPqnm.jpg": {
+    "lat": "39°16'20.16\"N",
+    "lon": "118°26'46.27\"E",
+    "camera": "476 m",
+    "sol": "4 m",
+    "echelle": "50 m"
+  },
+  "CHINE/opera_4cHdfvl0Jj.jpg": {
+    "lat": "39°55'47.98\"N",
+    "lon": "116°22'15.97\"E",
+    "camera": "4 659 m",
+    "sol": "50 m",
+    "echelle": "600 m"
+  },
+  "CHINE/opera_7gp5NUYdPX.jpg": {
+    "lat": "39°25'37.51\"N",
+    "lon": "118°22'19.63\"E",
+    "camera": "9 769 m",
+    "sol": "6 m",
+    "echelle": "1 000 m"
+  },
+  "CHINE/opera_7w6Rtl9vzz.jpg": {
+    "lat": "39°12'01.94\"N",
+    "lon": "118°35'50.00\"E",
+    "camera": "2 337 m",
+    "sol": "40 cm",
+    "echelle": "200 m"
+  },
+  "CHINE/opera_8qvxhqTxOD.jpg": {
+    "lat": "65°27'30.05\"N",
+    "lon": "97°43'41.87\"E",
+    "camera": "247 km",
+    "sol": "578 m",
+    "echelle": "30 km"
+  },
+  "CHINE/opera_9aQ9BO8ldF.jpg": {
+    "lat": "39°52'25.17\"N",
+    "lon": "116°01'40.18\"E",
+    "camera": "1 294 m",
+    "sol": "197 m",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_9vS1r7nHrB.jpg": {
+    "lat": "39°12'22.17\"N",
+    "lon": "118°40'44.79\"E",
+    "camera": "9 439 m",
+    "sol": "2 m",
+    "echelle": "1 000 m"
+  },
+  "CHINE/opera_abGn9KcPXV.jpg": {
+    "lat": "39°12'35.54\"N",
+    "lon": "118°27'06.40\"E",
+    "camera": "2 189 m",
+    "sol": "3 m",
+    "echelle": "200 m"
+  },
+  "CHINE/opera_AVA82IGfcE.jpg": {
+    "lat": "39°24'06.84\"N",
+    "lon": "118°59'43.01\"E",
+    "camera": "2 777 m",
+    "sol": "7 m",
+    "echelle": "200 m"
+  },
+  "CHINE/opera_BFh1YXvF2o.jpg": {
+    "lat": "39°14'20.22\"N",
+    "lon": "118°27'32.40\"E",
+    "camera": "3 098 m",
+    "sol": "1 m",
+    "echelle": "300 m"
+  },
+  "CHINE/opera_E1VkGgv4X8.jpg": {
+    "lat": "39°59'15.93\"N",
+    "lon": "116°08'23.96\"E",
+    "camera": "4 044 m",
+    "sol": "675 m",
+    "echelle": "400 m"
+  },
+  "CHINE/opera_eUfFG1eqMN.jpg": {
+    "lat": "39°17'15.81\"N",
+    "lon": "118°24'09.28\"E",
+    "camera": "1 423 m",
+    "sol": "1 m",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_EZgz4WK07f.jpg": {
+    "lat": "32°19'32.32\"N",
+    "lon": "96°01'41.73\"E",
+    "camera": "269 km",
+    "sol": "4 568 m",
+    "echelle": "30 km"
+  },
+  "CHINE/opera_fadzqhlyng.jpg": {
+    "lat": "39°16'02.44\"N",
+    "lon": "118°26'24.76\"E",
+    "camera": "580 m",
+    "sol": "-1 m",
+    "echelle": "70 m"
+  },
+  "CHINE/opera_fF3W5o8Sq4.jpg": {
+    "lat": "73°54'20.17\"N",
+    "lon": "87°16'31.29\"E",
+    "camera": "153 km",
+    "sol": "32 m",
+    "echelle": "10 km"
+  },
+  "CHINE/opera_fPNTMlmSYX.jpg": {
+    "lat": "39°17'16.16\"N",
+    "lon": "118°26'59.57\"E",
+    "camera": "847 m",
+    "sol": "29 cm",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_g6M0AH6X7j.jpg": {
+    "lat": "38°48'59.14\"N",
+    "lon": "82°49'07.57\"E",
+    "camera": "154 km",
+    "sol": "1 124 m",
+    "echelle": "20 km"
+  },
+  "CHINE/opera_gaJzEUd3Qz.jpg": {
+    "lat": "39°49'32.82\"N",
+    "lon": "116°02'43.53\"E",
+    "camera": "1 131 m",
+    "sol": "137 m",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_Hf8H4VSVyO.jpg": {
+    "lat": "39°11'46.30\"N",
+    "lon": "118°08'28.99\"E",
+    "camera": "8 951 m",
+    "sol": "2 m",
+    "echelle": "1 000 m"
+  },
+  "CHINE/opera_huhWdK21DG.jpg": {
+    "lat": "26°02'11.60\"N",
+    "lon": "105°04'14.97\"E",
+    "camera": "36 km",
+    "sol": "1 334 m",
+    "echelle": "4 000 m"
+  },
+  "CHINE/opera_HW3A1mvm28.jpg": {
+    "lat": "38°43'40.10\"N",
+    "lon": "117°36'18.97\"E",
+    "camera": "9 310 m",
+    "sol": "-6 m",
+    "echelle": "1 000 m"
+  },
+  "CHINE/opera_kR62iG7FjB.jpg": {
+    "lat": "39°55'07.47\"N",
+    "lon": "116°22'43.63\"E",
+    "camera": "3 039 m",
+    "sol": "49 m",
+    "echelle": "300 m"
+  },
+  "CHINE/opera_MmJzUw5d92.jpg": {
+    "lat": "29°55'55.98\"N",
+    "lon": "97°34'29.70\"E",
+    "camera": "149 km",
+    "sol": "4 106 m",
+    "echelle": "10 km"
+  },
+  "CHINE/opera_nT8FgslcLd.jpg": {
+    "lat": "39°37'53.77\"N",
+    "lon": "118°09'00.47\"E",
+    "camera": "6 453 m",
+    "sol": "29 m",
+    "echelle": "800 m"
+  },
+  "CHINE/opera_Rqm9ZWDRRc.jpg": {
+    "lat": "38°03'30.68\"N",
+    "lon": "118°09'07.29\"E",
+    "camera": "22 km",
+    "sol": "4 m",
+    "echelle": "2 000 m"
+  },
+  "CHINE/opera_UFQtCgU745.jpg": {
+    "lat": "39°55'41.50\"N",
+    "lon": "116°21'56.65\"E",
+    "camera": "2 105 m",
+    "sol": "53 m",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_uHtYawc7Ym.jpg": {
+    "lat": "31°59'17.87\"N",
+    "lon": "90°23'13.53\"E",
+    "camera": "291 km",
+    "sol": "4 750 m",
+    "echelle": "30 km"
+  },
+  "CHINE/opera_V2GcTCo8DP.jpg": {
+    "lat": "39°55'11.15\"N",
+    "lon": "116°25'27.21\"E",
+    "camera": "935 m",
+    "sol": "46 m",
+    "echelle": "100 m"
+  },
+  "CHINE/opera_v3Vdf72qCC.jpg": {
+    "lat": "39°11'56.69\"N",
+    "lon": "118°13'34.90\"E",
+    "camera": "6 386 m",
+    "sol": "-1 m",
+    "echelle": "800 m"
+  },
+  "CHINE/opera_wBH2SvxBVW.jpg": {
+    "lat": "39°14'55.08\"N",
+    "lon": "117°52'09.55\"E",
+    "camera": "3 904 m",
+    "sol": "9 cm",
+    "echelle": "500 m"
+  },
+  "CHINE/opera_xphXNCVuNw.jpg": {
+    "lat": "39°16'29.12\"N",
+    "lon": "118°26'20.34\"E",
+    "camera": "1 247 m",
+    "sol": "4 m",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_3hFsTCM4qt.jpg": {
+    "lat": "43°30'36.64\"N",
+    "lon": "4°11'51.00\"E",
+    "camera": "5 180 m",
+    "sol": "-1 m",
+    "echelle": "600 m"
+  },
+  "EUROPE/opera_5AsaZYNVIK.jpg": {
+    "lat": "46°22'07.21\"N",
+    "lon": "3°26'11.06\"E",
+    "camera": "8 160 m",
+    "sol": "279 m",
+    "echelle": "1 000 m"
+  },
+  "EUROPE/opera_aVPXmbTonV.jpg": {
+    "lat": "43°35'29.50\"N",
+    "lon": "4°35'08.96\"E",
+    "camera": "472 m",
+    "sol": "-1 m",
+    "echelle": "60 m"
+  },
+  "EUROPE/opera_cp9yHJ3kWM.jpg": {
+    "lat": "43°36'32.10\"N",
+    "lon": "4°09'21.23\"E",
+    "camera": "4 736 m",
+    "sol": "2 m",
+    "echelle": "600 m"
+  },
+  "EUROPE/opera_eaK6ibEruW.jpg": {
+    "lat": "42°58'44.08\"N",
+    "lon": "12°18'20.74\"E",
+    "camera": "2 413 m",
+    "sol": "205 m",
+    "echelle": "200 m"
+  },
+  "EUROPE/opera_Elb6kf2tiG.jpg": {
+    "lat": "44°37'34.39\"N",
+    "lon": "2°44'33.41\"E",
+    "camera": "13 253 m",
+    "sol": "806 m",
+    "echelle": "1 000 m"
+  },
+  "EUROPE/opera_fQv3OYQtB9.jpg": {
+    "lat": "43°35'10.80\"N",
+    "lon": "4°35'23.99\"E",
+    "camera": "1 076 m",
+    "sol": "10 cm",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_fSOUK2NxZQ.jpg": {
+    "lat": "43°33'15.09\"N",
+    "lon": "3°56'22.56\"E",
+    "camera": "785 m",
+    "sol": "-1 m",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_HJS8iJtTWa.jpg": {
+    "lat": "43°43'34.61\"N",
+    "lon": "3°34'17.94\"E",
+    "camera": "6 503 m",
+    "sol": "282 m",
+    "echelle": "700 m"
+  },
+  "EUROPE/opera_hMkDosS8xp.jpg": {
+    "lat": "43°36'09.63\"N",
+    "lon": "4°03'30.06\"E",
+    "camera": "879 m",
+    "sol": "9 cm",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_ilIKl88gh3.jpg": {
+    "lat": "43°35'20.61\"N",
+    "lon": "4°30'58.10\"E",
+    "camera": "1 727 m",
+    "sol": "-1 m",
+    "echelle": "200 m"
+  },
+  "EUROPE/opera_j9lxKOVSgN.jpg": {
+    "lat": "43°35'40.36\"N",
+    "lon": "4°34'22.98\"E",
+    "camera": "735 m",
+    "sol": "-21 cm",
+    "echelle": "90 m"
+  },
+  "EUROPE/opera_jPt0m4ddXz.jpg": {
+    "lat": "43°42'53.02\"N",
+    "lon": "5°02'12.68\"E",
+    "camera": "1 351 m",
+    "sol": "145 m",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_m0idaLpipv.jpg": {
+    "lat": "43°36'00.72\"N",
+    "lon": "4°05'34.16\"E",
+    "camera": "1 864 m",
+    "sol": "-1 m",
+    "echelle": "200 m"
+  },
+  "EUROPE/opera_MeHK7pRERy.jpg": {
+    "lat": "44°40'31.80\"N",
+    "lon": "2°19'16.72\"E",
+    "camera": "4 058 m",
+    "sol": "514 m",
+    "echelle": "400 m"
+  },
+  "EUROPE/opera_MJ2X8K40S0.jpg": {
+    "lat": "43°38'04.60\"N",
+    "lon": "4°20'19.72\"E",
+    "camera": "1 549 m",
+    "sol": "-19 cm",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_MxYjjMEdhj.jpg": {
+    "lat": "43°30'11.35\"N",
+    "lon": "4°11'17.16\"E",
+    "camera": "593 m",
+    "sol": "41 cm",
+    "echelle": "70 m"
+  },
+  "EUROPE/opera_oc1Rj4GAQ2.jpg": {
+    "lat": "43°33'16.19\"N",
+    "lon": "3°54'55.70\"E",
+    "camera": "1 218 m",
+    "sol": "-19 cm",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_oDYrC40Luv.jpg": {
+    "lat": "43°32'24.16\"N",
+    "lon": "4°12'27.18\"E",
+    "camera": "2 153 m",
+    "sol": "-1 m",
+    "echelle": "200 m"
+  },
+  "EUROPE/opera_oJGTwTqOQI.jpg": {
+    "lat": "43°33'13.79\"N",
+    "lon": "3°56'40.35\"E",
+    "camera": "277 m",
+    "sol": "1 m",
+    "echelle": "30 m"
+  },
+  "EUROPE/opera_pRP5AEgNJy.jpg": {
+    "lat": "46°37'52.87\"N",
+    "lon": "3°56'03.95\"E",
+    "camera": "4 382 m",
+    "sol": "340 m",
+    "echelle": "500 m"
+  },
+  "EUROPE/opera_QAYsOUQb8m.jpg": {
+    "lat": "43°35'43.70\"N",
+    "lon": "4°10'44.24\"E",
+    "camera": "951 m",
+    "sol": "-37 cm",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_rDsh1pwqtt.jpg": {
+    "lat": "43°29'18.06\"N",
+    "lon": "4°21'01.28\"E",
+    "camera": "2 295 m",
+    "sol": "40 cm",
+    "echelle": "200 m"
+  },
+  "EUROPE/opera_rnis7S2ebN.jpg": {
+    "lat": "43°35'34.58\"N",
+    "lon": "4°23'44.87\"E",
+    "camera": "4 068 m",
+    "sol": "-1 m",
+    "echelle": "500 m"
+  },
+  "EUROPE/opera_rWJDTNo8O5.jpg": {
+    "lat": "44°34'59.89\"N",
+    "lon": "2°34'45.51\"E",
+    "camera": "4 637 m",
+    "sol": "626 m",
+    "echelle": "500 m"
+  },
+  "EUROPE/opera_sTD8ygM2Kg.jpg": {
+    "lat": "43°35'36.71\"N",
+    "lon": "4°21'23.85\"E",
+    "camera": "1 034 m",
+    "sol": "-1 m",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_x2nKDzEhwW.jpg": {
+    "lat": "43°38'31.30\"N",
+    "lon": "4°27'13.08\"E",
+    "camera": "1 095 m",
+    "sol": "-23 cm",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_xfo3F6yYat.jpg": {
+    "lat": "43°28'51.38\"N",
+    "lon": "4°12'09.97\"E",
+    "camera": "1 357 m",
+    "sol": "1 m",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_xx37gJ2IGo.jpg": {
+    "lat": "43°29'39.40\"N",
+    "lon": "4°17'52.13\"E",
+    "camera": "6 562 m",
+    "sol": "-1 m",
+    "echelle": "800 m"
+  },
+  "EUROPE/opera_xXV9GeSg2y.jpg": {
+    "lat": "43°36'10.52\"N",
+    "lon": "3°52'39.32\"E",
+    "camera": "2 895 m",
+    "sol": "26 m",
+    "echelle": "300 m"
+  },
+  "EUROPE/opera_yGOPkUlIka.jpg": {
+    "lat": "43°41'28.32\"N",
+    "lon": "3°26'34.53\"E",
+    "camera": "1 465 m",
+    "sol": "113 m",
+    "echelle": "100 m"
+  },
+  "EUROPE/opera_zVjzqrg3Bs.jpg": {
+    "lat": "43°36'13.54\"N",
+    "lon": "4°41'25.54\"E",
+    "camera": "2 959 m",
+    "sol": "14 m",
+    "echelle": "300 m"
+  },
+  "ILE/BAHMAS/opera_L5tmR4rQyZ.jpg": {
+    "lat": "25°03'35.95\"N",
+    "lon": "76°28'10.61\"W",
+    "camera": "38 km",
+    "sol": "-14 m",
+    "echelle": "4 000 m"
+  },
+  "ILE/BAHMAS/opera_oi7MAONlEH.jpg": {
+    "lat": "23°58'41.52\"N",
+    "lon": "77°48'08.83\"W",
+    "camera": "17 km",
+    "sol": "7 m",
+    "echelle": "2 000 m"
+  },
+  "ILE/BAHMAS/opera_wttPsIMtOQ.jpg": {
+    "lat": "24°16'02.30\"N",
+    "lon": "77°54'11.59\"W",
+    "camera": "49 km",
+    "sol": "6 m",
+    "echelle": "6 000 m"
+  },
+  "ILE/BAHMAS/opera_xuCNRRTOUo.jpg": {
+    "lat": "23°09'03.93\"N",
+    "lon": "77°19'55.90\"W",
+    "camera": "64 km",
+    "sol": "-9 m",
+    "echelle": "8 000 m"
+  },
+  "ILE/opera_EnzJCK5Xp4.jpg": {
+    "lat": "16°48'27.24\"S",
+    "lon": "151°28'18.35\"W",
+    "camera": "4 115 m",
+    "sol": "160 m",
+    "echelle": "400 m"
+  },
+  "ILE/opera_EZbairpBiP.jpg": {
+    "lat": "42°08'11.54\"N",
+    "lon": "15°30'48.12\"E",
+    "camera": "600 m",
+    "sol": "34 m",
+    "echelle": "70 m"
+  },
+  "ILE/REUNION/opera_EHqXqoApLn.jpg": {
+    "lat": "21°04'23.60\"S",
+    "lon": "55°26'31.52\"E",
+    "camera": "4 065 m",
+    "sol": "1 780 m",
+    "echelle": "600 m"
+  },
+  "RUSSIE/opera_0Ix4CavOFx.jpg": {
+    "lat": "63°50'21.62\"N",
+    "lon": "73°36'16.80\"E",
+    "camera": "12 896 m",
+    "sol": "110 m",
+    "echelle": "1 000 m"
+  },
+  "RUSSIE/opera_6dS05a7Ycy.jpg": {
+    "lat": "52°49'11.56\"N",
+    "lon": "107°39'01.64\"E",
+    "camera": "8 546 m",
+    "sol": "-512 m",
+    "echelle": "1 000 m"
+  },
+  "RUSSIE/opera_EXDyoyKKMq.jpg": {
+    "lat": "74°26'10.49\"N",
+    "lon": "56°46'26.49\"E",
+    "camera": "161 km",
+    "sol": "560 m",
+    "echelle": "20 km"
+  },
+  "RUSSIE/opera_FgtnrTVLOR.jpg": {
+    "lat": "62°32'02.91\"N",
+    "lon": "71°01'48.09\"E",
+    "camera": "140 km",
+    "sol": "112 m",
+    "echelle": "10 km"
+  },
+  "RUSSIE/opera_gd4CDCYFwT.jpg": {
+    "lat": "75°28'25.15\"N",
+    "lon": "143°25'07.82\"E",
+    "camera": "3 806 m",
+    "sol": "16 m",
+    "echelle": "400 m"
+  },
+  "RUSSIE/opera_gqFi6rb65a.jpg": {
+    "lat": "75°10'56.93\"N",
+    "lon": "140°21'50.29\"E",
+    "camera": "34 km",
+    "sol": "4 m",
+    "echelle": "4 000 m"
+  },
+  "RUSSIE/opera_JwsNSrKcf9.jpg": {
+    "lat": "63°16'23.16\"N",
+    "lon": "110°36'42.06\"E",
+    "camera": "131 km",
+    "sol": "331 m",
+    "echelle": "10 km"
+  },
+  "RUSSIE/opera_ocU6nT5OtZ.jpg": {
+    "lat": "63°54'11.48\"N",
+    "lon": "73°48'45.31\"E",
+    "camera": "5 637 m",
+    "sol": "113 m",
+    "echelle": "700 m"
+  },
+  "RUSSIE/opera_UknYeyCaKA.jpg": {
+    "lat": "66°14'37.98\"N",
+    "lon": "130°00'24.06\"E",
+    "camera": "42 km",
+    "sol": "877 m",
+    "echelle": "5 000 m"
+  },
+  "RUSSIE/opera_Vh9si64nmI.jpg": {
+    "lat": "63°50'04.45\"N",
+    "lon": "73°37'35.58\"E",
+    "camera": "2 254 m",
+    "sol": "109 m",
+    "echelle": "200 m"
+  },
+  "RUSSIE/opera_yAEkTNApRO.jpg": {
+    "lat": "69°56'29.61\"N",
+    "lon": "70°05'00.21\"E",
+    "camera": "244 km",
+    "sol": "39 m",
+    "echelle": "30 km"
+  },
+  "RUSSIE/opera_ydl40iSJeU.jpg": {
+    "lat": "74°01'52.26\"N",
+    "lon": "94°08'52.05\"E",
+    "camera": "140 km",
+    "sol": "202 m",
+    "echelle": "10 km"
+  },
+  "RUSSIE/opera_YSviBfsuwI.jpg": {
+    "lat": "69°46'58.55\"N",
+    "lon": "93°33'56.29\"E",
+    "camera": "222 km",
+    "sol": "909 m",
+    "echelle": "20 km"
+  }
+}

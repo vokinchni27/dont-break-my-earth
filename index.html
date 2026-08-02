@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EARTH</title>
+  <link rel="stylesheet" href="css/earth.css">
+</head>
+<body>
+
+  <!-- la scene : tous les plans vivent la-dedans, rien d'autre -->
+  <main id="scene"></main>
+
+  <!-- l'archive, indexee par tools/index-images.mjs.
+       Ce script permet d'ouvrir le fichier en double-clic (file://)
+       sans serveur : le manifeste JSON reste prioritaire s'il est
+       accessible. -->
+  <script src="images/manifest.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="js/motion.js"></script>
+  <script src="js/layouts.js"></script>
+  <script src="js/stage.js"></script>
+  <script src="js/director.js"></script>
+  <script src="js/panel.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EARTH MEMORY</title>
+  <meta name="description" content="An instrument for looking at the Earth.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <!-- the stage : every image layer lives here -->
+  <div id="stage"></div>
+
+  <!-- the local signal : the visitor, rendered as characters -->
+  <canvas id="webcam-layer" class="hidden"></canvas>
+
+  <!-- breathing phrases -->
+  <div id="text-layer"></div>
+
+  <!-- film grain -->
+  <div id="grain"></div>
+
+  <!-- minimal instrument chrome — ESC hides it -->
+  <div id="ui">
+    <div class="ui-corner ui-tl">EARTH MEMORY<br><span class="dim">an instrument for looking</span></div>
+    <div class="ui-corner ui-tr" id="ui-clock">--:--:--</div>
+    <div class="ui-corner ui-bl" id="ui-status">ARCHIVE : LOADING…</div>
+    <div id="ui-compo"></div>
+    <div class="ui-corner ui-br dim">[space] explore &nbsp;&nbsp; [←→] layouts &nbsp;&nbsp; [1-0] preset &nbsp;&nbsp; [click] reveal / erase &nbsp;&nbsp; [esc] interface</div>
+  </div>
+
+  <!-- entry point -->
+  <div id="intro">
+    <div class="intro-inner">
+      <p>EARTH MEMORY</p>
+      <p class="dim">these images are real places<br>nothing here has been retouched</p>
+      <p class="blink">— press space —</p>
+    </div>
+  </div>
+
+  <!-- the last interaction of the piece -->
+  <div id="ending" class="hidden"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/archive.js"></script>
+  <script src="js/stage.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/text.js"></script>
+  <script src="js/compositions.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/webcam.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/ending.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
