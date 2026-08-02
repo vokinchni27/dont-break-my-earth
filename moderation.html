@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EARTH — moderation</title>
+  <meta name="robots" content="noindex">
+  <style>
+    /* Meme langue graphique que l'oeuvre : blanc, grotesque
+       banale, micro-typographie. Une planche de contact, pas un
+       tableau de bord. */
+    :root {
+      --encre: #111; --gris: #9a9a9a; --gris-clair: #e6e6e6;
+      --grotesque: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --micro: 9.5px; --interlettre: .14em;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font: 400 12px/1.45 var(--grotesque);
+      color: var(--encre); background: #fff;
+      padding: 22px 22px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .micro {
+      font-size: var(--micro); letter-spacing: var(--interlettre);
+      text-transform: uppercase;
+    }
+    header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 1px solid var(--encre); padding-bottom: 10px; margin-bottom: 26px;
+    }
+    h1 { font-size: clamp(26px, 5vw, 52px); font-weight: 700; letter-spacing: -.04em; line-height: .9; }
+    h1 sup { font-size: .34em; vertical-align: super; }
+    .compte { text-align: right; color: var(--gris); }
+
+    /* connexion */
+    #porte { max-width: 380px; margin: 12vh auto; text-align: center; }
+    #porte p { color: var(--gris); margin: 14px 0 20px; line-height: 1.7; }
+    input, button {
+      font: inherit; font-size: 12px;
+    }
+    input[type=email], input[type=text] {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--encre);
+      border-radius: 999px; outline: 0; background: #fff;
+    }
+    .bouton {
+      padding: 8px 16px; border: 1px solid var(--encre); border-radius: 999px;
+      background: #fff; color: var(--encre); cursor: pointer;
+      font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase;
+      transition: background .15s, color .15s;
+    }
+    .bouton:hover { background: var(--encre); color: #fff; }
+    .bouton--plein { background: var(--encre); color: #fff; }
+    .bouton--plein:hover { background: #fff; color: var(--encre); }
+    .bouton:disabled { opacity: .35; cursor: default; }
+
+    /* une proposition */
+    .item {
+      display: grid;
+      grid-template-columns: minmax(240px, 380px) 1fr;
+      gap: 22px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--gris-clair);
+      align-items: start;
+    }
+    .item.partie { opacity: .25; }
+    .vue { position: relative; }
+    .vue img { width: 100%; display: block; background: #f4f4f4; }
+    /* la bande de donnees de la capture, agrandie : les
+       coordonnees se lisent sans ouvrir le fichier */
+    .bande {
+      width: 100%;
+      aspect-ratio: 22.38;
+      margin-top: 6px;
+      background-repeat: no-repeat;
+      background-size: 238.1% auto;
+      background-position: 100% 100%;
+      outline: 1px solid var(--gris-clair);
+    }
+    .champs { display: flex; flex-direction: column; gap: 9px; }
+    .champs label { display: block; color: var(--gris); margin-bottom: 3px; }
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .meta { color: var(--gris); line-height: 1.8; }
+    .actions { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+    .verdict { font-weight: 700; letter-spacing: -.02em; }
+
+    #mot {
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+      background: #111; color: #fff; padding: 7px 14px; border-radius: 999px;
+      font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase;
+      opacity: 0; transition: opacity .25s; pointer-events: none;
+    }
+    #mot.visible { opacity: 1; }
+    .vide { color: var(--gris); padding: 40px 0; }
+    @media (max-width: 700px) { .item { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div id="porte" hidden>
+    <h1>EARTH<sup>®</sup></h1>
+    <p class="micro">moderation de l archive collective</p>
+    <p>Un lien de connexion va t etre envoye. Il n y a pas de mot de passe.</p>
+    <input type="email" id="courriel" placeholder="adresse" autocomplete="email">
+    <div style="margin-top:12px"><button class="bouton bouton--plein" id="envoyer">recevoir le lien</button></div>
+  </div>
+
+  <div id="atelier" hidden>
+    <header>
+      <div>
+        <h1>EN ATTENTE</h1>
+        <div class="micro" style="color:var(--gris);margin-top:6px">ce que le monde a rapporte</div>
+      </div>
+      <div class="compte micro">
+        <div id="compte">—</div>
+        <div style="margin-top:6px"><button class="bouton" id="sortir">quitter</button></div>
+      </div>
+    </header>
+    <div id="liste"></div>
+  </div>
+
+  <div id="mot"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/supabase.js"></script>
+  <script>
+  (function (EARTH) {
+    'use strict';
+    const Supa = EARTH.Supa;
+    const dms = EARTH.utils.dms;
+    const $ = s => document.querySelector(s);
+
+    function dire(m, garder) {
+      const d = $('#mot');
+      d.textContent = m;
+      d.classList.add('visible');
+      clearTimeout(dire._t);
+      if (!garder) dire._t = setTimeout(() => d.classList.remove('visible'), 3600);
+    }
+
+    /* --- la porte ---------------------------------------- */
+    async function demarrer() {
+      Supa.reprendreSession();
+      const u = await Supa.utilisateur();
+      if (u && u.email) { ouvrir(u); return; }
+      $('#porte').hidden = false;
+      $('#courriel').value = EARTH.CONFIG.collectif.moderatrice || '';
+      $('#envoyer').onclick = async () => {
+        const email = $('#courriel').value.trim();
+        if (!email) return;
+        $('#envoyer').disabled = true;
+        try {
+          await Supa.lienMagique(email, location.href.split('#')[0]);
+          dire('lien envoye — regarde tes courriels', true);
+        } catch (e) {
+          dire('envoi impossible : ' + String(e.message).slice(0, 80), true);
+          $('#envoyer').disabled = false;
+        }
+      };
+    }
+
+    function ouvrir(u) {
+      $('#porte').hidden = true;
+      $('#atelier').hidden = false;
+      $('#sortir').onclick = () => { Supa.deconnecter(); location.reload(); };
+      charger();
+    }
+
+    /* --- les propositions -------------------------------- */
+    async function charger() {
+      let lignes = [];
+      try {
+        lignes = await Supa.lire(
+          'earth_contributions',
+          'statut=eq.en_attente&select=*&order=cree_le.asc&limit=200'
+        );
+      } catch (e) {
+        dire('lecture impossible : ' + String(e.message).slice(0, 90), true);
+        return;
+      }
+      $('#compte').textContent = lignes.length + ' en attente';
+      const liste = $('#liste');
+      liste.innerHTML = '';
+      if (!lignes.length) {
+        liste.innerHTML = '<p class="vide">Rien pour l instant. L archive attend.</p>';
+        return;
+      }
+      lignes.forEach(l => liste.appendChild(carte(l)));
+    }
+
+    function carte(l) {
+      const url = Supa.urlPublique(l.chemin);
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.innerHTML = `
+        <div class="vue">
+          <img src="${url}" alt="" loading="lazy">
+          <div class="bande" style="background-image:url('${url}')"></div>
+          <div class="micro" style="color:var(--gris);margin-top:6px">bande de donnees agrandie</div>
+        </div>
+        <div class="champs">
+          <div class="meta micro">
+            ${new Date(l.cree_le).toLocaleString('fr-FR')}<br>
+            ${l.largeur || '?'} × ${l.hauteur || '?'} px ·
+            ${l.poids ? Math.round(l.poids / 1024) + ' ko' : '?'}<br>
+            ${l.auteur ? 'signee : ' + escapeHtml(l.auteur) : 'non signee'}
+          </div>
+          <div><label class="micro">lieu</label><input type="text" data-champ="lieu" placeholder="ISLANDE, ILE/REUNION…"></div>
+          <div class="duo">
+            <div><label class="micro">latitude</label><input type="text" data-champ="lat" placeholder="43°35'29.50&quot;N"></div>
+            <div><label class="micro">longitude</label><input type="text" data-champ="lon" placeholder="4°35'08.96&quot;E"></div>
+          </div>
+          <div class="actions">
+            <button class="bouton bouton--plein" data-act="retenue">retenir</button>
+            <button class="bouton" data-act="ecartee">ecarter</button>
+            <a class="bouton" href="${url}" target="_blank" rel="noopener">voir en grand</a>
+          </div>
+        </div>`;
+
+      el.querySelectorAll('[data-act]').forEach(b => {
+        b.onclick = () => decider(el, l, b.dataset.act);
+      });
+      return el;
+    }
+
+    async function decider(el, l, statut) {
+      const val = c => {
+        const i = el.querySelector(`[data-champ="${c}"]`);
+        return i && i.value.trim() ? i.value.trim() : null;
+      };
+      const lat = val('lat'), lon = val('lon');
+      const champs = {
+        statut,
+        vue_le: new Date().toISOString(),
+        lieu: val('lieu'),
+        lat, lon,
+        lat_dec: dms(lat),
+        lon_dec: dms(lon)
+      };
+
+      /* on previent plutot que d'echouer en silence : une capture
+         retenue sans coordonnees n'entrera dans aucune partition
+         gouvernee par les donnees */
+      if (statut === 'retenue' && (!lat || champs.lat_dec == null)) {
+        if (!confirm('Aucune coordonnee lisible.\nElle sera retenue mais restera « non situee ».\nContinuer ?')) return;
+      }
+
+      el.querySelectorAll('button').forEach(b => b.disabled = true);
+      try {
+        await Supa.modifier('earth_contributions', 'id=eq.' + l.id, champs);
+        el.classList.add('partie');
+        el.querySelector('.champs').insertAdjacentHTML(
+          'beforeend',
+          `<div class="verdict">${statut === 'retenue' ? 'retenue' : 'ecartee'}</div>`
+        );
+        dire(statut === 'retenue' ? 'elle rejoint l archive' : 'ecartee');
+        const c = $('#compte');
+        const n = Math.max(0, parseInt(c.textContent, 10) - 1);
+        c.textContent = n + ' en attente';
+      } catch (e) {
+        el.querySelectorAll('button').forEach(b => b.disabled = false);
+        dire('impossible : ' + String(e.message).slice(0, 90), true);
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    demarrer();
+  })(window.EARTH);
+  </script>
+</body>
+</html>

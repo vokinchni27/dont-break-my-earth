@@ -42,8 +42,11 @@
       this.ligneLat = creer('coord-ligne coord-ligne--lat');
       this.ligneLon = creer('coord-ligne coord-ligne--lon');
       this.bandeau = creer('coord-bandeau');
-      [this.bloc, this.curseur, this.ligneLat, this.ligneLon, this.bandeau]
+      [this.bloc, this.curseur, this.ligneLat, this.ligneLon]
         .forEach(d => el.appendChild(d));
+      /* le bandeau montre les VRAIS pixels de la capture : il doit
+         rester hors de la couche en fusion, qui les inverserait */
+      document.body.appendChild(this.bandeau);
       return this;
     },
 
@@ -73,16 +76,15 @@
       if (!cfg.survol || !plan) return;
       this.survole = plan;
 
-      const r = plan.frame.getBoundingClientRect();
+      /* Le pave ne se pose PAS sur l'image : en fusion difference,
+         un texte qui tombe sur un gris moyen devient invisible.
+         Il rejoint l'appareillage, a place fixe, comme la lecture
+         d'un instrument. C'est plus lisible, et plus juste : la
+         donnee n'appartient pas a l'image, elle appartient a
+         l'appareil qui la regarde. */
       this.bloc.textContent = this.detail(plan.item) || this.texte(plan.item);
       this.bloc.style.setProperty('--taille', cfg.taille + 'px');
       this.bloc.classList.add('visible');
-
-      /* le bloc se pose sous l'image, cale sur son bord gauche —
-         sauf s'il sortirait de l'ecran */
-      const x = clamp(r.left, 8, window.innerWidth - 220);
-      const y = r.bottom + 8 > window.innerHeight - 90 ? r.top - 74 : r.bottom + 8;
-      this.bloc.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
 
       if (cfg.lignes) this.tracer(plan.item);
       if (cfg.bandeau) this.montrerBandeau(plan);
@@ -126,7 +128,11 @@
       const largeurVisible = 1 - BANDE.gauche;
       const hauteurVisible = 1 - BANDE.haut;
       const zoom = 1 / largeurVisible;
-      const ar = largeurVisible / (hauteurVisible * (zoom / AR_SOURCE));
+
+      /* la largeur du bloc vaut « zoom » fois sa propre largeur en
+         image ; la hauteur rendue vaut donc W*zoom/AR, dont on ne
+         garde que la tranche du bandeau */
+      const ar = AR_SOURCE / (hauteurVisible * zoom);
 
       const d = this.bandeau;
       d.style.backgroundImage = `url("${plan.item.src}")`;

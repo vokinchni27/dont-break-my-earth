@@ -65,7 +65,11 @@
 
       /* --- respiration et dispersion ------------------------ */
       bus.sur('lent', p => { this.parallaxe.x = p.nx; this.parallaxe.y = p.ny; });
-      bus.sur('pointeur', p => { this.parallaxe.x = p.nx; this.parallaxe.y = p.ny; });
+      bus.sur('pointeur', p => {
+        this.parallaxe.x = p.nx;
+        this.parallaxe.y = p.ny;
+        EARTH.Coords.suivre(p.x, p.y);
+      });
       bus.sur('rapide', p => this.disperser(p));
 
       /* --- immobilite --------------------------------------- */

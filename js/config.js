@@ -179,6 +179,29 @@ EARTH.CONFIG = {
     source: 'camera'     // 'camera' | 'test' (mire animee, sans camera)
   },
 
+  /* --- L'APPAREILLAGE ------------------------------------- */
+  /* Quatre angles, une horloge, un bandeau de coordonnees.
+     En fusion « difference » : jamais de fond, jamais d'ecran. */
+  hud: {
+    actif: true,
+    marquee: true,
+    curseur: true        // curseur en croix (souris seulement)
+  },
+
+  /* --- L'ARCHIVE COLLECTIVE ------------------------------- */
+  /* Le visiteur capture sur Google Earth et depose son fichier
+     sur la page. Il attend d'etre retenu : personne ne se publie
+     soi-meme. Voir supabase/earth.sql pour les regles. */
+  collectif: {
+    actif: true,
+    url: 'https://jhdwyiknkoqdxflafwmx.supabase.co',
+    cle: 'sb_publishable_oTGmFsH39Qe4Jxv2-C9S4Q_kGeL3twF',
+    bucket: 'earth',
+    dossier: 'propositions',
+    tailleMax: 8 * 1024 * 1024,
+    moderatrice: 'kara.garnier27@gmail.com'
+  },
+
   /* --- LE BAC A SABLE ------------------------------------- */
   bacASable: {
     panneauOuvert: false,

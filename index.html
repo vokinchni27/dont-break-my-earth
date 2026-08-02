@@ -2,16 +2,36 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EARTH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>EARTH — archive vivante</title>
+  <meta name="description" content="Un systeme qui compose en permanence de nouvelles relations entre des images satellites, leurs coordonnees et celui qui regarde.">
   <link rel="stylesheet" href="css/earth.css">
 </head>
 <body>
 
-  <!-- la scene : tous les plans vivent la-dedans, rien d'autre -->
+  <!-- la grille : elle structure, les images ne lui obeissent pas toujours -->
+  <div id="grille"></div>
+
+  <!-- la scene : tous les plans vivent la-dedans -->
   <main id="scene"></main>
 
-  <!-- l'archive, indexee par tools/index-images.mjs.
+  <!-- la mosaique de la webcam (vide tant qu'elle dort) -->
+  <div id="webcam"></div>
+
+  <!-- les donnees devenues design -->
+  <div id="coordonnees"></div>
+
+  <!-- le texte, vivant -->
+  <div id="textes"></div>
+
+  <!-- l'appareillage : angles, horloge, bandeau, curseur -->
+  <div id="hud"></div>
+
+  <!-- le depot des contributions -->
+  <div id="depot"></div>
+
+  <!-- l'archive locale, indexee par tools/index-images.mjs.
        Ce script permet d'ouvrir le fichier en double-clic (file://)
        sans serveur : le manifeste JSON reste prioritaire s'il est
        accessible. -->
@@ -19,11 +39,21 @@
 
   <script src="js/config.js"></script>
   <script src="js/utils.js"></script>
+  <script src="js/supabase.js"></script>
   <script src="js/loader.js"></script>
   <script src="js/motion.js"></script>
+  <script src="js/grid.js"></script>
   <script src="js/layouts.js"></script>
+  <script src="js/coords.js"></script>
+  <script src="js/text.js"></script>
   <script src="js/stage.js"></script>
+  <script src="js/events.js"></script>
   <script src="js/director.js"></script>
+  <script src="js/gestures.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/webcam.js"></script>
+  <script src="js/contribute.js"></script>
+  <script src="js/hud.js"></script>
   <script src="js/panel.js"></script>
   <script src="js/main.js"></script>
 </body>

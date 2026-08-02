@@ -1,16 +1,34 @@
 /* ============================================================
    EARTH — css/earth.css
    ------------------------------------------------------------
-   Blanc. Des images posees dessus. Rien d'autre.
-   Aucune decoration : pas de cadre, pas d'ombre, pas de coin
-   arrondi, pas de degrade. Le vide fait la composition.
+   Blanc. Des images posees dessus. Une grille qu'on peut voir.
+   Des donnees devenues typographie.
+
+   Deux registres, jamais trois :
+     micro    9–10 px, capitales, interlettrage large — l'appareillage
+     display  tres grand, gras, interlettrage negatif — les moments rares
+
+   Une grotesque neutre, volontairement banale. Aucun webfont :
+   la page doit s'ouvrir en double-clic, hors ligne.
+
+   L'appareillage est en fusion « difference » : il se lit noir sur
+   le blanc et blanc sur les images sombres, sans jamais poser de
+   fond. L'interface traverse l'oeuvre au lieu de la recouvrir.
    ============================================================ */
 
 :root {
   --fond: #ffffff;
   --encre: #111111;
   --gris: #9a9a9a;
+  --gris-clair: #e6e6e6;
   --opacite: 1;
+  --attenuation: 0.06;
+
+  --grotesque: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --micro: 9.5px;
+  --interlettre: 0.14em;
+
+  --marge: 14px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,13 +38,64 @@ html, body {
   height: 100%;
   overflow: hidden;
   background: var(--fond);
+  overscroll-behavior: none;
 }
 
 body {
-  font: 400 11px/1.5 ui-monospace, "SFMono-Regular", "Consolas", "Menlo", monospace;
+  font: 400 12px/1.45 var(--grotesque);
   color: var(--encre);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  touch-action: none;                    /* le doigt compose, il ne defile pas */
+  -webkit-tap-highlight-color: transparent;
+  transition: background .7s ease;
 }
+
+/* le curseur devient un instrument : une croix, pas une fleche */
+@media (pointer: fine) {
+  body.instrument, body.instrument * { cursor: none; }
+  body.instrument #panneau, body.instrument #panneau * { cursor: auto; }
+  body.instrument .invite { cursor: none; }
+}
+
+/* la nuit tombe sur l'archive (evenement rare) */
+body.nuit { background: #000; }
+body.nuit #scene { filter: invert(1) hue-rotate(180deg); }
+
+/* ============================================================
+   LA GRILLE
+   ============================================================ */
+
+#grille {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity .5s ease;
+  will-change: transform;
+}
+#grille.cachee { opacity: 0; }
+
+.grille-trait { position: absolute; background: var(--trait, rgba(0,0,0,.09)); }
+.grille-trait--v { top: 0; bottom: 0; width: 1px; }
+.grille-trait--h { left: 0; right: 0; height: 1px; }
+.grille-trait.fort { background: var(--trait-fort, rgba(0,0,0,.22)); }
+
+.grille-repere {
+  position: absolute;
+  top: 4px;
+  transform: translateX(-50%);
+  font-size: 8px;
+  letter-spacing: .1em;
+  color: rgba(0,0,0,.24);
+  font-variant-numeric: tabular-nums;
+}
+
+/* quand on depose un fichier, la grille se durcit : le systeme
+   se montre au moment ou on lui confie quelque chose */
+body.depot #grille { opacity: 1; }
+body.depot .grille-trait { background: rgba(0,0,0,.28); }
+body.depot .grille-trait.fort { background: #111; }
 
 /* ============================================================
    LA SCENE
@@ -35,37 +104,46 @@ body {
 #scene {
   position: fixed;
   inset: 0;
+  z-index: 2;
   overflow: hidden;
 }
 
-/* un plan : position et taille. Jamais anime. */
 .plate {
   position: absolute;
   left: calc(var(--x) * 100%);
   top: calc(var(--y) * 100%);
   width: calc(var(--w) * 100vmin);
-  transform: translate(-50%, -50%) rotate(calc(var(--rot, 0) * 1deg));
+  transform:
+    translate(-50%, -50%)
+    translate(var(--px, 0px), var(--py, 0px))
+    rotate(calc(var(--rot, 0) * 1deg));
   pointer-events: none;
 }
 
-/* la couche animee : opacite et transform y vivent seules */
+/* un plan qu'on deplace (alignement sur la grille) */
+.plate.glisse {
+  transition:
+    left var(--duree-glisse, .9s) cubic-bezier(.22,.61,.36,1),
+    top var(--duree-glisse, .9s) cubic-bezier(.22,.61,.36,1),
+    width var(--duree-glisse, .9s) cubic-bezier(.22,.61,.36,1);
+}
+
 .plate-motion {
   opacity: 0;
   transform-origin: 50% 50%;
   will-change: opacity, transform;
 }
 
-/* la fenetre de recadrage : elle porte le rapport de l'image
-   APRES coupe, l'interface de Google Earth reste dehors */
 .plate-frame {
   position: relative;
   width: 100%;
   aspect-ratio: var(--ar, 2.7);
   overflow: hidden;
   background: var(--fond);
+  pointer-events: auto;                  /* c'est elle qui recoit le geste */
 }
 
-.plate-frame.filet { outline: 1px solid rgba(0, 0, 0, .18); outline-offset: 0; }
+.plate-frame.filet { outline: 1px solid rgba(0,0,0,.18); }
 
 .plate-frame > img,
 .plate-frame > video {
@@ -78,19 +156,422 @@ body {
   transform: translate(calc(var(--cl, 0) * -100%), calc(var(--ct, 0) * -100%));
 }
 
+/* l'image effleuree se detache tres legerement */
+.plate.effleure .plate-frame {
+  outline: 1px solid rgba(0,0,0,.5);
+  outline-offset: 0;
+}
+
+/* plein regard : tout le reste s'efface */
+#scene.attenue .plate:not(.garde) {
+  opacity: var(--attenuation);
+  transition: opacity .55s ease;
+}
+#scene .plate.garde { z-index: 900 !important; }
+
+/* une capture qui vient d'etre deposee */
+.plate.contribuee .plate-frame { outline: 1px solid #111; }
+.plate.envoyee .plate-frame { outline-color: rgba(0,0,0,.25); }
+
 /* ============================================================
-   NOTE DE DIAGNOSTIC (le seul texte de la piece)
+   LES DONNEES DEVENUES DESIGN
+   ============================================================ */
+
+/* La fusion s'applique a la COUCHE, pas aux enfants : un element
+   qui cree un contexte d'empilement (position + z-index) confine
+   le melange de ses enfants a lui-meme, et le texte disparait.
+   La couche entiere se fond donc avec ce qui est dessous, et tout
+   ce qu'elle contient est encre en blanc. */
+#coordonnees {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+
+/* le pave typographique au survol — a place fixe, dans
+   l'appareillage, sur le fond et non sur l'image */
+.coord-bloc {
+  position: absolute;
+  top: 58px;
+  left: var(--marge);
+  font-size: var(--taille, 11px);
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: .01em;
+  white-space: pre;
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+.coord-bloc.visible { opacity: 1; }
+
+/* la lecture qui suit le curseur */
+.coord-curseur {
+  position: absolute;
+  top: 0; left: 0;
+  font-size: 9.5px;
+  line-height: 1.45;
+  letter-spacing: .06em;
+  white-space: pre;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.coord-curseur.visible { opacity: .75; }
+
+/* la latitude et la longitude tracees en travers de l'ecran */
+.coord-ligne {
+  position: absolute;
+  background: #fff;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.coord-ligne--lat { left: 0; right: 0; height: 1px; }
+.coord-ligne--lon { top: 0; bottom: 0; width: 1px; }
+.coord-ligne.visible { opacity: .35; }
+
+.coord-ligne::after {
+  content: attr(data-valeur);
+  position: absolute;
+  font-size: 8.5px;
+  letter-spacing: .1em;
+  padding: 1px 4px;
+}
+.coord-ligne--lat::after { right: 6px; top: -14px; }
+.coord-ligne--lon::after {
+  bottom: 8px; left: 5px;
+  transform-origin: left bottom;
+  writing-mode: vertical-rl;
+}
+
+/* les vrais pixels du bandeau Google Earth, agrandis */
+.coord-bandeau {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 5;
+  width: min(560px, 62vw);
+  transform: translateX(-50%);
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  outline: 1px solid rgba(0,0,0,.14);
+}
+.coord-bandeau.visible { opacity: 1; }
+
+/* les coordonnees imprimees a meme l'image */
+.coord-imprimee {
+  position: absolute;
+  left: 8px;
+  bottom: 7px;
+  z-index: 2;
+  font-size: 9.5px;
+  line-height: 1.4;
+  letter-spacing: .07em;
+  white-space: pre;
+  color: #fff;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+/* l'inondation : toute l'archive, a sa vraie place */
+.coord-nappe { position: absolute; inset: 0; }
+.coord-nappe span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 9px;
+  letter-spacing: .05em;
+  white-space: nowrap;
+  opacity: 0;
+  animation: nappe-entre .5s ease forwards;
+}
+.coord-nappe.sortie span { animation: nappe-sort .5s ease forwards; }
+@keyframes nappe-entre { from { opacity: 0; } to { opacity: 1; } }
+@keyframes nappe-sort { to { opacity: 0; } }
+
+/* ============================================================
+   LE TEXTE VIVANT
+   ============================================================ */
+
+#textes {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+
+.texte-bloc {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  max-width: 78vw;
+  font-size: var(--taille, 22px);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  transition: opacity .8s ease;
+}
+.texte-bloc.sortie { opacity: 0; }
+
+.texte-lettre {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  animation: lettre-entre .5s ease forwards;
+  will-change: transform;
+}
+@keyframes lettre-entre { to { opacity: 1; } }
+
+/* ============================================================
+   L'APPAREILLAGE
+   ============================================================ */
+
+#hud {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  transition: opacity .4s ease;
+  mix-blend-mode: difference;
+  color: #fff;
+}
+#hud.cache { opacity: 0; }
+
+.hud-coin {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--micro);
+  line-height: 1.5;
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.hud-coin b { font-weight: 700; letter-spacing: .08em; }
+.hud-coin sup { font-size: .6em; vertical-align: super; }
+.hud-faible { opacity: .55; }
+
+.hud-tl { top: var(--marge); left: var(--marge); }
+.hud-tr { top: var(--marge); right: var(--marge); text-align: right; align-items: flex-end; }
+.hud-bl { bottom: calc(var(--marge) + 18px); left: var(--marge); }
+.hud-br {
+  bottom: calc(var(--marge) + 18px);
+  right: var(--marge);
+  text-align: right;
+  align-items: flex-end;
+}
+
+/* le bandeau defilant : les coordonnees de ce qui est a l'ecran */
+.marquee {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 18px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(255,255,255,.16);
+  transition: opacity .4s ease;
+}
+.marquee.cache, .marquee.vide { opacity: 0; }
+.marquee-ruban {
+  white-space: nowrap;
+  font-size: 8.5px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .5;
+  animation: ruban 40s linear infinite;
+  will-change: transform;
+}
+@keyframes ruban { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* le curseur en croix */
+.curseur {
+  position: absolute;
+  top: 0; left: 0;
+  width: 15px; height: 15px;
+  margin: -7.5px 0 0 -7.5px;
+  opacity: 0;
+}
+body.instrument .curseur { opacity: 1; }
+.curseur::before, .curseur::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+}
+.curseur::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+.curseur::after { top: 50%; left: 0; right: 0; height: 1px; }
+@media (pointer: coarse) { .curseur { display: none; } }
+
+/* le tres grand corps, reserve aux moments rares */
+.proclame {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 92vw;
+  text-align: center;
+  font-size: clamp(34px, 8vw, 118px);
+  font-weight: 700;
+  line-height: .86;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+.proclame.visible { opacity: 1; }
+
+/* ============================================================
+   CONTRIBUER
+   ============================================================ */
+
+#depot {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.depot-voile {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: rgba(255,255,255,.86);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+body.depot .depot-voile { opacity: 1; }
+
+.depot-mot {
+  font-size: clamp(40px, 11vw, 168px);
+  font-weight: 700;
+  line-height: .82;
+  letter-spacing: -0.05em;
+  text-align: center;
+}
+.depot-note {
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+  color: var(--gris);
+}
+
+/* la pastille d'invitation, empruntee aux boutiques : petite,
+   ronde, discrete, toujours la */
+.invite {
+  position: fixed;
+  right: var(--marge);
+  bottom: calc(var(--marge) + 46px);
+  z-index: 8;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px 7px 10px;
+  border: 1px solid var(--encre);
+  border-radius: 999px;
+  background: var(--fond);
+  color: var(--encre);
+  font: inherit;
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+.invite:hover { background: var(--encre); color: var(--fond); transform: translateY(-1px); }
+.invite-signe { font-size: 13px; line-height: 1; }
+.invite-fichier { position: fixed; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+/* la seule question posee au visiteur, et elle est facultative */
+.signature {
+  position: fixed;
+  left: 50%; bottom: 76px;
+  z-index: 9;
+  transform: translate(-50%, 10px);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 14px;
+  border: 1px solid var(--encre);
+  border-radius: 999px;
+  background: var(--fond);
+  opacity: 0;
+  transition: opacity .4s ease, transform .4s ease;
+}
+.signature.visible { opacity: 1; transform: translate(-50%, 0); }
+.signature label {
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+  color: var(--gris);
+}
+.signature input {
+  font: inherit;
+  font-size: 12px;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--encre);
+  width: 150px;
+}
+
+#contrib-mot {
+  position: fixed;
+  left: 50%; bottom: 44px;
+  z-index: 9;
+  transform: translateX(-50%);
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+  color: var(--encre);
+  background: var(--fond);
+  padding: 5px 12px;
+  border: 1px solid var(--gris-clair);
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+#contrib-mot.visible { opacity: 1; }
+
+/* ============================================================
+   LA WEBCAM, EN MOSAIQUE DE PAYSAGES
+   ============================================================ */
+
+#webcam {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+.wc-tuile {
+  position: absolute;
+  top: 0; left: 0;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity .7s ease, width .7s ease, height .7s ease, transform .7s ease;
+  will-change: transform, opacity;
+}
+
+/* ============================================================
+   DIAGNOSTIC
    ============================================================ */
 
 .note {
   position: fixed;
-  left: 50%;
-  top: 50%;
+  left: 50%; top: 50%;
   transform: translate(-50%, -50%);
   max-width: 34em;
   text-align: center;
   line-height: 1.9;
-  color: var(--encre);
+  z-index: 20;
 }
 .note code {
   display: inline-block;
@@ -101,32 +582,30 @@ body {
 
 /* ============================================================
    LE BAC A SABLE
-   Ferme par defaut. Ouvert : une colonne sobre, a droite.
    ============================================================ */
 
 #panneau {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 274px;
+  top: 0; right: 0;
+  width: 278px;
   height: 100%;
   z-index: 9999;
-  background: rgba(255, 255, 255, .94);
-  border-left: 1px solid #e6e6e6;
+  background: rgba(255,255,255,.95);
+  border-left: 1px solid var(--gris-clair);
   overflow-y: auto;
   padding: 14px 16px 40px;
   transform: translateX(100%);
-  transition: transform .28s cubic-bezier(.22, .61, .36, 1);
+  transition: transform .28s cubic-bezier(.22,.61,.36,1);
   backdrop-filter: blur(3px);
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 body.panneau-ouvert #panneau { transform: none; }
 
-/* poignee toujours accessible quand le panneau est ferme */
-body:not(.panneau-ouvert) #panneau::after { content: none; }
-
 .pan-tete {
   display: flex; justify-content: space-between; align-items: baseline;
-  letter-spacing: .14em; font-size: 10px; color: var(--encre);
+  letter-spacing: var(--interlettre); font-size: var(--micro);
+  text-transform: uppercase;
   padding-bottom: 10px; border-bottom: 1px solid #ededed;
 }
 .pan-fermer { cursor: pointer; font-size: 14px; line-height: 1; color: var(--gris); }
@@ -135,25 +614,24 @@ body:not(.panneau-ouvert) #panneau::after { content: none; }
 .pan-etat {
   font-size: 10px; line-height: 1.7; color: #444;
   padding: 10px 0; border-bottom: 1px solid #ededed;
+  font-variant-numeric: tabular-nums;
 }
-.pan-etat b { font-weight: 700; }
 
 .pan-bloc { padding: 12px 0 4px; border-bottom: 1px solid #ededed; }
 .pan-bloc h2 {
   font-size: 9px; font-weight: 400; letter-spacing: .16em;
-  color: var(--gris); margin-bottom: 8px;
+  color: var(--gris); margin-bottom: 8px; text-transform: uppercase;
 }
 
-/* --- une ligne de reglage --- */
 .pan-ligne {
   display: grid;
-  grid-template-columns: 78px 1fr 46px;
+  grid-template-columns: 84px 1fr 46px;
   align-items: center;
   gap: 6px;
   margin-bottom: 5px;
   font-size: 10px;
 }
-.pan-ligne--bascule { grid-template-columns: 78px 1fr; }
+.pan-ligne--bascule { grid-template-columns: 84px 1fr; }
 .pan-nom { color: #333; }
 .pan-valeur { text-align: right; color: var(--gris); font-variant-numeric: tabular-nums; }
 
@@ -174,7 +652,6 @@ body:not(.panneau-ouvert) #panneau::after { content: none; }
 }
 .pan-ligne input[type="checkbox"] { accent-color: #111; justify-self: start; }
 
-/* --- les partitions --- */
 .pan-partitions { display: flex; flex-direction: column; gap: 1px; }
 .pan-partition { display: grid; grid-template-columns: 16px 1fr; align-items: center; }
 .pan-partition input { accent-color: #111; }
@@ -187,10 +664,9 @@ body:not(.panneau-ouvert) #panneau::after { content: none; }
 .pan-lien em { display: block; font-style: normal; color: var(--gris); font-size: 9px; }
 .pan-num { display: inline-block; width: 12px; color: var(--gris); }
 
-/* --- actions --- */
 .pan-actions { display: flex; flex-direction: column; gap: 5px; padding: 12px 0; }
 .pan-bouton {
-  font: inherit; font-size: 10px; letter-spacing: .06em;
+  font: inherit; font-size: 10px; letter-spacing: .06em; text-transform: uppercase;
   padding: 6px 8px; cursor: pointer;
   background: #fff; color: var(--encre); border: 1px solid #dcdcdc;
 }
@@ -201,20 +677,52 @@ body:not(.panneau-ouvert) #panneau::after { content: none; }
 
 #pan-flash {
   position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
-  background: #111; color: #fff; padding: 6px 12px; font-size: 10px;
+  background: #111; color: #fff; padding: 6px 12px; font-size: var(--micro);
   letter-spacing: .08em; opacity: 0; transition: opacity .2s; z-index: 10000;
-  pointer-events: none;
+  pointer-events: none; text-transform: uppercase;
 }
 #pan-flash.visible { opacity: 1; }
 
-/* indice minuscule, en bas a gauche, quand le panneau est ferme */
-body:not(.panneau-ouvert)::after {
-  content: "P";
-  position: fixed; left: 14px; bottom: 12px;
-  font-size: 9px; letter-spacing: .1em; color: #d8d8d8;
-  z-index: 9998; pointer-events: none;
+/* ============================================================
+   LE TELEPHONE
+   Le doigt compose aussi bien que la souris.
+   ============================================================ */
+
+@media (max-width: 720px), (pointer: coarse) {
+  :root { --marge: 10px; --micro: 9px; }
+
+  .hud-br { display: none; }              /* pas de legende clavier au doigt */
+  .hud-bl { bottom: calc(var(--marge) + 20px); }
+  .coord-bandeau { width: 86vw; bottom: 58px; }
+  .coord-curseur { display: none; }       /* le doigt cache deja l'endroit */
+
+  .invite {
+    left: 50%;
+    right: auto;
+    bottom: calc(var(--marge) + 26px);
+    transform: translateX(-50%);
+    padding: 14px 22px 14px 18px;         /* ~44 px de haut : cible tactile */
+  }
+  .invite:hover { transform: translateX(-50%); }
+
+  .depot-mot { font-size: clamp(34px, 13vw, 84px); }
+
+  #panneau {
+    width: 100%;
+    height: 62%;
+    top: auto;
+    bottom: 0;
+    border-left: 0;
+    border-top: 1px solid var(--gris-clair);
+    transform: translateY(100%);
+  }
+  body.panneau-ouvert #panneau { transform: none; }
+
+  .pan-ligne { grid-template-columns: 92px 1fr 48px; font-size: 11px; }
+  .pan-lien { padding: 7px 4px; }         /* plus haut, donc atteignable */
+  .signature input { width: 120px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #panneau { transition: none; }
+  #panneau, .marquee-ruban, .plate.glisse { transition: none; animation: none; }
 }

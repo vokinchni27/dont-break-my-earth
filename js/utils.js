@@ -60,6 +60,18 @@
     cible[last] = valeur;
   }
 
+  /* "43°35'29.50\"N" -> 43.591528
+     Sert a la moderation : une coordonnee lue sur un bandeau
+     devient une donnee calculable, comme celles de l'archive. */
+  function dms(chaine) {
+    if (!chaine) return null;
+    const m = String(chaine).match(/(\d+)\s*°\s*(\d+)\s*'\s*([\d.]+)\s*"?\s*([NSEWO])/i);
+    if (!m) return null;
+    let v = Number(m[1]) + Number(m[2]) / 60 + Number(m[3]) / 3600;
+    if (/[SWO]/i.test(m[4])) v = -v;
+    return Math.round(v * 1e6) / 1e6;
+  }
+
   /* un bus d'evenements minuscule : c'est par la que les gestes
      parlent aux interactions, sans que personne ne se connaisse */
   function Bus() {
@@ -74,7 +86,7 @@
     };
   }
 
-  EARTH.utils = { Rand, clamp, lerp, get, set, vmin, mobile, Bus };
+  EARTH.utils = { Rand, clamp, lerp, get, set, vmin, mobile, Bus, dms };
   EARTH.bus = Bus();
 
 })(window.EARTH = window.EARTH || {});

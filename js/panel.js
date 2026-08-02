@@ -47,12 +47,50 @@
       { p: 'regard.contraste', l: 'contraste', min: 0.5, max: 2, pas: 0.01, apres: regard },
       { p: 'regard.filet', l: 'filet', type: 'bascule', apres: regard }
     ]],
+    ['GRILLE', [
+      { p: 'grille.visible', l: 'visible', type: 'bascule', apres: grille },
+      { p: 'grille.colonnes', l: 'colonnes', min: 2, max: 24, pas: 1, apres: grilleRefaire },
+      { p: 'grille.lignes', l: 'lignes', min: 2, max: 18, pas: 1, apres: grilleRefaire },
+      { p: 'grille.obeissance', l: 'obeissance', min: 0, max: 1, pas: 0.05 }
+    ]],
+    ['GESTE', [
+      { p: 'geste.parallaxe', l: 'respiration', min: 0, max: 3, pas: 0.05 },
+      { p: 'geste.dispersion', l: 'dispersion', min: 0, max: 3, pas: 0.05 },
+      { p: 'geste.seuilRapide', l: 'seuil vif', min: 0.1, max: 2, pas: 0.05 },
+      { p: 'geste.immobilite', l: 'immobilite', min: 2000, max: 30000, pas: 500, u: 'ms' },
+      { p: 'geste.creuseCadence', l: 'cadence fouille', min: 80, max: 900, pas: 20, u: 'ms' },
+      { p: 'geste.creuseMax', l: 'profondeur max', min: 3, max: 30, pas: 1 }
+    ]],
+    ['DONNEES', [
+      { p: 'coordonnees.survol', l: 'au survol', type: 'bascule' },
+      { p: 'coordonnees.curseur', l: 'au curseur', type: 'bascule' },
+      { p: 'coordonnees.lignes', l: 'lignes de compo', type: 'bascule' },
+      { p: 'coordonnees.bandeau', l: 'bandeau source', type: 'bascule' },
+      { p: 'coordonnees.imprimees', l: 'imprimees', min: 0, max: 1, pas: 0.02 },
+      { p: 'hud.actif', l: 'appareillage', type: 'bascule', apres: hud },
+      { p: 'hud.marquee', l: 'bandeau defilant', type: 'bascule', apres: hud },
+      { p: 'hud.curseur', l: 'curseur en croix', type: 'bascule', apres: hud }
+    ]],
+    ['TEXTE ET EVENEMENTS', [
+      { p: 'texte.actif', l: 'texte', type: 'bascule' },
+      { p: 'texte.frequence', l: 'frequence', min: 0, max: 1, pas: 0.02 },
+      { p: 'texte.taille', l: 'corps', min: 10, max: 90, pas: 1, u: 'px' },
+      { p: 'evenements.actifs', l: 'evenements rares', type: 'bascule' },
+      { p: 'evenements.rarete', l: 'rarete', min: 0, max: 0.6, pas: 0.01 },
+      { p: 'regard.melangeChance', l: 'conflit', min: 0, max: 1, pas: 0.05 }
+    ]],
     ['ARCHIVE', [
       { p: 'archive.ordre', l: 'ordre', type: 'choix', options: ['sac', 'hasard', 'suite'] },
       { p: 'archive.includeVideos', l: 'videos', type: 'bascule', apres: filtres },
+      { p: 'archive.poidsVideos', l: 'poids videos', min: 1, max: 20, pas: 1 },
+      { p: 'collectif.actif', l: 'archive collective', type: 'bascule' },
       { p: 'bacASable.journal', l: 'journal console', type: 'bascule' }
     ]]
   ];
+
+  function grille() { EARTH.Grille.appliquer(); }
+  function grilleRefaire() { EARTH.Grille.mesurer(); EARTH.Grille.dessiner(); }
+  function hud() { EARTH.HUD.appliquer(); }
 
   function recadrer() { EARTH.Stage.recadrerTout(); }
   function regard() { EARTH.Stage.rafraichirRegard(); }
@@ -232,12 +270,20 @@
     const d = document.createElement('div');
     d.className = 'pan-aide';
     d.innerHTML = [
+      '<b>clic bref</b> plein regard',
+      '<b>maintenir</b> creuser dans le lieu',
+      '<b>lent / vif</b> respirer / disperser',
+      '<b>ne rien faire</b> une image immense',
+      '<b>deposer un fichier</b> contribuer',
+      '&nbsp;',
       '<b>espace</b> composition suivante',
       '<b>← →</b> precedente / suivante',
-      '<b>R</b> meme partition, autre tirage',
-      '<b>Maj+R</b> rejouer a l identique',
-      '<b>X</b> pause · <b>1-9</b> partition',
-      '<b>C</b> recadrage · <b>G</b> gris · <b>P</b> panneau'
+      '<b>R</b> autre tirage · <b>Maj+R</b> identique',
+      '<b>Entree</b> tout aligner · <b>Retour</b> tout effacer',
+      '<b>1-9</b> partition · <b>X</b> pause',
+      '<b>G</b> grille · <b>H</b> appareillage · <b>N</b> gris',
+      '<b>C</b> recadrage · <b>T</b> texte · <b>A</b> ajouter',
+      '<b>E</b> evenement · <b>W</b> webcam · <b>P</b> panneau'
     ].join('<br>');
     return d;
   }
@@ -303,9 +349,40 @@
       }
       if (k === 'x' || k === 'X') { EARTH.Director.bascule(); return; }
       if (k === 'p' || k === 'P') { Panel.basculer(); return; }
-      if (k === 'g' || k === 'G') {
+      if (k === 'g' || k === 'G') { EARTH.Grille.basculer(); return; }
+      if (k === 'n' || k === 'N') {
         cfg.regard.grisaille = cfg.regard.grisaille ? 0 : 1;
         EARTH.Stage.rafraichirRegard();
+        return;
+      }
+      if (k === 'h' || k === 'H') { EARTH.HUD.basculer(); return; }
+      if (k === 't' || k === 'T') {
+        cfg.texte.actif = !cfg.texte.actif;
+        if (!cfg.texte.actif) EARTH.Texte.viderTout();
+        return;
+      }
+      if (k === 'a' || k === 'A') { EARTH.Contribution.choisir(); return; }
+      if (k === 'e' || k === 'E') {
+        /* provoquer un evenement rare, pour l'atelier seulement */
+        EARTH.Evenements.declencher(
+          EARTH.Evenements.noms[Math.floor(Math.random() * EARTH.Evenements.noms.length)]
+        );
+        return;
+      }
+      if (k === 'w' || k === 'W') {
+        EARTH.Webcam.basculer().then(ok => {
+          if (!ok && EARTH.Webcam.erreur) EARTH.HUD.proclamer(EARTH.Webcam.erreur, 2600);
+        });
+        return;
+      }
+      /* l'ordre, d'un coup : tout se cale sur la grille */
+      if (k === 'Enter') { EARTH.Evenements.declencher('alignement'); return; }
+      /* le vide */
+      if (k === 'Backspace') {
+        e.preventDefault();
+        EARTH.Stage.viderTout('fondu');
+        EARTH.Texte.viderTout();
+        EARTH.Director.suspendre(4000);
         return;
       }
       if (k === 'c' || k === 'C') {
