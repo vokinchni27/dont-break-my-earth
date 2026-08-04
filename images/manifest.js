@@ -1,8 +1,8 @@
 /* genere par tools/index-images.mjs — ne pas editer a la main */
 window.EARTH_MANIFEST = {
-  "generated": "2026-08-01T18:30:24.958Z",
-  "count": 112,
-  "situees": 110,
+  "generated": "2026-08-04T17:36:23.228Z",
+  "count": 130,
+  "situees": 128,
   "places": [
     "AFRIQUE",
     "CHINE",
@@ -15,7 +15,7 @@ window.EARTH_MANIFEST = {
   "byPlace": {
     "AFRIQUE": 27,
     "CHINE": 33,
-    "EUROPE": 32,
+    "EUROPE": 50,
     "ILE": 2,
     "ILE/BAHMAS": 4,
     "ILE/REUNION": 1,
@@ -34,6 +34,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_21ZJitIwS4",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_21ZJitIwS4.jpg",
       "coord": {
         "lat": "5°59'49.71\"S",
         "lon": "35°15'00.44\"E",
@@ -53,6 +58,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_3Ex93eZUkS",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_3Ex93eZUkS.jpg",
       "coord": {
         "lat": "6°42'24.21\"N",
         "lon": "47°27'59.17\"E",
@@ -72,6 +82,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_53lt9KnBQk",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_53lt9KnBQk.jpg",
       "coord": {
         "lat": "6°48'57.83\"S",
         "lon": "36°24'15.18\"E",
@@ -91,6 +106,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_61cy0auLAd",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_61cy0auLAd.jpg",
       "coord": {
         "lat": "6°25'35.40\"N",
         "lon": "48°40'38.87\"E",
@@ -110,6 +130,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_6R4GUie8Jx",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_6R4GUie8Jx.jpg",
       "coord": {
         "lat": "6°35'52.20\"N",
         "lon": "47°29'59.96\"E",
@@ -129,6 +154,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_8omdkeFzOu",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_8omdkeFzOu.jpg",
       "coord": {
         "lat": "31°02'45.52\"S",
         "lon": "23°52'01.63\"E",
@@ -148,6 +178,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_9jqJXFmub4",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_9jqJXFmub4.jpg",
       "coord": {
         "lat": "6°39'55.94\"S",
         "lon": "36°18'51.77\"E",
@@ -167,6 +202,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_GbtR9sSwf7",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_GbtR9sSwf7.jpg",
       "coord": {
         "lat": "6°38'54.35\"S",
         "lon": "36°18'24.21\"E",
@@ -186,6 +226,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_gYbR7kUsCG",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_gYbR7kUsCG.jpg",
       "coord": {
         "lat": "5°46'09.82\"N",
         "lon": "48°48'45.14\"E",
@@ -205,6 +250,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_hgf6OEFaZU",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_hgf6OEFaZU.jpg",
       "coord": {
         "lat": "13°15'58.48\"S",
         "lon": "18°29'16.83\"E",
@@ -224,6 +274,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_iur16LoPlS",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_iur16LoPlS.jpg",
       "coord": {
         "lat": "6°06'18.49\"S",
         "lon": "35°35'01.90\"E",
@@ -243,6 +298,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_krRD7PrvF6",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_krRD7PrvF6.jpg",
       "coord": {
         "lat": "6°42'31.20\"S",
         "lon": "36°18'34.16\"E",
@@ -262,6 +322,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_KVaz0NJOon",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_KVaz0NJOon.jpg",
       "coord": {
         "lat": "6°25'07.29\"N",
         "lon": "48°40'26.76\"E",
@@ -281,6 +346,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_lDlucei8Cm",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_lDlucei8Cm.jpg",
       "coord": {
         "lat": "6°34'49.14\"N",
         "lon": "47°56'09.77\"E",
@@ -300,6 +370,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_lFLYTJyriv",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_lFLYTJyriv.jpg",
       "coord": {
         "lat": "3°22'27.05\"S",
         "lon": "33°13'10.48\"E",
@@ -319,6 +394,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_LqdDkvq8IB",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_LqdDkvq8IB.jpg",
       "coord": {
         "lat": "6°45'14.01\"N",
         "lon": "47°29'33.01\"E",
@@ -338,6 +418,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_Mv3KItCFef",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_Mv3KItCFef.jpg",
       "coord": {
         "lat": "3°22'29.41\"S",
         "lon": "33°12'42.54\"E",
@@ -357,6 +442,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_PA7F6tJGYX",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_PA7F6tJGYX.jpg",
       "coord": {
         "lat": "4°03'12.31\"S",
         "lon": "34°14'06.28\"E",
@@ -376,6 +466,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_pCwCsPK2Yl",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_pCwCsPK2Yl.jpg",
       "coord": {
         "lat": "13°16'10.88\"S",
         "lon": "18°29'11.13\"E",
@@ -395,6 +490,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_Q6CYlmrr87",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_Q6CYlmrr87.jpg",
       "coord": {
         "lat": "6°42'28.23\"N",
         "lon": "47°29'46.23\"E",
@@ -414,6 +514,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_rSqjKlcDBT",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_rSqjKlcDBT.jpg",
       "coord": {
         "lat": "6°42'27.14\"N",
         "lon": "47°29'56.15\"E",
@@ -447,6 +552,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_UU4S5NIkDH",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_UU4S5NIkDH.jpg",
       "coord": {
         "lat": "31°02'24.87\"S",
         "lon": "23°59'57.52\"E",
@@ -466,6 +576,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_WdkjXoGy0h",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_WdkjXoGy0h.jpg",
       "coord": {
         "lat": "1°18'52.22\"S",
         "lon": "32°53'52.58\"E",
@@ -485,6 +600,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_ZlNpQVahN6",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_ZlNpQVahN6.jpg",
       "coord": {
         "lat": "13°25'48.52\"S",
         "lon": "18°48'30.47\"E",
@@ -504,6 +624,11 @@ window.EARTH_MANIFEST = {
       "place": "AFRIQUE",
       "name": "opera_zwbBD1MSow",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/AFRIQUE/opera_zwbBD1MSow.jpg",
       "coord": {
         "lat": "6°42'30.15\"N",
         "lon": "47°30'32.08\"E",
@@ -523,6 +648,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_01DsVdg7yC",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_01DsVdg7yC.jpg",
       "coord": {
         "lat": "29°23'32.07\"N",
         "lon": "96°55'41.04\"E",
@@ -542,6 +672,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_1nZhNWvQHa",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_1nZhNWvQHa.jpg",
       "coord": {
         "lat": "39°16'25.15\"N",
         "lon": "118°26'16.81\"E",
@@ -561,6 +696,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_3IR1RMPqnm",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_3IR1RMPqnm.jpg",
       "coord": {
         "lat": "39°16'20.16\"N",
         "lon": "118°26'46.27\"E",
@@ -580,6 +720,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_4cHdfvl0Jj",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_4cHdfvl0Jj.jpg",
       "coord": {
         "lat": "39°55'47.98\"N",
         "lon": "116°22'15.97\"E",
@@ -599,6 +744,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_7gp5NUYdPX",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_7gp5NUYdPX.jpg",
       "coord": {
         "lat": "39°25'37.51\"N",
         "lon": "118°22'19.63\"E",
@@ -618,6 +768,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_7w6Rtl9vzz",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_7w6Rtl9vzz.jpg",
       "coord": {
         "lat": "39°12'01.94\"N",
         "lon": "118°35'50.00\"E",
@@ -637,6 +792,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_8qvxhqTxOD",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_8qvxhqTxOD.jpg",
       "coord": {
         "lat": "65°27'30.05\"N",
         "lon": "97°43'41.87\"E",
@@ -656,6 +816,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_9aQ9BO8ldF",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_9aQ9BO8ldF.jpg",
       "coord": {
         "lat": "39°52'25.17\"N",
         "lon": "116°01'40.18\"E",
@@ -675,6 +840,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_9vS1r7nHrB",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_9vS1r7nHrB.jpg",
       "coord": {
         "lat": "39°12'22.17\"N",
         "lon": "118°40'44.79\"E",
@@ -694,6 +864,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_abGn9KcPXV",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_abGn9KcPXV.jpg",
       "coord": {
         "lat": "39°12'35.54\"N",
         "lon": "118°27'06.40\"E",
@@ -713,6 +888,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_AVA82IGfcE",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_AVA82IGfcE.jpg",
       "coord": {
         "lat": "39°24'06.84\"N",
         "lon": "118°59'43.01\"E",
@@ -732,6 +912,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_BFh1YXvF2o",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_BFh1YXvF2o.jpg",
       "coord": {
         "lat": "39°14'20.22\"N",
         "lon": "118°27'32.40\"E",
@@ -751,6 +936,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_E1VkGgv4X8",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_E1VkGgv4X8.jpg",
       "coord": {
         "lat": "39°59'15.93\"N",
         "lon": "116°08'23.96\"E",
@@ -770,6 +960,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_eUfFG1eqMN",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_eUfFG1eqMN.jpg",
       "coord": {
         "lat": "39°17'15.81\"N",
         "lon": "118°24'09.28\"E",
@@ -789,6 +984,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_EZgz4WK07f",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_EZgz4WK07f.jpg",
       "coord": {
         "lat": "32°19'32.32\"N",
         "lon": "96°01'41.73\"E",
@@ -808,6 +1008,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_fadzqhlyng",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_fadzqhlyng.jpg",
       "coord": {
         "lat": "39°16'02.44\"N",
         "lon": "118°26'24.76\"E",
@@ -827,6 +1032,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_fF3W5o8Sq4",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_fF3W5o8Sq4.jpg",
       "coord": {
         "lat": "73°54'20.17\"N",
         "lon": "87°16'31.29\"E",
@@ -846,6 +1056,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_fPNTMlmSYX",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_fPNTMlmSYX.jpg",
       "coord": {
         "lat": "39°17'16.16\"N",
         "lon": "118°26'59.57\"E",
@@ -865,6 +1080,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_g6M0AH6X7j",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_g6M0AH6X7j.jpg",
       "coord": {
         "lat": "38°48'59.14\"N",
         "lon": "82°49'07.57\"E",
@@ -884,6 +1104,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_gaJzEUd3Qz",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_gaJzEUd3Qz.jpg",
       "coord": {
         "lat": "39°49'32.82\"N",
         "lon": "116°02'43.53\"E",
@@ -903,6 +1128,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_Hf8H4VSVyO",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_Hf8H4VSVyO.jpg",
       "coord": {
         "lat": "39°11'46.30\"N",
         "lon": "118°08'28.99\"E",
@@ -922,6 +1152,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_huhWdK21DG",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_huhWdK21DG.jpg",
       "coord": {
         "lat": "26°02'11.60\"N",
         "lon": "105°04'14.97\"E",
@@ -941,6 +1176,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_HW3A1mvm28",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_HW3A1mvm28.jpg",
       "coord": {
         "lat": "38°43'40.10\"N",
         "lon": "117°36'18.97\"E",
@@ -960,6 +1200,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_kR62iG7FjB",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_kR62iG7FjB.jpg",
       "coord": {
         "lat": "39°55'07.47\"N",
         "lon": "116°22'43.63\"E",
@@ -979,6 +1224,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_MmJzUw5d92",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_MmJzUw5d92.jpg",
       "coord": {
         "lat": "29°55'55.98\"N",
         "lon": "97°34'29.70\"E",
@@ -998,6 +1248,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_nT8FgslcLd",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_nT8FgslcLd.jpg",
       "coord": {
         "lat": "39°37'53.77\"N",
         "lon": "118°09'00.47\"E",
@@ -1017,6 +1272,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_Rqm9ZWDRRc",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_Rqm9ZWDRRc.jpg",
       "coord": {
         "lat": "38°03'30.68\"N",
         "lon": "118°09'07.29\"E",
@@ -1036,6 +1296,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_UFQtCgU745",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_UFQtCgU745.jpg",
       "coord": {
         "lat": "39°55'41.50\"N",
         "lon": "116°21'56.65\"E",
@@ -1055,6 +1320,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_uHtYawc7Ym",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_uHtYawc7Ym.jpg",
       "coord": {
         "lat": "31°59'17.87\"N",
         "lon": "90°23'13.53\"E",
@@ -1074,6 +1344,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_V2GcTCo8DP",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_V2GcTCo8DP.jpg",
       "coord": {
         "lat": "39°55'11.15\"N",
         "lon": "116°25'27.21\"E",
@@ -1093,6 +1368,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_v3Vdf72qCC",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_v3Vdf72qCC.jpg",
       "coord": {
         "lat": "39°11'56.69\"N",
         "lon": "118°13'34.90\"E",
@@ -1112,6 +1392,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_wBH2SvxBVW",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_wBH2SvxBVW.jpg",
       "coord": {
         "lat": "39°14'55.08\"N",
         "lon": "117°52'09.55\"E",
@@ -1131,6 +1416,11 @@ window.EARTH_MANIFEST = {
       "place": "CHINE",
       "name": "opera_xphXNCVuNw",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/CHINE/opera_xphXNCVuNw.jpg",
       "coord": {
         "lat": "39°16'29.12\"N",
         "lon": "118°26'20.34\"E",
@@ -1150,6 +1440,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_3hFsTCM4qt",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_3hFsTCM4qt.jpg",
       "coord": {
         "lat": "43°30'36.64\"N",
         "lon": "4°11'51.00\"E",
@@ -1164,11 +1459,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_4bmS1nR9V0.jpg",
+      "path": "EUROPE/opera_4bmS1nR9V0.jpg",
+      "place": "EUROPE",
+      "name": "opera_4bmS1nR9V0",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_4bmS1nR9V0.jpg",
+      "coord": {
+        "lat": "39°19'13.51\"N",
+        "lon": "8°55'36.52\"W",
+        "latDec": 39.320419,
+        "lonDec": -8.926811,
+        "camera": "4 264 m",
+        "cameraM": 4264,
+        "sol": "54 m",
+        "solM": 54,
+        "echelle": "500 m",
+        "echelleM": 500
+      }
+    },
+    {
       "src": "images/EUROPE/opera_5AsaZYNVIK.jpg",
       "path": "EUROPE/opera_5AsaZYNVIK.jpg",
       "place": "EUROPE",
       "name": "opera_5AsaZYNVIK",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_5AsaZYNVIK.jpg",
       "coord": {
         "lat": "46°22'07.21\"N",
         "lon": "3°26'11.06\"E",
@@ -1183,11 +1507,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_6YssfuzMVZ.jpg",
+      "path": "EUROPE/opera_6YssfuzMVZ.jpg",
+      "place": "EUROPE",
+      "name": "opera_6YssfuzMVZ",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_6YssfuzMVZ.jpg",
+      "coord": {
+        "lat": "39°17'22.49\"N",
+        "lon": "8°53'49.54\"W",
+        "latDec": 39.289581,
+        "lonDec": -8.897094,
+        "camera": "2 008 m",
+        "cameraM": 2008,
+        "sol": "48 m",
+        "solM": 48,
+        "echelle": "200 m",
+        "echelleM": 200
+      }
+    },
+    {
       "src": "images/EUROPE/opera_aVPXmbTonV.jpg",
       "path": "EUROPE/opera_aVPXmbTonV.jpg",
       "place": "EUROPE",
       "name": "opera_aVPXmbTonV",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_aVPXmbTonV.jpg",
       "coord": {
         "lat": "43°35'29.50\"N",
         "lon": "4°35'08.96\"E",
@@ -1202,11 +1555,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_C16wOHWnKc.jpg",
+      "path": "EUROPE/opera_C16wOHWnKc.jpg",
+      "place": "EUROPE",
+      "name": "opera_C16wOHWnKc",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_C16wOHWnKc.jpg",
+      "coord": {
+        "lat": "39°11'52.13\"N",
+        "lon": "9°02'23.02\"W",
+        "latDec": 39.197814,
+        "lonDec": -9.039728,
+        "camera": "2 609 m",
+        "cameraM": 2609,
+        "sol": "342 m",
+        "solM": 342,
+        "echelle": "200 m",
+        "echelleM": 200
+      }
+    },
+    {
       "src": "images/EUROPE/opera_cp9yHJ3kWM.jpg",
       "path": "EUROPE/opera_cp9yHJ3kWM.jpg",
       "place": "EUROPE",
       "name": "opera_cp9yHJ3kWM",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_cp9yHJ3kWM.jpg",
       "coord": {
         "lat": "43°36'32.10\"N",
         "lon": "4°09'21.23\"E",
@@ -1221,11 +1603,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_CszUYW1lxl.jpg",
+      "path": "EUROPE/opera_CszUYW1lxl.jpg",
+      "place": "EUROPE",
+      "name": "opera_CszUYW1lxl",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_CszUYW1lxl.jpg",
+      "coord": {
+        "lat": "39°47'01.68\"N",
+        "lon": "8°56'54.86\"W",
+        "latDec": 39.7838,
+        "lonDec": -8.948572,
+        "camera": "6 444 m",
+        "cameraM": 6444,
+        "sol": "73 m",
+        "solM": 73,
+        "echelle": "800 m",
+        "echelleM": 800
+      }
+    },
+    {
       "src": "images/EUROPE/opera_eaK6ibEruW.jpg",
       "path": "EUROPE/opera_eaK6ibEruW.jpg",
       "place": "EUROPE",
       "name": "opera_eaK6ibEruW",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_eaK6ibEruW.jpg",
       "coord": {
         "lat": "42°58'44.08\"N",
         "lon": "12°18'20.74\"E",
@@ -1240,11 +1651,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_EcKhRC6COc.jpg",
+      "path": "EUROPE/opera_EcKhRC6COc.jpg",
+      "place": "EUROPE",
+      "name": "opera_EcKhRC6COc",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_EcKhRC6COc.jpg",
+      "coord": {
+        "lat": "39°15'19.77\"N",
+        "lon": "8°56'06.90\"W",
+        "latDec": 39.255492,
+        "lonDec": -8.93525,
+        "camera": "1 054 m",
+        "cameraM": 1054,
+        "sol": "69 m",
+        "solM": 69,
+        "echelle": "100 m",
+        "echelleM": 100
+      }
+    },
+    {
       "src": "images/EUROPE/opera_Elb6kf2tiG.jpg",
       "path": "EUROPE/opera_Elb6kf2tiG.jpg",
       "place": "EUROPE",
       "name": "opera_Elb6kf2tiG",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_Elb6kf2tiG.jpg",
       "coord": {
         "lat": "44°37'34.39\"N",
         "lon": "2°44'33.41\"E",
@@ -1259,11 +1699,64 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_f9Rq4cd6VY.jpg",
+      "path": "EUROPE/opera_f9Rq4cd6VY.jpg",
+      "place": "EUROPE",
+      "name": "opera_f9Rq4cd6VY",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_f9Rq4cd6VY.jpg",
+      "coord": {
+        "lat": "41°10'52.01\"N",
+        "lon": "6°15'19.26\"W",
+        "latDec": 41.181114,
+        "lonDec": -6.25535,
+        "camera": "49 km",
+        "cameraM": 49000,
+        "sol": "760 m",
+        "solM": 760,
+        "echelle": "6 000 m",
+        "echelleM": 6000
+      }
+    },
+    {
+      "src": "images/EUROPE/opera_fLeZ8jOulU.jpg",
+      "path": "EUROPE/opera_fLeZ8jOulU.jpg",
+      "place": "EUROPE",
+      "name": "opera_fLeZ8jOulU",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_fLeZ8jOulU.jpg",
+      "coord": {
+        "lat": "40°17'48.72\"N",
+        "lon": "8°38'41.52\"W",
+        "latDec": 40.296867,
+        "lonDec": -8.644867,
+        "camera": "5 469 m",
+        "cameraM": 5469,
+        "sol": "97 m",
+        "solM": 97,
+        "echelle": "600 m",
+        "echelleM": 600
+      }
+    },
+    {
       "src": "images/EUROPE/opera_fQv3OYQtB9.jpg",
       "path": "EUROPE/opera_fQv3OYQtB9.jpg",
       "place": "EUROPE",
       "name": "opera_fQv3OYQtB9",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_fQv3OYQtB9.jpg",
       "coord": {
         "lat": "43°35'10.80\"N",
         "lon": "4°35'23.99\"E",
@@ -1283,6 +1776,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_fSOUK2NxZQ",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_fSOUK2NxZQ.jpg",
       "coord": {
         "lat": "43°33'15.09\"N",
         "lon": "3°56'22.56\"E",
@@ -1297,11 +1795,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_FujZWzgYwR.jpg",
+      "path": "EUROPE/opera_FujZWzgYwR.jpg",
+      "place": "EUROPE",
+      "name": "opera_FujZWzgYwR",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_FujZWzgYwR.jpg",
+      "coord": {
+        "lat": "39°12'25.77\"N",
+        "lon": "9°16'25.22\"W",
+        "latDec": 39.207158,
+        "lonDec": -9.273672,
+        "camera": "567 m",
+        "cameraM": 567,
+        "sol": "94 m",
+        "solM": 94,
+        "echelle": "60 m",
+        "echelleM": 60
+      }
+    },
+    {
       "src": "images/EUROPE/opera_HJS8iJtTWa.jpg",
       "path": "EUROPE/opera_HJS8iJtTWa.jpg",
       "place": "EUROPE",
       "name": "opera_HJS8iJtTWa",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_HJS8iJtTWa.jpg",
       "coord": {
         "lat": "43°43'34.61\"N",
         "lon": "3°34'17.94\"E",
@@ -1321,6 +1848,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_hMkDosS8xp",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_hMkDosS8xp.jpg",
       "coord": {
         "lat": "43°36'09.63\"N",
         "lon": "4°03'30.06\"E",
@@ -1335,11 +1867,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_I34v1MNW7B.jpg",
+      "path": "EUROPE/opera_I34v1MNW7B.jpg",
+      "place": "EUROPE",
+      "name": "opera_I34v1MNW7B",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_I34v1MNW7B.jpg",
+      "coord": {
+        "lat": "39°20'16.11\"N",
+        "lon": "9°02'52.22\"W",
+        "latDec": 39.337808,
+        "lonDec": -9.047839,
+        "camera": "3 100 m",
+        "cameraM": 3100,
+        "sol": "137 m",
+        "solM": 137,
+        "echelle": "300 m",
+        "echelleM": 300
+      }
+    },
+    {
       "src": "images/EUROPE/opera_ilIKl88gh3.jpg",
       "path": "EUROPE/opera_ilIKl88gh3.jpg",
       "place": "EUROPE",
       "name": "opera_ilIKl88gh3",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_ilIKl88gh3.jpg",
       "coord": {
         "lat": "43°35'20.61\"N",
         "lon": "4°30'58.10\"E",
@@ -1359,6 +1920,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_j9lxKOVSgN",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_j9lxKOVSgN.jpg",
       "coord": {
         "lat": "43°35'40.36\"N",
         "lon": "4°34'22.98\"E",
@@ -1378,6 +1944,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_jPt0m4ddXz",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_jPt0m4ddXz.jpg",
       "coord": {
         "lat": "43°42'53.02\"N",
         "lon": "5°02'12.68\"E",
@@ -1392,11 +1963,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_jrgHRSwb0Q.jpg",
+      "path": "EUROPE/opera_jrgHRSwb0Q.jpg",
+      "place": "EUROPE",
+      "name": "opera_jrgHRSwb0Q",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_jrgHRSwb0Q.jpg",
+      "coord": {
+        "lat": "39°58'06.84\"N",
+        "lon": "8°56'02.46\"W",
+        "latDec": 39.968567,
+        "lonDec": -8.934017,
+        "camera": "6 454 m",
+        "cameraM": 6454,
+        "sol": "2 m",
+        "solM": 2,
+        "echelle": "800 m",
+        "echelleM": 800
+      }
+    },
+    {
       "src": "images/EUROPE/opera_m0idaLpipv.jpg",
       "path": "EUROPE/opera_m0idaLpipv.jpg",
       "place": "EUROPE",
       "name": "opera_m0idaLpipv",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_m0idaLpipv.jpg",
       "coord": {
         "lat": "43°36'00.72\"N",
         "lon": "4°05'34.16\"E",
@@ -1416,6 +2016,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_MeHK7pRERy",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_MeHK7pRERy.jpg",
       "coord": {
         "lat": "44°40'31.80\"N",
         "lon": "2°19'16.72\"E",
@@ -1435,6 +2040,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_MJ2X8K40S0",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_MJ2X8K40S0.jpg",
       "coord": {
         "lat": "43°38'04.60\"N",
         "lon": "4°20'19.72\"E",
@@ -1454,6 +2064,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_MxYjjMEdhj",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_MxYjjMEdhj.jpg",
       "coord": {
         "lat": "43°30'11.35\"N",
         "lon": "4°11'17.16\"E",
@@ -1468,11 +2083,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_nM3KnVLpXX.jpg",
+      "path": "EUROPE/opera_nM3KnVLpXX.jpg",
+      "place": "EUROPE",
+      "name": "opera_nM3KnVLpXX",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_nM3KnVLpXX.jpg",
+      "coord": {
+        "lat": "39°11'30.71\"N",
+        "lon": "9°12'38.45\"W",
+        "latDec": 39.191864,
+        "lonDec": -9.210681,
+        "camera": "975 m",
+        "cameraM": 975,
+        "sol": "93 m",
+        "solM": 93,
+        "echelle": "100 m",
+        "echelleM": 100
+      }
+    },
+    {
       "src": "images/EUROPE/opera_oc1Rj4GAQ2.jpg",
       "path": "EUROPE/opera_oc1Rj4GAQ2.jpg",
       "place": "EUROPE",
       "name": "opera_oc1Rj4GAQ2",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_oc1Rj4GAQ2.jpg",
       "coord": {
         "lat": "43°33'16.19\"N",
         "lon": "3°54'55.70\"E",
@@ -1492,6 +2136,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_oDYrC40Luv",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_oDYrC40Luv.jpg",
       "coord": {
         "lat": "43°32'24.16\"N",
         "lon": "4°12'27.18\"E",
@@ -1511,6 +2160,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_oJGTwTqOQI",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_oJGTwTqOQI.jpg",
       "coord": {
         "lat": "43°33'13.79\"N",
         "lon": "3°56'40.35\"E",
@@ -1530,6 +2184,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_pRP5AEgNJy",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_pRP5AEgNJy.jpg",
       "coord": {
         "lat": "46°37'52.87\"N",
         "lon": "3°56'03.95\"E",
@@ -1549,6 +2208,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_QAYsOUQb8m",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_QAYsOUQb8m.jpg",
       "coord": {
         "lat": "43°35'43.70\"N",
         "lon": "4°10'44.24\"E",
@@ -1563,11 +2227,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_Qrvve0S8pB.jpg",
+      "path": "EUROPE/opera_Qrvve0S8pB.jpg",
+      "place": "EUROPE",
+      "name": "opera_Qrvve0S8pB",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_Qrvve0S8pB.jpg",
+      "coord": {
+        "lat": "41°15'50.44\"N",
+        "lon": "6°14'40.81\"W",
+        "latDec": 41.264011,
+        "lonDec": -6.244669,
+        "camera": "5 060 m",
+        "cameraM": 5060,
+        "sol": "728 m",
+        "solM": 728,
+        "echelle": "500 m",
+        "echelleM": 500
+      }
+    },
+    {
       "src": "images/EUROPE/opera_rDsh1pwqtt.jpg",
       "path": "EUROPE/opera_rDsh1pwqtt.jpg",
       "place": "EUROPE",
       "name": "opera_rDsh1pwqtt",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_rDsh1pwqtt.jpg",
       "coord": {
         "lat": "43°29'18.06\"N",
         "lon": "4°21'01.28\"E",
@@ -1587,6 +2280,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_rnis7S2ebN",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_rnis7S2ebN.jpg",
       "coord": {
         "lat": "43°35'34.58\"N",
         "lon": "4°23'44.87\"E",
@@ -1606,6 +2304,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_rWJDTNo8O5",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_rWJDTNo8O5.jpg",
       "coord": {
         "lat": "44°34'59.89\"N",
         "lon": "2°34'45.51\"E",
@@ -1620,11 +2323,40 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_S67FTL7lso.jpg",
+      "path": "EUROPE/opera_S67FTL7lso.jpg",
+      "place": "EUROPE",
+      "name": "opera_S67FTL7lso",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_S67FTL7lso.jpg",
+      "coord": {
+        "lat": "39°15'09.10\"N",
+        "lon": "9°20'20.24\"W",
+        "latDec": 39.252528,
+        "lonDec": -9.338956,
+        "camera": "1 410 m",
+        "cameraM": 1410,
+        "sol": "28 m",
+        "solM": 28,
+        "echelle": "100 m",
+        "echelleM": 100
+      }
+    },
+    {
       "src": "images/EUROPE/opera_sTD8ygM2Kg.jpg",
       "path": "EUROPE/opera_sTD8ygM2Kg.jpg",
       "place": "EUROPE",
       "name": "opera_sTD8ygM2Kg",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_sTD8ygM2Kg.jpg",
       "coord": {
         "lat": "43°35'36.71\"N",
         "lon": "4°21'23.85\"E",
@@ -1639,11 +2371,64 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_tRScVrYLud.jpg",
+      "path": "EUROPE/opera_tRScVrYLud.jpg",
+      "place": "EUROPE",
+      "name": "opera_tRScVrYLud",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_tRScVrYLud.jpg",
+      "coord": {
+        "lat": "39°54'51.66\"N",
+        "lon": "8°45'42.82\"W",
+        "latDec": 39.91435,
+        "lonDec": -8.761894,
+        "camera": "4 353 m",
+        "cameraM": 4353,
+        "sol": "134 m",
+        "solM": 134,
+        "echelle": "400 m",
+        "echelleM": 400
+      }
+    },
+    {
+      "src": "images/EUROPE/opera_UQLiJ1GiWf.jpg",
+      "path": "EUROPE/opera_UQLiJ1GiWf.jpg",
+      "place": "EUROPE",
+      "name": "opera_UQLiJ1GiWf",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_UQLiJ1GiWf.jpg",
+      "coord": {
+        "lat": "39°09'03.77\"N",
+        "lon": "9°10'11.61\"W",
+        "latDec": 39.151047,
+        "lonDec": -9.169892,
+        "camera": "6 178 m",
+        "cameraM": 6178,
+        "sol": "87 m",
+        "solM": 87,
+        "echelle": "700 m",
+        "echelleM": 700
+      }
+    },
+    {
       "src": "images/EUROPE/opera_x2nKDzEhwW.jpg",
       "path": "EUROPE/opera_x2nKDzEhwW.jpg",
       "place": "EUROPE",
       "name": "opera_x2nKDzEhwW",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_x2nKDzEhwW.jpg",
       "coord": {
         "lat": "43°38'31.30\"N",
         "lon": "4°27'13.08\"E",
@@ -1663,6 +2448,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_xfo3F6yYat",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_xfo3F6yYat.jpg",
       "coord": {
         "lat": "43°28'51.38\"N",
         "lon": "4°12'09.97\"E",
@@ -1682,6 +2472,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_xx37gJ2IGo",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_xx37gJ2IGo.jpg",
       "coord": {
         "lat": "43°29'39.40\"N",
         "lon": "4°17'52.13\"E",
@@ -1701,6 +2496,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_xXV9GeSg2y",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_xXV9GeSg2y.jpg",
       "coord": {
         "lat": "43°36'10.52\"N",
         "lon": "3°52'39.32\"E",
@@ -1720,6 +2520,11 @@ window.EARTH_MANIFEST = {
       "place": "EUROPE",
       "name": "opera_yGOPkUlIka",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_yGOPkUlIka.jpg",
       "coord": {
         "lat": "43°41'28.32\"N",
         "lon": "3°26'34.53\"E",
@@ -1734,11 +2539,88 @@ window.EARTH_MANIFEST = {
       }
     },
     {
+      "src": "images/EUROPE/opera_YU7QM1hZ5H.jpg",
+      "path": "EUROPE/opera_YU7QM1hZ5H.jpg",
+      "place": "EUROPE",
+      "name": "opera_YU7QM1hZ5H",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_YU7QM1hZ5H.jpg",
+      "coord": {
+        "lat": "39°35'58.91\"N",
+        "lon": "9°02'25.44\"W",
+        "latDec": 39.599697,
+        "lonDec": -9.0404,
+        "camera": "2 094 m",
+        "cameraM": 2094,
+        "sol": "45 m",
+        "solM": 45,
+        "echelle": "200 m",
+        "echelleM": 200
+      }
+    },
+    {
+      "src": "images/EUROPE/opera_zKaY6EA7AK.jpg",
+      "path": "EUROPE/opera_zKaY6EA7AK.jpg",
+      "place": "EUROPE",
+      "name": "opera_zKaY6EA7AK",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_zKaY6EA7AK.jpg",
+      "coord": {
+        "lat": "42°03'26.24\"N",
+        "lon": "3°05'03.51\"W",
+        "latDec": 42.057289,
+        "lonDec": -3.084308,
+        "camera": "5 238 m",
+        "cameraM": 5238,
+        "sol": "1 982 m",
+        "solM": 1982,
+        "echelle": "400 m",
+        "echelleM": 400
+      }
+    },
+    {
+      "src": "images/EUROPE/opera_zlg8W6IEdU.jpg",
+      "path": "EUROPE/opera_zlg8W6IEdU.jpg",
+      "place": "EUROPE",
+      "name": "opera_zlg8W6IEdU",
+      "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_zlg8W6IEdU.jpg",
+      "coord": {
+        "lat": "41°54'11.30\"N",
+        "lon": "2°57'11.26\"W",
+        "latDec": 41.903139,
+        "lonDec": -2.953128,
+        "camera": "7 352 m",
+        "cameraM": 7352,
+        "sol": "1 242 m",
+        "solM": 1242,
+        "echelle": "700 m",
+        "echelleM": 700
+      }
+    },
+    {
       "src": "images/EUROPE/opera_zVjzqrg3Bs.jpg",
       "path": "EUROPE/opera_zVjzqrg3Bs.jpg",
       "place": "EUROPE",
       "name": "opera_zVjzqrg3Bs",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/EUROPE/opera_zVjzqrg3Bs.jpg",
       "coord": {
         "lat": "43°36'13.54\"N",
         "lon": "4°41'25.54\"E",
@@ -1758,6 +2640,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE/BAHMAS",
       "name": "opera_L5tmR4rQyZ",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/BAHMAS/opera_L5tmR4rQyZ.jpg",
       "coord": {
         "lat": "25°03'35.95\"N",
         "lon": "76°28'10.61\"W",
@@ -1777,6 +2664,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE/BAHMAS",
       "name": "opera_oi7MAONlEH",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/BAHMAS/opera_oi7MAONlEH.jpg",
       "coord": {
         "lat": "23°58'41.52\"N",
         "lon": "77°48'08.83\"W",
@@ -1796,6 +2688,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE/BAHMAS",
       "name": "opera_wttPsIMtOQ",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/BAHMAS/opera_wttPsIMtOQ.jpg",
       "coord": {
         "lat": "24°16'02.30\"N",
         "lon": "77°54'11.59\"W",
@@ -1815,6 +2712,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE/BAHMAS",
       "name": "opera_xuCNRRTOUo",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/BAHMAS/opera_xuCNRRTOUo.jpg",
       "coord": {
         "lat": "23°09'03.93\"N",
         "lon": "77°19'55.90\"W",
@@ -1834,6 +2736,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE",
       "name": "opera_EnzJCK5Xp4",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/opera_EnzJCK5Xp4.jpg",
       "coord": {
         "lat": "16°48'27.24\"S",
         "lon": "151°28'18.35\"W",
@@ -1853,6 +2760,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE",
       "name": "opera_EZbairpBiP",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/opera_EZbairpBiP.jpg",
       "coord": {
         "lat": "42°08'11.54\"N",
         "lon": "15°30'48.12\"E",
@@ -1872,6 +2784,11 @@ window.EARTH_MANIFEST = {
       "place": "ILE/REUNION",
       "name": "opera_EHqXqoApLn",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/ILE/REUNION/opera_EHqXqoApLn.jpg",
       "coord": {
         "lat": "21°04'23.60\"S",
         "lon": "55°26'31.52\"E",
@@ -1891,6 +2808,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_0Ix4CavOFx",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_0Ix4CavOFx.jpg",
       "coord": {
         "lat": "63°50'21.62\"N",
         "lon": "73°36'16.80\"E",
@@ -1910,6 +2832,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_6dS05a7Ycy",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_6dS05a7Ycy.jpg",
       "coord": {
         "lat": "52°49'11.56\"N",
         "lon": "107°39'01.64\"E",
@@ -1929,6 +2856,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_EXDyoyKKMq",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_EXDyoyKKMq.jpg",
       "coord": {
         "lat": "74°26'10.49\"N",
         "lon": "56°46'26.49\"E",
@@ -1948,6 +2880,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_FgtnrTVLOR",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_FgtnrTVLOR.jpg",
       "coord": {
         "lat": "62°32'02.91\"N",
         "lon": "71°01'48.09\"E",
@@ -1967,6 +2904,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_gd4CDCYFwT",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_gd4CDCYFwT.jpg",
       "coord": {
         "lat": "75°28'25.15\"N",
         "lon": "143°25'07.82\"E",
@@ -1986,6 +2928,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_gqFi6rb65a",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_gqFi6rb65a.jpg",
       "coord": {
         "lat": "75°10'56.93\"N",
         "lon": "140°21'50.29\"E",
@@ -2005,6 +2952,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_JwsNSrKcf9",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_JwsNSrKcf9.jpg",
       "coord": {
         "lat": "63°16'23.16\"N",
         "lon": "110°36'42.06\"E",
@@ -2024,6 +2976,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_ocU6nT5OtZ",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_ocU6nT5OtZ.jpg",
       "coord": {
         "lat": "63°54'11.48\"N",
         "lon": "73°48'45.31\"E",
@@ -2043,6 +3000,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_UknYeyCaKA",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_UknYeyCaKA.jpg",
       "coord": {
         "lat": "66°14'37.98\"N",
         "lon": "130°00'24.06\"E",
@@ -2062,6 +3024,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_Vh9si64nmI",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_Vh9si64nmI.jpg",
       "coord": {
         "lat": "63°50'04.45\"N",
         "lon": "73°37'35.58\"E",
@@ -2081,6 +3048,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_yAEkTNApRO",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_yAEkTNApRO.jpg",
       "coord": {
         "lat": "69°56'29.61\"N",
         "lon": "70°05'00.21\"E",
@@ -2100,6 +3072,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_ydl40iSJeU",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_ydl40iSJeU.jpg",
       "coord": {
         "lat": "74°01'52.26\"N",
         "lon": "94°08'52.05\"E",
@@ -2119,6 +3096,11 @@ window.EARTH_MANIFEST = {
       "place": "RUSSIE",
       "name": "opera_YSviBfsuwI",
       "type": "image",
+      "tailles": [
+        640,
+        1400
+      ],
+      "cache": "images/_cache/{t}/RUSSIE/opera_YSviBfsuwI.jpg",
       "coord": {
         "lat": "69°46'58.55\"N",
         "lon": "93°33'56.29\"E",

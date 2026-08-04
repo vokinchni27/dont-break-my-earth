@@ -44,7 +44,7 @@
       invite.innerHTML =
         '<span class="invite-signe">+</span>' +
         '<span class="invite-texte">ajouter une capture</span>';
-      invite.title = 'va sur Google Earth, capture, depose ici';
+      invite.title = 'va sur Google Earth, capture, dépose ici';
       invite.onclick = () => this.choisir();
       document.body.appendChild(invite);
       this.invite = invite;
@@ -64,8 +64,8 @@
       const voile = document.createElement('div');
       voile.className = 'depot-voile';
       voile.innerHTML =
-        '<div class="depot-mot">DEPOSE<br>TA TERRE</div>' +
-        '<div class="depot-note">elle rejoindra l archive si elle est retenue</div>';
+        '<div class="depot-mot">DÉPOSE<br>TA TERRE</div>' +
+        '<div class="depot-note">elle rejoindra l’archive si elle est retenue</div>';
       this.el.appendChild(voile);
       this.voile = voile;
     },
@@ -95,7 +95,7 @@
         const fichiers = Array.from(e.dataTransfer.files || [])
           .filter(f => /^image\//.test(f.type));
         if (fichiers.length) this.accueillir(fichiers, e.clientX, e.clientY);
-        else this.dire('ce n est pas une image');
+        else this.dire('ce n’est pas une image');
       });
     },
 
@@ -148,7 +148,7 @@
     async envoyer(fichier, item, plan) {
       const Supa = EARTH.Supa;
       if (!Supa.pret) {
-        this.dire('gardee ici seulement — archive collective non configuree');
+        this.dire('gardée ici seulement — archive collective non configurée');
         return;
       }
 
@@ -175,7 +175,7 @@
         });
         this.envois++;
         if (plan) plan.el.classList.add('envoyee');
-        this.dire('recue — elle attend d etre retenue');
+        this.dire('reçue — elle attend d’être retenue');
       } catch (e) {
         console.warn('[EARTH] contribution', e);
         this.dire('envoi impossible — elle reste ici');

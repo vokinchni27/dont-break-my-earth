@@ -2,28 +2,34 @@
    EARTH — js/config.js
    ------------------------------------------------------------
    LE TABLEAU DE BORD.
-   Tout ce qui se regle se regle ici, et nulle part ailleurs.
-   Le panneau (touche P) modifie ces memes valeurs en direct.
-   Quand un reglage te plait, copie-le ici pour le figer.
+   Tout ce qui se règle se règle ici, et nulle part ailleurs.
    ============================================================ */
 
 window.EARTH = window.EARTH || {};
 
 EARTH.CONFIG = {
 
-  /* --- L'ARCHIVE ------------------------------------------ */
+  titre: {
+    mot: 'DON’T BREAK MY HEART',
+    /* HEART est l’anagramme d’EARTH : quand la matière se
+       liquéfie, le mot peut retrouver l’autre. */
+    echo: 'DON’T BREAK MY EARTH',
+    liquide: 1,            // amplitude de la déformation au curseur
+    viscosite: 0.9,        // 0 = revient sec, 1 = revient très lentement
+    sortie: 2200           // ms de silence avant que le titre s’efface
+  },
+
   archive: {
     manifest: 'images/manifest.json',
     includeVideos: true,
-    poidsVideos: 6,      // une video compte pour N images dans le tirage
-    places: null,        // null = tous les lieux. Sinon ['CHINE','RUSSIE']
-    ordre: 'sac'         // 'sac' = tout passe avant de repasser | 'hasard' | 'suite'
+    poidsVideos: 6,
+    places: null,
+    ordre: 'sac'
   },
 
   /* --- LE RECADRAGE --------------------------------------- */
-  /* L'interface de Google Earth est coupee a l'affichage, jamais
-     sur le disque. Le bandeau de donnees (bas droite) peut etre
-     rappele a la demande : voir coordonnees.bandeau. */
+  /* L’interface de Google Earth est coupée à l’affichage,
+     jamais sur le disque. */
   crop: {
     top: 0.145,
     bottom: 0.11,
@@ -31,51 +37,72 @@ EARTH.CONFIG = {
     right: 0
   },
 
-  /* --- LES ECHELLES --------------------------------------- */
+  /* Le cartel : la bande noire des coordonnées, en vrais pixels.
+     0.9699 = la première ligne vraiment noire d’une capture
+     2493×1231, mesurée et non estimée. */
+  cartel: {
+    haut: 0.9699,
+    gauche: 0.58,
+    visible: true
+  },
+
   echelle: {
-    min: 0.05,           // fraction du petit cote de l'ecran
+    min: 0.05,
     max: 1.30,
     rotationMax: 0
   },
 
-  /* --- LA SCENE ------------------------------------------- */
   scene: {
     fond: '#ffffff',
     maxPlans: 26,
     marge: 0.05
   },
 
-  /* --- LA GRILLE ------------------------------------------ */
-  /* Elle structure l'espace. Les images ne lui obeissent pas
-     toujours : c'est le jeu entre systeme et liberte. */
+  /* --- LA GRILLE VIVANTE ---------------------------------- */
+  /* Elle n’est plus un décor : elle respire, elle suit la main,
+     et chaque capture la déforme localement selon sa position
+     sur la Terre. On n’a jamais deux fois la même grille. */
   grille: {
     visible: true,
     colonnes: 12,
     lignes: 8,
     colonnesMobile: 6,
     lignesMobile: 10,
-    trait: 'rgba(0,0,0,.09)',
-    traitFort: 'rgba(0,0,0,.22)',
-    obeissance: 0.5,     // part des compositions qui se calent sur la grille
-    reperes: true        // chiffres de colonnes/lignes dans les marges
+    trait: 0.09,           // opacité du trait ordinaire
+    traitFort: 0.24,       // opacité des bords
+    obeissance: 0.5,       // part des compositions qui se calent dessus
+    souffle: 1,            // respiration lente
+    vibration: 0.35,       // frémissement
+    attraction: 1,         // déformation autour des captures
+    curseur: 1,            // déformation sous la main
+    absences: 0.08,        // part des lignes qui manquent, et changent
+    reperes: true
   },
 
-  /* --- LE RYTHME ------------------------------------------ */
+  /* --- LA PLONGÉE ----------------------------------------- */
+  /* Molette ou deux doigts : on descend dans le quadrillage.
+     Les cases s’écartent, de nouvelles naissent au centre.
+     L’archive n’a pas de fond. */
+  plongee: {
+    active: true,
+    vitesse: 0.0016,
+    inertie: 0.92,
+    naissances: 3,         // captures qui apparaissent par palier
+    limite: 7              // au-delà, un plan est retiré
+  },
+
   rythme: {
     tenue: 11000,
     tenueVariation: 4000,
     cascade: 420,
     cascadeVariation: 300,
     cascadeBudget: 0.55,
-    passage: 'remplace', // 'remplace' | 'accumule' | 'echange'
+    passage: 'remplace',
     accumuleChance: 0.25,
     demarrageAuto: true,
-    /* le geste suspend la machine : tant que le visiteur agit,
-       la composition ne se remplace pas toute seule */
-    patience: 6000       // ms de silence avant que le temps reprenne
+    patience: 6000
   },
 
-  /* --- LE MOUVEMENT --------------------------------------- */
   mouvement: {
     entree: 'auto',
     sortie: 'auto',
@@ -88,64 +115,57 @@ EARTH.CONFIG = {
     poolSortie: ['fondu', 'coupe', 'retrait', 'chute']
   },
 
-  /* --- LE GESTE ------------------------------------------- */
-  /* Le curseur n'est pas un pointeur, c'est un outil d'observation.
-     Ces seuils decident de ce qu'un geste veut dire. */
   geste: {
-    seuilBref: 240,      // ms : en dessous = clic bref
-    seuilMaintien: 320,  // ms : au dela = on creuse
-    seuilLent: 0.05,     // vitesse (vmin/ms) en dessous = respiration
-    seuilRapide: 0.55,   // au dela = dispersion
-    immobilite: 7000,    // ms sans bouger = recompense de la contemplation
-    parallaxe: 0.9,      // amplitude de la respiration (0 = aucune)
-    dispersion: 1,       // amplitude de la dispersion
-    creuseCadence: 260,  // ms entre deux fragments pendant un maintien
-    creuseMax: 14        // fragments maximum par maintien
+    seuilBref: 240,
+    seuilMaintien: 320,
+    seuilLent: 0.05,
+    seuilRapide: 0.55,
+    immobilite: 7000,
+    parallaxe: 0.9,
+    dispersion: 1,
+    creuseCadence: 260,
+    creuseMax: 14
   },
 
-  /* --- LES COORDONNEES ------------------------------------ */
-  /* Les donnees deviennent du design. */
+  /* --- LES COORDONNÉES ------------------------------------ */
   coordonnees: {
-    survol: true,        // bloc typographique au survol
-    curseur: true,       // lecture permanente qui suit le curseur
-    imprimees: 0.18,     // part des plans qui portent leurs coordonnees
-    bandeau: true,       // le vrai bandeau Google Earth, en pixels, sur demande
-    lignes: true,        // latitude / longitude tracees comme lignes de compo
+    survol: true,
+    curseur: true,
+    imprimees: 0.18,
+    cartel: true,          // la vraie bande noire, agrandie
+    lignes: true,
     taille: 11
   },
 
-  /* --- LE TEXTE ------------------------------------------- */
   texte: {
     actif: true,
-    frequence: 0.28,     // probabilite qu'une composition porte un fragment
-    taille: 22,          // px, a l'echelle de vmin
+    frequence: 0.28,
+    taille: 22,
     duree: 9000,
     fragments: [
       'tu regardes',
-      'personne n a jamais marche ici',
-      'cette riviere ne connait pas ton nom',
+      'personne n’a jamais marché ici',
+      'cette rivière ne connaît pas ton nom',
       'il pleut quelque part sur cette image',
-      'la lumiere que tu vois est deja partie',
-      'ce n est pas une carte',
+      'la lumière que tu vois est déjà partie',
+      'ce n’est pas une carte',
       'ce lieu existe maintenant',
-      'rien ici n a ete retouche',
+      'rien ici n’a été retouché',
       'reste encore un peu',
       'plus lentement',
-      'quelqu un a construit cette ligne droite',
+      'quelqu’un a tracé cette ligne droite',
       'la Terre ne pose pas',
-      'tu es aussi dedans'
+      'tu es dedans aussi'
     ]
   },
 
-  /* --- LES EVENEMENTS RARES ------------------------------- */
   evenements: {
     actifs: true,
-    rarete: 0.06,        // probabilite de base a chaque declencheur
-    palier: 45000,       // ms mini entre deux evenements
+    rarete: 0.06,
+    palier: 45000,
     liste: ['inondation', 'effacement', 'nuit', 'alignement', 'apparition', 'eclat']
   },
 
-  /* --- LES COMPOSITIONS ----------------------------------- */
   compositions: {
     actives: [
       'solo', 'plein', 'duo', 'diptyque', 'constellation',
@@ -156,42 +176,33 @@ EARTH.CONFIG = {
   },
 
   /* --- LE REGARD ------------------------------------------ */
+  /* Noir et blanc absolu : aucune couleur en dehors des images. */
   regard: {
     opacite: 1,
     grisaille: 0,
     contraste: 1,
     filet: false,
-    melange: 'normal',   // 'normal' | 'multiply' | 'difference' | 'darken'
-    melangeChance: 0.2   // part des compositions qui entrent en conflit
+    melange: 'normal',
+    melangeChance: 0.2
   },
 
-  /* --- LA WEBCAM ------------------------------------------ */
-  /* Jamais d'image video brute : la camera n'est qu'une source de
-     luminance, retranscrite en mosaique de paysages. Desactivee
-     par defaut — la place est prete (touche W). */
+  hud: {
+    actif: true,
+    marquee: true,
+    curseur: true,
+    fuseau: 'Europe/Paris'
+  },
+
   webcam: {
     actif: false,
     colonnes: 26,
     lignes: 18,
-    seuil: 0.42,         // en dessous = cellule vide (le vide fait le visage)
-    cadence: 900,        // ms entre deux rafraichissements
+    seuil: 0.42,
+    cadence: 900,
     opacite: 0.9,
-    source: 'camera'     // 'camera' | 'test' (mire animee, sans camera)
+    source: 'camera'
   },
 
-  /* --- L'APPAREILLAGE ------------------------------------- */
-  /* Quatre angles, une horloge, un bandeau de coordonnees.
-     En fusion « difference » : jamais de fond, jamais d'ecran. */
-  hud: {
-    actif: true,
-    marquee: true,
-    curseur: true        // curseur en croix (souris seulement)
-  },
-
-  /* --- L'ARCHIVE COLLECTIVE ------------------------------- */
-  /* Le visiteur capture sur Google Earth et depose son fichier
-     sur la page. Il attend d'etre retenu : personne ne se publie
-     soi-meme. Voir supabase/earth.sql pour les regles. */
   collectif: {
     actif: true,
     url: 'https://jhdwyiknkoqdxflafwmx.supabase.co',
@@ -202,7 +213,6 @@ EARTH.CONFIG = {
     moderatrice: 'kara.garnier27@gmail.com'
   },
 
-  /* --- LE BAC A SABLE ------------------------------------- */
   bacASable: {
     panneauOuvert: false,
     graine: null,

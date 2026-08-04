@@ -22,8 +22,6 @@
 
   const { clamp, lerp } = EARTH.utils;
 
-  /* la bande de donnees dans la capture d'origine, en fractions */
-  const BANDE = { gauche: 0.58, haut: 0.962 };
   const AR_SOURCE = 2493 / 1231;
 
   const Coords = {
@@ -47,6 +45,10 @@
       /* le bandeau montre les VRAIS pixels de la capture : il doit
          rester hors de la couche en fusion, qui les inverserait */
       document.body.appendChild(this.bandeau);
+
+      /* le cartel se copie : les coordonnees appartiennent aussi
+         a celui qui regarde, il doit pouvoir les emporter */
+      this.bandeau.addEventListener('click', () => this.copier());
       return this;
     },
 
@@ -63,9 +65,9 @@
       if (!c) return '';
       return [
         `${c.lat}  ${c.lon}`,
-        `camera ${c.camera}`,
+        `caméra ${c.camera}`,
         `sol ${c.sol}`,
-        `echelle ${c.echelle}`
+        `échelle ${c.echelle}`
       ].join('\n');
     },
 
@@ -87,7 +89,7 @@
       this.bloc.classList.add('visible');
 
       if (cfg.lignes) this.tracer(plan.item);
-      if (cfg.bandeau) this.montrerBandeau(plan);
+      if (cfg.cartel) this.montrerBandeau(plan);
     },
 
     cacher() {
@@ -125,6 +127,7 @@
 
     montrerBandeau(plan) {
       if (plan.item.type !== 'image') return;
+      const BANDE = EARTH.CONFIG.cartel;
       const largeurVisible = 1 - BANDE.gauche;
       const hauteurVisible = 1 - BANDE.haut;
       const zoom = 1 / largeurVisible;
@@ -158,6 +161,19 @@
       this.curseur.style.transform =
         `translate(${Math.round(clamp(x + 16, 8, window.innerWidth - 150))}px, ` +
         `${Math.round(clamp(y + 16, 8, window.innerHeight - 46))}px)`;
+    },
+
+    /* --- emporter les coordonnees --------------------------- */
+
+    copier() {
+      const item = this.survole && this.survole.item;
+      const c = item && item.coord;
+      if (!c) return;
+      const texte = `${c.lat} ${c.lon}`;
+      const dire = () => EARTH.HUD && EARTH.HUD.souffler('coordonnées copiées');
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texte).then(dire, () => repli(texte, dire));
+      } else repli(texte, dire);
     },
 
     /* --- coordonnees imprimees ------------------------------ */
@@ -213,6 +229,16 @@
       if (d < d2) { d2 = d; best = p; }
     });
     return best;
+  }
+
+  function repli(texte, fin) {
+    const t = document.createElement('textarea');
+    t.value = texte;
+    t.style.cssText = 'position:fixed;left:-9999px';
+    document.body.appendChild(t);
+    t.select();
+    try { document.execCommand('copy'); fin(); } catch (e) { /* tant pis */ }
+    t.remove();
   }
 
   function creer(classe) {

@@ -1,15 +1,14 @@
 /* ============================================================
    EARTH — js/hud.js
    ------------------------------------------------------------
-   L'appareillage. Quatre angles, une horloge, un bandeau.
+   L’appareillage. Quatre angles, une heure, un bandeau.
 
-   Tout est en fusion « difference » : le texte se lit noir sur le
-   blanc, blanc sur les images sombres, sans jamais poser de fond.
-   L'interface ne recouvre pas l'oeuvre, elle la traverse.
+   Tout est en fusion « différence » : le texte se lit noir sur
+   le blanc, blanc sur les images sombres, sans jamais poser de
+   fond. L’interface ne recouvre pas l’œuvre, elle la traverse.
 
-   Rien ici n'est cliquable sauf ce qui doit l'etre. Le HUD dit
-   trois choses : ou tu es, ce que contient l'archive, et ce que
-   tu peux faire.
+   L’heure est locale — Europe/Paris. Une œuvre sur la Terre n’a
+   pas besoin d’afficher un décalage.
    ============================================================ */
 
 (function (EARTH) {
@@ -25,19 +24,21 @@
       el.innerHTML =
         '<div class="hud-coin hud-tl">' +
           '<b>EARTH<sup>®</sup></b>' +
-          '<span>archive vivante</span>' +
+          '<span class="hud-faible">archive vivante</span>' +
         '</div>' +
         '<div class="hud-coin hud-tr">' +
-          '<span id="hud-heure">--:--:--</span>' +
-          '<span id="hud-compte">—</span>' +
+          '<span id="hud-heure">--:--</span>' +
+          '<span class="hud-faible" id="hud-date">--.--.----</span>' +
+          '<span class="hud-faible" id="hud-compte">—</span>' +
         '</div>' +
         '<div class="hud-coin hud-bl">' +
           '<span id="hud-partition">—</span>' +
-          '<span class="hud-faible">jamais termine</span>' +
+          '<span class="hud-faible">jamais terminé</span>' +
         '</div>' +
         '<div class="hud-coin hud-br">' +
-          '<span class="hud-faible">maintiens pour creuser</span>' +
-          '<span class="hud-faible">ne bouge plus, et attends</span>' +
+          '<span class="hud-faible">maintiens pour creuser.</span>' +
+          '<span class="hud-faible">ne bouge plus.</span>' +
+          '<span class="hud-faible">attends.</span>' +
         '</div>';
 
       this.marquee = document.createElement('div');
@@ -63,10 +64,9 @@
       const cfg = EARTH.CONFIG.hud;
       this.el.classList.toggle('cache', !cfg.actif);
       this.marquee.classList.toggle('cache', !cfg.marquee);
-      /* pas de curseur en croix quand il n'y a pas de curseur :
-         au doigt, la croix resterait figee la ou on a touche */
-      const croix = cfg.curseur && !EARTH.utils.mobile();
-      document.body.classList.toggle('instrument', !!croix);
+      /* pas de curseur en croix quand il n’y a pas de curseur :
+         au doigt, la croix resterait figée là où on a touché */
+      document.body.classList.toggle('instrument', !!(cfg.curseur && !EARTH.utils.mobile()));
     },
 
     basculer() {
@@ -74,12 +74,28 @@
       this.appliquer();
     },
 
+    /* heure locale, sans mention de fuseau : c’est l’heure d’ici */
     horloge() {
+      const zone = EARTH.CONFIG.hud.fuseau || 'Europe/Paris';
       const d = new Date();
-      const p = n => String(n).padStart(2, '0');
-      const e = document.getElementById('hud-heure');
-      if (e) e.textContent =
-        `UTC ${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())}`;
+      let heure, date;
+      try {
+        heure = new Intl.DateTimeFormat('fr-FR', {
+          timeZone: zone, hour: '2-digit', minute: '2-digit', hour12: false
+        }).format(d);
+        const p = new Intl.DateTimeFormat('fr-FR', {
+          timeZone: zone, day: '2-digit', month: '2-digit', year: 'numeric'
+        }).formatToParts(d).reduce((o, x) => (o[x.type] = x.value, o), {});
+        date = `${p.day}.${p.month}.${p.year}`;
+      } catch (e) {
+        const n = x => String(x).padStart(2, '0');
+        heure = `${n(d.getHours())}:${n(d.getMinutes())}`;
+        date = `${n(d.getDate())}.${n(d.getMonth() + 1)}.${d.getFullYear()}`;
+      }
+      const h = document.getElementById('hud-heure');
+      const j = document.getElementById('hud-date');
+      if (h) h.textContent = heure;
+      if (j) j.textContent = date;
     },
 
     majEtat() {
@@ -89,15 +105,14 @@
       if (compte) {
         compte.textContent =
           `${A.taille} captures · ${A.lieux.length} lieux` +
-          (collectives ? ` · ${collectives} recues` : '');
+          (collectives ? ` · ${collectives} reçues` : '');
       }
       const part = document.getElementById('hud-partition');
       const c = EARTH.Director.courante;
       if (part && c) part.textContent = c.nom;
     },
 
-    /* le bandeau ne defile pas du texte decoratif : il enumere
-       les coordonnees de ce qui est a l'ecran, maintenant */
+    /* le bandeau énumère les coordonnées de ce qui est à l’écran */
     majMarquee() {
       const ruban = this.marquee.firstChild;
       const vivants = EARTH.Stage.plans.filter(p => !p.sorti && p.item.coord);
@@ -115,7 +130,7 @@
       this.curseur.style.transform = `translate(${p.x}px, ${p.y}px)`;
     },
 
-    /* un mot en tres grand, au centre. Reserve aux moments rares. */
+    /* un mot en très grand, au centre. Les moments rares. */
     proclamer(mot, duree) {
       const d = document.createElement('div');
       d.className = 'proclame';
@@ -126,6 +141,20 @@
         d.classList.remove('visible');
         setTimeout(() => d.remove(), 900);
       }, duree || 2600);
+    },
+
+    /* un mot minuscule, en bas : un accusé de réception */
+    souffler(message) {
+      let d = document.getElementById('hud-souffle');
+      if (!d) {
+        d = document.createElement('div');
+        d.id = 'hud-souffle';
+        document.body.appendChild(d);
+      }
+      d.textContent = message;
+      d.classList.add('visible');
+      clearTimeout(this._souffle);
+      this._souffle = setTimeout(() => d.classList.remove('visible'), 2600);
     }
   };
 

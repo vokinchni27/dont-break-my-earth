@@ -35,8 +35,12 @@ EXT = {".jpg", ".jpeg", ".png", ".webp"}
 def fichiers():
     out = []
     for p in sorted(IMAGES.rglob("*")):
-        if p.is_file() and p.suffix.lower() in EXT:
-            out.append(p.relative_to(IMAGES).as_posix())
+        if not (p.is_file() and p.suffix.lower() in EXT):
+            continue
+        rel = p.relative_to(IMAGES).as_posix()
+        if rel.startswith("_"):        # _cache/ : ce sont des derivees, pas des captures
+            continue
+        out.append(rel)
     return out
 
 

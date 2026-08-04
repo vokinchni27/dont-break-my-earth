@@ -62,14 +62,17 @@
         media.decoding = 'async';
         media.alt = '';
       }
-      media.src = item.src;
+      /* la bonne taille pour la place occupée : une vignette de
+         60 px ne charge pas un fichier de 2493 px. Le survol et le
+         plein regard vont ensuite chercher l'original. */
+      plan_src_init(media, item, place);
 
       frame.appendChild(media);
       motion.appendChild(frame);
       el.appendChild(motion);
       this.el.appendChild(el);
 
-      const plan = { el, motion, frame, media, item, place, ne: performance.now(), sorti: false };
+      const plan = { el, motion, frame, media, item, place, ne: performance.now(), sorti: false, hd: false };
       frame._plan = plan;                       // pour la detection du geste
       this.plans.push(plan);
       this.recadrer(plan);
@@ -135,6 +138,27 @@
     },
 
     recadrerTout() { this.plans.forEach(p => this.recadrer(p)); },
+
+    /* --- la qualité ---------------------------------------- */
+    /* trois états : aperçu, moyen, original. On ne montre jamais
+       une image compressée là où elle est regardée vraiment. */
+    source(item, largeurCss) {
+      if (!item.tailles || !item.cache) return item.src;
+      const besoin = largeurCss * Math.min(2, window.devicePixelRatio || 1);
+      const t = item.tailles.find(t => t >= besoin);
+      return t ? item.cache.replace('{t}', String(t)) : item.src;
+    },
+
+    /* charge l'original en silence, puis l'échange sans clignoter */
+    monterEnQualite(plan) {
+      if (!plan || plan.hd || plan.sorti) return;
+      if (plan.item.type !== 'image') return;
+      if (plan.media.src.endsWith(plan.item.src)) { plan.hd = true; return; }
+      plan.hd = true;
+      const pre = new Image();
+      pre.onload = () => { if (!plan.sorti) plan.media.src = plan.item.src; };
+      pre.src = plan.item.src;
+    },
 
     /* --- deplacer un plan deja pose ------------------------- */
     replacer(plan, place, duree) {
@@ -239,6 +263,15 @@
       this.plans.forEach(p => p.frame.classList.toggle('filet', !!r.filet));
     }
   };
+
+  /* la source de départ : dérivée si elle suffit, original sinon.
+     Une image que l'on va fouiller part directement en original —
+     on ne creuse pas dans une vignette. */
+  function plan_src_init(media, item, place) {
+    const vm = Math.min(window.innerWidth, window.innerHeight);
+    const largeur = (place.w || 0.3) * vm * (place.fouille ? (place.fouille.zoom || 1) : 1);
+    media.src = place.fouille ? item.src : EARTH.Stage.source(item, largeur);
+  }
 
   function pret(media) {
     if (media.tagName === 'VIDEO') {

@@ -26,7 +26,7 @@
 
     /* 2. l'archive locale */
     const n = await EARTH.Archive.charger(cfg);
-    if (!n) { note(EARTH.Archive.erreur || 'aucune image trouvee dans images/'); return; }
+    if (!n) { note(EARTH.Archive.erreur || 'aucune image trouvée dans images/'); return; }
     console.log(
       `[EARTH] ${n} captures · ${EARTH.Archive.lieux.length} lieux · ` +
       `${EARTH.Archive.situees.length} situees`
@@ -37,9 +37,10 @@
     EARTH.Panel.init();
     EARTH.Panel.clavier();
 
-    /* 4. le geste */
+    /* 4. le geste, et la descente */
     EARTH.Gestes.init();
     EARTH.Interactions.init();
+    EARTH.Plongee.init();
 
     /* 5. l'archive collective — elle arrive quand elle arrive,
           la piece n'attend pas le reseau pour commencer */
@@ -49,8 +50,13 @@
       window.addEventListener(ev, () => EARTH.Stage.reveillerVideos(), { passive: true })
     );
 
-    if (cfg.rythme.demarrageAuto) EARTH.Director.demarrer();
-    else EARTH.Director.pause();
+    /* 6. le titre tient la porte : la composition ne commence
+          qu'une fois la matiere liquefiee, ou le visiteur pressé */
+    EARTH.Titre.init(document.getElementById('titre'));
+    EARTH.bus.sur('titre-fini', () => {
+      if (cfg.rythme.demarrageAuto) EARTH.Director.demarrer();
+    });
+    if (!cfg.rythme.demarrageAuto) EARTH.Director.pause();
 
     EARTH.HUD.majEtat();
   }

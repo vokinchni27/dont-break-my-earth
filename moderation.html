@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EARTH — moderation</title>
+  <title>EARTH — modération</title>
   <meta name="robots" content="noindex">
   <style>
     /* Meme langue graphique que l'oeuvre : blanc, grotesque
@@ -99,8 +99,8 @@
 
   <div id="porte" hidden>
     <h1>EARTH<sup>®</sup></h1>
-    <p class="micro">moderation de l archive collective</p>
-    <p>Un lien de connexion va t etre envoye. Il n y a pas de mot de passe.</p>
+    <p class="micro">modération de l’archive collective</p>
+    <p>Un lien de connexion va t’être envoyé. Il n’y a pas de mot de passe.</p>
     <input type="email" id="courriel" placeholder="adresse" autocomplete="email">
     <div style="margin-top:12px"><button class="bouton bouton--plein" id="envoyer">recevoir le lien</button></div>
   </div>
@@ -109,7 +109,7 @@
     <header>
       <div>
         <h1>EN ATTENTE</h1>
-        <div class="micro" style="color:var(--gris);margin-top:6px">ce que le monde a rapporte</div>
+        <div class="micro" style="color:var(--gris);margin-top:6px">ce que le monde a rapporté</div>
       </div>
       <div class="compte micro">
         <div id="compte">—</div>
@@ -152,7 +152,7 @@
         $('#envoyer').disabled = true;
         try {
           await Supa.lienMagique(email, location.href.split('#')[0]);
-          dire('lien envoye — regarde tes courriels', true);
+          dire('lien envoyé — regarde tes courriels', true);
         } catch (e) {
           dire('envoi impossible : ' + String(e.message).slice(0, 80), true);
           $('#envoyer').disabled = false;
@@ -183,7 +183,7 @@
       const liste = $('#liste');
       liste.innerHTML = '';
       if (!lignes.length) {
-        liste.innerHTML = '<p class="vide">Rien pour l instant. L archive attend.</p>';
+        liste.innerHTML = '<p class="vide">Rien pour l’instant. L’archive attend.</p>';
         return;
       }
       lignes.forEach(l => liste.appendChild(carte(l)));
@@ -197,23 +197,23 @@
         <div class="vue">
           <img src="${url}" alt="" loading="lazy">
           <div class="bande" style="background-image:url('${url}')"></div>
-          <div class="micro" style="color:var(--gris);margin-top:6px">bande de donnees agrandie</div>
+          <div class="micro" style="color:var(--gris);margin-top:6px">bande de données agrandie</div>
         </div>
         <div class="champs">
           <div class="meta micro">
             ${new Date(l.cree_le).toLocaleString('fr-FR')}<br>
             ${l.largeur || '?'} × ${l.hauteur || '?'} px ·
             ${l.poids ? Math.round(l.poids / 1024) + ' ko' : '?'}<br>
-            ${l.auteur ? 'signee : ' + escapeHtml(l.auteur) : 'non signee'}
+            ${l.auteur ? 'signée : ' + escapeHtml(l.auteur) : 'non signée'}
           </div>
-          <div><label class="micro">lieu</label><input type="text" data-champ="lieu" placeholder="ISLANDE, ILE/REUNION…"></div>
+          <div><label class="micro">lieu</label><input type="text" data-champ="lieu" placeholder="ISLANDE, ÎLE/RÉUNION…"></div>
           <div class="duo">
             <div><label class="micro">latitude</label><input type="text" data-champ="lat" placeholder="43°35'29.50&quot;N"></div>
             <div><label class="micro">longitude</label><input type="text" data-champ="lon" placeholder="4°35'08.96&quot;E"></div>
           </div>
           <div class="actions">
             <button class="bouton bouton--plein" data-act="retenue">retenir</button>
-            <button class="bouton" data-act="ecartee">ecarter</button>
+            <button class="bouton" data-act="ecartee">écarter</button>
             <a class="bouton" href="${url}" target="_blank" rel="noopener">voir en grand</a>
           </div>
         </div>`;
@@ -252,9 +252,9 @@
         el.classList.add('partie');
         el.querySelector('.champs').insertAdjacentHTML(
           'beforeend',
-          `<div class="verdict">${statut === 'retenue' ? 'retenue' : 'ecartee'}</div>`
+          `<div class="verdict">${statut === 'retenue' ? 'retenue' : 'écartée'}</div>`
         );
-        dire(statut === 'retenue' ? 'elle rejoint l archive' : 'ecartee');
+        dire(statut === 'retenue' ? 'elle rejoint l’archive' : 'écartée');
         const c = $('#compte');
         const n = Math.max(0, parseInt(c.textContent, 10) - 1);
         c.textContent = n + ' en attente';

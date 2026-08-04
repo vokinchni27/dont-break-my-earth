@@ -39,6 +39,7 @@
       /* --- effleurer ---------------------------------------- */
       bus.sur('effleure', ({ plan }) => {
         EARTH.Coords.montrer(plan);
+        EARTH.Stage.monterEnQualite(plan);      // le survol charge l'original
         plan.el.classList.add('effleure');
         clearTimeout(this.minuteurAttrait);
         /* s'attarder sur une image appelle ses voisines reelles */
@@ -125,8 +126,12 @@
       this.focalise = plan;
       document.body.classList.add('focalise');
 
+      Stage.monterEnQualite(plan);
       Stage.attenuerSauf(plan, 0.05);
+      /* l'image quitte la grille et flotte. Jamais de fenêtre :
+         on reste dans le même espace, la grille reste derrière. */
       const rendre = Stage.focaliser(plan, { couverture: 0.94, duree: 900 });
+      EARTH.Grille.ouvrir(plan);
 
       if (plan.item.coord && !plan.imprimee) EARTH.Coords.imprimer(plan);
 
@@ -141,6 +146,7 @@
       const plan = this.focalise;
       this.focalise = null;
       document.body.classList.remove('focalise');
+      EARTH.Grille.refermer();
       if (this._rendre) this._rendre();
       EARTH.Stage.retablir();
       /* elle a ete vue : elle peut disparaitre */

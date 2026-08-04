@@ -13,6 +13,7 @@ Le site ne doit jamais donner l'impression d'etre termine.
 ## 1. Ouvrir
 
 ```bash
+python tools/derive-images.py
 node tools/index-images.mjs
 ```
 
@@ -27,6 +28,9 @@ aussi profond que voulu. Puis reindexer :
 - ponctuel : `node tools/index-images.mjs`
 - continu : **`tools/VEILLE.cmd`** — laisser la fenetre ouverte, chaque fichier
   depose est indexe tout seul ; il ne reste qu'a rafraichir (F5).
+
+Après chaque ajout, refaire les déclinaisons : `python tools/derive-images.py`
+(seules les nouvelles sont calculées).
 
 Formats : `jpg jpeg png webp avif gif` et `mp4 webm mov`. Les videos sont jouees
 en boucle et muettes, et **sur-representees dans le tirage** (`archive.poidsVideos`)
@@ -58,8 +62,25 @@ par capture manquante, numerotees. On les lit, on remplit `images/coordinates.js
 
 Puis on reindexe : l'indexeur convertit le DMS en degres decimaux tout seul.
 
-**Etat actuel : 110 captures sur 112 sont situees**, de -31° a +75° de latitude.
-Les deux non situees sont les videos.
+**État actuel : 128 captures sur 130 sont situées**, de −31° à +75° de latitude.
+Les deux non situées sont les vidéos.
+
+## 3 bis. La qualité d'image
+
+Trois états, jamais un seul :
+
+| état | largeur | pour |
+|---|---|---|
+| aperçu | 640 px | vignettes, poussière, nuées |
+| moyen | 1400 px | lecture courante |
+| **original** | tel quel | survol, plein regard, creusage |
+
+`python tools/derive-images.py` fabrique les deux premiers dans `images/_cache/`
+(ignoré par git, régénérable). Le site choisit selon la place occupée à l'écran
+**et la densité de l'écran** ; le survol précharge l'original en silence et
+l'échange sans clignoter. On ne creuse jamais dans une vignette.
+
+Si le cache n'existe pas, tout retombe sur l'original : rien ne casse.
 
 ---
 
@@ -233,6 +254,26 @@ Chaque composition porte une **graine** (affichee dans le panneau).
 
 ---
 
+## 7 bis. Le titre, la grille, la descente
+
+**Le titre.** Le site commence par un vide : `DON'T BREAK MY HEART` en gris très
+clair, presque invisible. La main le liquéfie — les lettres s'étirent, suivent le
+curseur, retrouvent lentement leur forme. Quand il se retire, le dernier mot se
+décale d'un cran : **HEART est l'anagramme d'EARTH**, à une rotation près. Ce ne
+sont pas d'autres lettres, ce sont les mêmes.
+
+**La grille vit.** Elle respire, elle frémit, certaines lignes manquent puis
+reviennent, elle s'écarte sous la main, elle s'ouvre autour d'une image qu'on
+regarde. Et surtout : **chaque capture la déforme selon sa position géographique**
+— la longitude donne la direction de la tension, la latitude sa force. La
+structure n'est donc pas arbitraire, elle émerge des lieux photographiés. Presque
+personne ne le remarquera consciemment.
+
+**La descente.** Molette ou deux doigts : on ne défile pas, on descend. Les cases
+s'écartent depuis le point visé, deux générations de quadrillage se relaient pour
+que la subdivision soit sans fin, et de nouvelles captures naissent au centre à
+chaque palier. L'archive n'a pas de fond.
+
 ## 8. Le recadrage
 
 L'interface de Google Earth (bandeau bleu, menus, barre d'attribution, mini-carte)
@@ -240,8 +281,10 @@ est coupee **a l'affichage** — jamais sur le disque. `CONFIG.crop`, en fractio
 de hauteur. Valeurs calees sur les captures 2493×1231 : `top 0.145` / `bottom 0.11`.
 Touche **C** pour comparer avec / sans.
 
-Le bandeau de donnees, lui, est rappele **en vrais pixels** au survol : on ne
-recompose pas le texte, on va chercher l'image.
+Le **cartel**, lui, est rappelé en vrais pixels au survol : on ne recompose pas
+le texte, on va chercher l'image. Il ne contient que la bande noire — la première
+ligne vraiment noire d'une capture 2493×1231 est à `y = 1194`, soit `0,9699`,
+mesurée et non estimée. **Un clic dessus copie les coordonnées.**
 
 ---
 

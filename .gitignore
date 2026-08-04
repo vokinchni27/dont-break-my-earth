@@ -2,6 +2,10 @@
 #   python tools/coord-sheets.py
 tools/_coords/
 
+# dérivées d'images : régénérables par
+#   python tools/derive-images.py
+images/_cache/
+
 # scories systeme
 Thumbs.db
 desktop.ini

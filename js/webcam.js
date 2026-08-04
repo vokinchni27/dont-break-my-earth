@@ -61,8 +61,8 @@
           await this.video.play();
         } catch (e) {
           this.erreur = e && e.name === 'NotAllowedError'
-            ? 'camera refusee'
-            : 'camera indisponible (il faut https ou localhost)';
+            ? 'caméra refusée'
+            : 'caméra indisponible — il faut https ou localhost';
           console.warn('[EARTH] ' + this.erreur, e);
           return false;
         }

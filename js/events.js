@@ -44,7 +44,7 @@
         EARTH.Stage.viderTout('fondu');
         EARTH.Texte.viderTout();
         setTimeout(() => {
-          EARTH.Texte.poser('il n y a rien a voir pour l instant', { x: 0.5, y: 0.5 },
+          EARTH.Texte.poser('il n’y a rien à voir pour l’instant', { x: 0.5, y: 0.5 },
             { taille: 15, duree: 2600, alignement: 'center' });
         }, 1400);
         setTimeout(fin, 4600);
@@ -124,7 +124,7 @@
       this.encours = nom;
       this.dernier = performance.now();
       this.journal.push(nom);
-      if (EARTH.CONFIG.bacASable.journal) console.log('[EARTH] evenement rare : ' + nom);
+      if (EARTH.CONFIG.bacASable.journal) console.log('[EARTH] événement rare : ' + nom);
       EARTH.Director.suspendre(12000);
       let fini = false;
       const fin = () => {

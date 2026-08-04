@@ -74,6 +74,15 @@ async function lireCoordonnees() {
   }
 }
 
+/* les declinaisons fabriquees par tools/derive-images.py */
+async function lireDerivees() {
+  try {
+    return JSON.parse(await fs.readFile(path.join(IMAGES, '_cache', 'derivees.json'), 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
 function dmsVersDecimal(chaine) {
   if (!chaine) return null;
   const m = String(chaine).match(/(\d+)°\s*(\d+)'\s*([\d.]+)"?\s*([NSEWO])/i);
@@ -99,8 +108,18 @@ function versMetres(chaine) {
 async function build() {
   const items = await walk(IMAGES);
   const coords = await lireCoordonnees();
+  const derivees = await lireDerivees();
 
   for (const item of items) {
+    /* les tailles disponibles, de la plus petite a l'originale.
+       Le site choisit selon la place occupee a l'ecran. */
+    const tailles = derivees[item.path];
+    if (tailles && tailles.length) {
+      item.tailles = tailles;
+      item.cache = 'images/_cache/{t}/' +
+        item.path.replace(/\.[^.]+$/, '.jpg').split('/').map(encodeURIComponent).join('/');
+    }
+
     const c = coords[item.path];
     if (!c) continue;
     item.coord = {
