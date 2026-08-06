@@ -5,10 +5,10 @@ Ce qui était automatisable est déjà fait.
 
 | étape | où | fait ? |
 |---|---|---|
-| 1. Base de données | Supabase | ✅ **déjà fait** |
-| 2. Compte administrateur | Supabase | à faire — 1 min |
-| 3. Envoyer le code | Terminal | à faire — 1 commande |
-| 4. Brancher Vercel | Vercel | à faire — 5 min |
+| 1. Base de données | Supabase | ✅ **fait** |
+| 2. Envoyer le code | GitHub | ✅ **fait** |
+| 3. Importer le dépôt dans Vercel | Vercel | ⬅️ **c'est ici que ça bloque** |
+| 4. Compte administrateur | Supabase | à faire — 1 min |
 
 ---
 
@@ -19,7 +19,25 @@ Supabase `jhdwyiknkoqdxflafwmx`. Rien à faire.
 
 ---
 
-## Étape 2 — Créer ton compte administrateur
+## Étape 3 — Importer le dépôt dans Vercel ⬅️ à faire
+
+Le code est sur GitHub, mais **aucun projet Vercel ne le lit encore**.
+Vérifié : GitHub n'enregistre aucun déploiement pour ce dépôt.
+
+1. vercel.com → bouton **Add New…** → **Project**
+2. dans la liste des dépôts GitHub, trouve **`dont-break-my-earth`** → **Import**
+   - si le dépôt n'apparaît pas : **Adjust GitHub App Permissions** →
+     autorise Vercel à voir ce dépôt
+3. **ne touche à aucun réglage de build** — tout est déjà fixé dans `vercel.json`
+4. déplie **Environment Variables** et colle les 9 lignes du tableau plus bas
+5. **Deploy**
+
+Une fois déployé, Vercel affiche une URL en `.vercel.app`. Donne-la moi :
+je vérifie le site, le dépôt d'une capture et le tableau de bord.
+
+---
+
+## Étape 4 — Créer ton compte administrateur
 
 C’est le compte avec lequel tu valideras les captures.
 
@@ -35,9 +53,12 @@ C’est tout. Le rôle administrateur t’est donné automatiquement, ton adress
 
 ---
 
-## Étape 3 — Envoyer le code sur GitHub
+## Étape 2 — Envoyer le code sur GitHub ✅ fait
 
-Ouvre un terminal (PowerShell) et colle **une seule ligne** :
+Le dépôt `vokinchni27/dont-break-my-earth`, branche `main`, contient tout :
+le moteur, les 130 captures, leurs déclinaisons, les fonctions `api/`.
+
+Pour les mises à jour futures, la commande est :
 
 ```bash
 cd "C:/Users/karac/Desktop/EARTH VIEW"; git remote add origin https://github.com/vokinchni27/dont-break-my-earth.git; git push -u origin codex/collaborative-platform:main
@@ -51,12 +72,9 @@ que Vercel déploiera. C’est normal qu’elle porte un autre nom en local.
 
 ---
 
-## Étape 4 — Brancher Vercel
+## Les 9 variables d'environnement
 
-1. vercel.com → **Add New…** → **Project**
-2. **Import** le dépôt `dont-break-my-earth`
-3. ne touche à aucun réglage de build (le projet n’a pas besoin d’être compilé)
-4. déplie **Environment Variables** et ajoute ces **9 lignes**, une par une :
+À coller dans Vercel, à l'étape 3 :
 
 | Name | Value |
 |---|---|
