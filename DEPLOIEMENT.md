@@ -44,19 +44,26 @@ déploiement. C’est la seule chose qui manque.
 4. déplie **Environment Variables** et colle les 9 lignes ci-dessous
 5. **Deploy**
 
-### Les 9 variables
+### Les 5 variables obligatoires
+
+Le reste a des valeurs par défaut : inutile de les poser.
 
 | Name | Value |
 |---|---|
-| `SUPABASE_URL` | `https://jhdwyiknkoqdxflafwmx.supabase.co` |
-| `SUPABASE_ANON_KEY` | la clé **anon / public** — voir ci-dessous |
-| `SUPABASE_SERVICE_ROLE_KEY` | la clé **service_role** — voir ci-dessous |
-| `PUBLIC_SITE_URL` | `https://dont-break-my-earth.vercel.app` |
+| `SUPABASE_URL` | l’URL de ton projet Supabase |
+| `SUPABASE_ANON_KEY` | la clé **anon / publishable** |
+| `SUPABASE_SERVICE_ROLE_KEY` | la clé **service_role** (bouton *Reveal*) |
 | `RATE_LIMIT_SECRET` | le premier secret que Claude t’a donné |
 | `UPLOAD_TOKEN_SECRET` | le second secret que Claude t’a donné |
-| `MAX_UPLOAD_BYTES` | `8388608` |
-| `SIGNED_URL_TTL_SECONDS` | `3600` |
-| `GOOGLE_EARTH_URL` | `https://earth.google.com/web/` |
+
+Si l’intégration Vercel–Supabase a déjà posé les trois premières,
+**il ne reste que les deux secrets à ajouter.**
+
+### Facultatives
+
+`PUBLIC_SITE_URL` (`https://dont-break-my-earth.vercel.app`),
+`MAX_UPLOAD_BYTES` (8388608), `SIGNED_URL_TTL_SECONDS` (3600),
+`GOOGLE_EARTH_URL` (`https://earth.google.com/web/`).
 
 **Où trouver les deux clés :** Supabase → **Project Settings** (la roue
 dentée) → **API Keys**.
