@@ -7,7 +7,7 @@ Une ligne de la table `site_content` dont la colonne `key` vaut exactement
 une clé ci-dessous **remplace** le texte statique au chargement, sans toucher
 au code ni redéployer. C’est le CMS.
 
-> 183 textes. Régénérer avec `node tools/lister-textes.mjs`.
+> 181 textes. Régénérer avec `node tools/lister-textes.mjs`.
 
 ---
 
@@ -27,9 +27,9 @@ au code ni redéployer. C’est le CMS.
 | `hud.marque` | EARTH |
 | `hud.sousTitre` | archive vivante |
 | `hud.etatJamaisTermine` | jamais terminé |
-| `hud.aide1` | maintiens pour creuser. |
-| `hud.aide2` | ne bouge plus. |
-| `hud.aide3` | attends. |
+| `hud.aide1` | glisse pour descendre. |
+| `hud.aide2` | maintiens pour creuser. |
+| `hud.aide3` | ne bouge plus. |
 | `hud.captures` | captures |
 | `hud.lieux` | lieux |
 | `hud.recues` | reçues |
@@ -51,12 +51,12 @@ au code ni redéployer. C’est le CMS.
 | `contribution.fermerAria` | Fermer |
 | `contribution.etape1Index` | 01 · explorer |
 | `contribution.etape1Texte` | Choisis un lieu dans Google Earth et réalise une capture d’écran. |
-| `contribution.etape1Lien` | ouvrir Google Earth ↗ |
+| `contribution.etape1Lien` | ouvrir Google Earth |
 | `contribution.etape2Index` | 02 · déposer |
 | `contribution.etape2Bouton` | choisir la capture |
 | `contribution.apercuAria` | Aperçu de la capture |
-| `contribution.etape3Index` | 03 · situer, si tu veux |
-| `contribution.etape3Texte` | Rien n’est obligatoire ici. Une capture seule suffit. |
+| `contribution.etape3Index` | 03 · situer |
+| `contribution.etape3Texte` | facultatif |
 | `contribution.champLatitude` | latitude, si tu veux |
 | `contribution.champLongitude` | longitude, si tu veux |
 | `contribution.champLieu` | lieu, si tu veux |
@@ -79,14 +79,6 @@ au code ni redéployer. C’est le CMS.
 | `contribution.archiveInjoignable` | archive collective injoignable |
 | `contribution.lieuCollectif` | COLLECTIF |
 
-## raccourcis
-
-| clé | texte actuel |
-|---|---|
-| `raccourcis.titre` | QUELQUES TOUCHES |
-| `raccourcis.note` | ? pour revoir |
-| `raccourcis.rappel` | ? |
-
 ## Le feuillet « à propos »
 
 | clé | texte actuel |
@@ -94,6 +86,7 @@ au code ni redéployer. C’est le CMS.
 | `contenu.invite` | à propos |
 | `contenu.fermer` | fermer |
 | `contenu.aria` | À propos de Don’t Break My Earth |
+| `contenu.blocs` | DON’T BREAK MY EARTH — Une archive vivante composée de morceaux de Terre rapportés par celles et ceux qui la regardent. · CE QUE C’EST — Des captures satellite, leurs coordonnées, et un système qui compose sans fin de nouvelles relations entre elles. Rien n’est retouché. Rien n’est fixe. · PARTICIPER — Choisis un lieu, capture-le, dépose-le. Chaque morceau est relu avant de rejoindre l’archive. |
 
 ## Le bac à sable
 
@@ -150,13 +143,13 @@ au code ni redéployer. C’est le CMS.
 
 | clé | texte actuel |
 |---|---|
-| `apercuAide` | X — pause · ← → — image précédente / suivante · W — webcam · P — bac à sable |
+| `apercuAide` | X — pause · ← → — précédente / suivante · W — webcam |
 
 ## Les consignes de geste
 
 | clé | texte actuel |
 |---|---|
-| `aide` | MOLETTE — descendre dans la grille · CLIC — détacher une image · MAINTENIR — creuser · NE RIEN FAIRE — une image immense · DÉPOSER — contribuer · ESPACE — suivante · ← → — naviguer · R — rejouer · X — pause · 1-9 — partition · ENTRÉE — aligner · RETOUR — effacer · G — grille · H — appareillage · N — gris · C — recadrage · T — texte · A — ajouter · E — événement · W — webcam · P — panneau · ? — cette aide |
+| `aide` | MOLETTE — descendre dans la grille · CLIC — détacher une image · MAINTENIR — creuser · NE RIEN FAIRE — une image immense · DÉPOSER — contribuer · ESPACE — suivante · ← → — naviguer · R — rejouer · X — pause · 1-9 — partition · ENTRÉE — aligner · RETOUR — effacer · G — grille · H — appareillage · N — gris · C — recadrage · T — texte · A — ajouter · E — événement · W — webcam · P — panneau |
 
 ## Les fragments vivants
 

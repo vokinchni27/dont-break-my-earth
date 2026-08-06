@@ -82,7 +82,6 @@
         const plan = EARTH.Stage.poser(item, {
           x: 0.5, y: 0.5, w: EARTH.CONFIG.echelle.max * 1.25, z: 500
         }, 'fondu', 500);
-        if (plan && item.coord) setTimeout(() => EARTH.Coords.imprimer(plan), 1600);
         setTimeout(() => { if (plan) EARTH.Stage.retirer(plan, 'fondu'); fin(); }, 7200);
       },
 

@@ -133,8 +133,6 @@
       const rendre = Stage.focaliser(plan, { couverture: 0.94, duree: 900 });
       EARTH.Grille.ouvrir(plan);
 
-      if (plan.item.coord && !plan.imprimee) EARTH.Coords.imprimer(plan);
-
       this.minuteurFocus = setTimeout(() => this.liberer(), 3400);
       this._rendre = rendre;
       EARTH.Director.suspendre(4200);
@@ -247,9 +245,6 @@
       if (plan) {
         plan.recompense = true;
         this.recompense = plan;
-        setTimeout(() => {
-          if (plan.item.coord) EARTH.Coords.imprimer(plan);
-        }, 2200);
         /* une derive tres lente : l'image n'est jamais tout a fait fixe */
         plan.motion.animate(
           [{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }],

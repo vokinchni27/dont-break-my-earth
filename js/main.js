@@ -14,6 +14,7 @@
 
   async function demarrer() {
     const cfg = EARTH.CONFIG;
+    reglerPourLEcran(cfg);
     document.documentElement.style.setProperty('--fond', cfg.scene.fond);
 
     /* La configuration publique et le CMS enrichissent l'œuvre,
@@ -59,13 +60,25 @@
     /* 6. le titre tient la porte : la composition ne commence
           qu'une fois la matiere liquefiee, ou le visiteur pressé */
     EARTH.Titre.init(document.getElementById('titre'));
-    EARTH.Aide.init();
     EARTH.bus.sur('titre-fini', () => {
       if (cfg.rythme.demarrageAuto) EARTH.Director.demarrer();
     });
     if (!cfg.rythme.demarrageAuto) EARTH.Director.pause();
 
     EARTH.HUD.majEtat();
+  }
+
+  /* Le telephone n'est pas un petit ecran : c'est un autre temps.
+     On y donne dix secondes, pas dix minutes, et une composition
+     qui met onze secondes a changer passe pour une image fixe.
+     Les valeurs de CONFIG.telephone remplacent alors les autres. */
+  function reglerPourLEcran(cfg) {
+    if (!cfg.telephone.actif || !EARTH.utils.mobile()) return;
+    Object.keys(cfg.telephone).forEach(chemin => {
+      if (chemin.indexOf('.') === -1) return;      // 'actif' n'est pas un reglage
+      EARTH.utils.set(cfg, chemin, cfg.telephone[chemin]);
+    });
+    document.body.classList.add('au-doigt');
   }
 
   /* seul texte que la piece s'autorise en cas de panne */

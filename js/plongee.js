@@ -41,21 +41,57 @@
         EARTH.Director.suspendre(5000);
       }, { passive: false });
 
-      /* deux doigts : même geste, même descente */
+      /* ------------------------------------------------------
+         AU DOIGT
+         Deux gestes, pas un : le pincement, et surtout le simple
+         glissement vertical. Exiger deux doigts condamnait le
+         téléphone à ne rien faire — on y glisse d'instinct, on
+         n'y pince presque jamais.
+         ------------------------------------------------------ */
       let pincee = null;
+      let dernierY = null, dernierX = null;
+
+      window.addEventListener('touchstart', e => {
+        pincee = null;
+        if (e.touches.length === 1 && !interfaceSous(e.target)) {
+          dernierY = e.touches[0].clientY;
+          dernierX = e.touches[0].clientX;
+        } else { dernierY = null; }
+      }, { passive: true });
+
       window.addEventListener('touchmove', e => {
-        if (!EARTH.CONFIG.plongee.active || e.touches.length !== 2) return;
-        if (interfaceSous(e.target)) return;
+        if (!EARTH.CONFIG.plongee.active || interfaceSous(e.target)) return;
+        const cfg = EARTH.CONFIG.plongee;
+
+        /* un doigt qui glisse : on descend, comme à la molette */
+        if (e.touches.length === 1 && dernierY != null) {
+          const t = e.touches[0];
+          const dy = dernierY - t.clientY;
+          dernierY = t.clientY;
+          /* sous le seuil, c'est un appui qui tremble, pas un geste */
+          if (Math.abs(dy) > 1.5) {
+            this.vitesse += dy * cfg.vitesse * 1.15;
+            this.centre.x = clamp(dernierX / window.innerWidth, 0.1, 0.9);
+            this.centre.y = clamp(t.clientY / window.innerHeight, 0.1, 0.9);
+            EARTH.Director.suspendre(4000);
+          }
+          return;
+        }
+
+        /* deux doigts : le pincement fait la même chose, en plus franc */
+        if (e.touches.length !== 2) return;
+        dernierY = null;
         const [a, b] = e.touches;
         const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
         if (pincee != null) {
-          this.vitesse += (pincee - d) * EARTH.CONFIG.plongee.vitesse * 1.6;
+          this.vitesse += (pincee - d) * cfg.vitesse * 1.6;
           this.centre.x = clamp((a.clientX + b.clientX) / 2 / window.innerWidth, 0.1, 0.9);
           this.centre.y = clamp((a.clientY + b.clientY) / 2 / window.innerHeight, 0.1, 0.9);
         }
         pincee = d;
       }, { passive: true });
-      window.addEventListener('touchend', () => { pincee = null; }, { passive: true });
+
+      window.addEventListener('touchend', () => { pincee = null; dernierY = null; }, { passive: true });
 
       this.demarrer();
       return this;

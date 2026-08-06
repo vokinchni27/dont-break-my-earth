@@ -38,9 +38,11 @@
       marque: 'EARTH',
       sousTitre: 'archive vivante',
       etatJamaisTermine: 'jamais terminé',
-      aide1: 'maintiens pour creuser.',
-      aide2: 'ne bouge plus.',
-      aide3: 'attends.',
+      /* Vrai à la souris comme au doigt : c'est pour cela que ces
+         trois lignes restent affichées sur téléphone. */
+      aide1: 'glisse pour descendre.',
+      aide2: 'maintiens pour creuser.',
+      aide3: 'ne bouge plus.',
       captures: 'captures',
       lieux: 'lieux',
       recues: 'reçues',
@@ -63,14 +65,14 @@
 
       etape1Index: '01 · explorer',
       etape1Texte: 'Choisis un lieu dans Google Earth et réalise une capture d’écran.',
-      etape1Lien: 'ouvrir Google Earth ↗',
+      etape1Lien: 'ouvrir Google Earth',
 
       etape2Index: '02 · déposer',
       etape2Bouton: 'choisir la capture',
       apercuAria: 'Aperçu de la capture',
 
-      etape3Index: '03 · situer, si tu veux',
-      etape3Texte: 'Rien n’est obligatoire ici. Une capture seule suffit.',
+      etape3Index: '03 · situer',
+      etape3Texte: 'facultatif',
       champLatitude: 'latitude, si tu veux',
       champLongitude: 'longitude, si tu veux',
       champLieu: 'lieu, si tu veux',
@@ -96,20 +98,28 @@
       lieuCollectif: 'COLLECTIF'      // quand personne n’a nommé le lieu
     },
 
-    /* --- L’AIDE AU CENTRE ---------------------------------- */
-    /* Elle paraît, elle se lit, elle s’efface. On la rappelle
-       avec « ? ». La liste des touches est plus bas : `aide`. */
-    raccourcis: {
-      titre: 'QUELQUES TOUCHES',
-      note: '? pour revoir',
-      rappel: '?'
-    },
 
     /* --- LE FEUILLET « À PROPOS » -------------------------- */
     contenu: {
       invite: 'à propos',
       fermer: 'fermer',
-      aria: 'À propos de Don’t Break My Earth'
+      aria: 'À propos de Don’t Break My Earth',
+
+      /* Le contenu du feuillet, un bloc par ligne : le titre, puis
+         une tabulation, puis le texte. Réécrivable depuis le bac à
+         sable comme n’importe quel autre texte.
+
+         Le mini-CMS reste prioritaire : s’il porte des contenus
+         longs, ce sont eux qui s’affichent, et cette liste sert de
+         version d’origine. */
+      blocs: [
+        ['DON’T BREAK MY EARTH',
+         'Une archive vivante composée de morceaux de Terre rapportés par celles et ceux qui la regardent.'],
+        ['CE QUE C’EST',
+         'Des captures satellite, leurs coordonnées, et un système qui compose sans fin de nouvelles relations entre elles. Rien n’est retouché. Rien n’est fixe.'],
+        ['PARTICIPER',
+         'Choisis un lieu, capture-le, dépose-le. Chaque morceau est relu avant de rejoindre l’archive.']
+      ]
     },
 
     /* --- LE BAC À SABLE ------------------------------------ */
@@ -162,14 +172,18 @@
       absences: 'lignes absentes'
     },
 
-    /* --- CE QUE MONTRE L’AIDE DU CENTRE -------------------- */
-    /* Court exprès : on n’apprend pas un clavier, on en retient
-       trois touches. La liste complète reste dans le bac à sable. */
+    /* --- LES TOUCHES MONTRÉES DANS L’APPAREILLAGE ---------- */
+    /* Toujours là, en bas à droite, dans le même gris que les
+       consignes de geste. Court exprès : on n’apprend pas un
+       clavier, on en retient trois touches.
+
+       ⚠️ Le bac à sable (touche P) N’Y FIGURE PAS, et ne doit pas
+       y figurer : c’est l’atelier, pas une fonction du site. La
+       touche continue de répondre pour qui la connaît. */
     apercuAide: [
       ['X', 'pause'],
-      ['← →', 'image précédente / suivante'],
-      ['W', 'webcam'],
-      ['P', 'bac à sable']
+      ['← →', 'précédente / suivante'],
+      ['W', 'webcam']
     ],
 
     /* --- LES CONSIGNES DE GESTE ---------------------------- */
@@ -194,8 +208,7 @@
       ['A', 'ajouter'],
       ['E', 'événement'],
       ['W', 'webcam'],
-      ['P', 'panneau'],
-      ['?', 'cette aide']
+      ['P', 'panneau']
     ],
 
     /* --- LES FRAGMENTS VIVANTS ----------------------------- */
@@ -318,18 +331,30 @@
 
   /* ----------------------------------------------------------
      L’ACCESSEUR
-     EARTH.T('contribution.envoyer') → le texte statique, ou la
-     valeur du CMS si une ligne de site_content porte cette clé.
+
+     Trois étages, du plus fort au plus faible :
+
+       locales   ce que le bac à sable vient de réécrire
+       distantes ce que le mini-CMS a publié
+       TEXTES    le texte d’origine, dans ce fichier
+
+     L’ordre compte. Les deux sources arrivent à des moments
+     différents — les locales au chargement du script, le CMS
+     quand le réseau répond — et si elles partageaient une seule
+     table, la réponse du CMS effacerait sans prévenir ce qu’on
+     est en train d’écrire dans le bac à sable.
      ---------------------------------------------------------- */
 
-  const surcharges = Object.create(null);
+  const locales = Object.create(null);    // bac à sable, gardées ici
+  const distantes = Object.create(null);  // mini-CMS, jamais gardées
 
   function lire(source, chemin) {
     return chemin.split('.').reduce((o, k) => (o == null ? o : o[k]), source);
   }
 
   function T(cle, defaut) {
-    if (cle in surcharges) return surcharges[cle];
+    if (cle in locales) return locales[cle];
+    if (cle in distantes) return distantes[cle];
     const valeur = lire(TEXTES, cle);
     if (valeur == null) {
       if (defaut !== undefined) return defaut;
@@ -368,17 +393,24 @@
     }
   };
 
+  /* le bac à sable : on garde, et on l’emporte sur le reste */
   T.definir = function (cle, valeur) {
-    surcharges[cle] = valeur;
+    locales[cle] = valeur;
     const gardees = magasin.lire();
     gardees[cle] = valeur;
     magasin.ecrire(gardees);
     prevenir();
   };
 
+  /* le CMS et les outils : on applique, on ne garde pas */
+  T.poser = function (cle, valeur) {
+    distantes[cle] = valeur;
+    prevenir();
+  };
+
   T.oublier = function () {
     magasin.vider();
-    Object.keys(surcharges).forEach(k => delete surcharges[k]);
+    Object.keys(locales).forEach(k => delete locales[k]);
     prevenir();
   };
 
@@ -386,14 +418,14 @@
 
   (function reprendre() {
     const gardees = magasin.lire();
-    Object.keys(gardees).forEach(k => { surcharges[k] = gardees[k]; });
+    Object.keys(gardees).forEach(k => { locales[k] = gardees[k]; });
   })();
 
   /* appelé par content.js quand le CMS a répondu */
   T.surcharger = function (lignes) {
     (lignes || []).forEach(ligne => {
       if (ligne && typeof ligne.key === 'string' && typeof ligne.value === 'string') {
-        if (lire(TEXTES, ligne.key) != null) surcharges[ligne.key] = ligne.value;
+        if (lire(TEXTES, ligne.key) != null) distantes[ligne.key] = ligne.value;
       }
     });
     prevenir();

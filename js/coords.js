@@ -176,18 +176,6 @@
       } else repli(texte, dire);
     },
 
-    /* --- coordonnees imprimees ------------------------------ */
-    /* certaines images portent leurs coordonnees a meme la surface */
-
-    imprimer(plan) {
-      if (!plan.item.coord) return;
-      const d = document.createElement('div');
-      d.className = 'coord-imprimee';
-      d.textContent = this.texte(plan.item);
-      plan.frame.appendChild(d);
-      plan.imprimee = d;
-    },
-
     /* --- l'inondation (evenement rare) ---------------------- */
     /* toutes les coordonnees de l'archive envahissent l'ecran,
        a leur vraie place : la carte apparait enfin, une fois */

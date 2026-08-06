@@ -94,9 +94,6 @@
       });
 
       /* certaines images portent leurs coordonnees a meme la surface */
-      if (item.coord && place.w > 0.2 && Math.random() < cfg.coordonnees.imprimees) {
-        EARTH.Coords.imprimer(plan);
-      }
 
       const vivants = this.plans.filter(p => !p.sorti && !p.recompense);
       if (vivants.length > cfg.scene.maxPlans) {

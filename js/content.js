@@ -33,10 +33,27 @@
       return this.items;
     },
 
+    /* Le feuillet vient de `contenu.blocs`, donc du bac à sable.
+       Si le mini-CMS publie des contenus longs, ce sont eux qui
+       gagnent : on les traduit dans la même clé, sans les garder,
+       pour qu'il n'existe qu'UNE source à l'écran. */
+    adopterContenusDistants() {
+      const longs = this.items.filter(item => item.type !== 'fragment' && item.value);
+      if (!longs.length) return;
+      EARTH.T.poser('contenu.blocs', longs.map(item => [item.title || '', item.value]));
+    },
+
+    blocs() {
+      const liste = EARTH.T('contenu.blocs');
+      return (Array.isArray(liste) ? liste : [])
+        .map(b => Array.isArray(b) ? b : ['', String(b)])
+        .filter(b => b[0] || b[1]);
+    },
+
     init(el) {
       this.el = el;
-      const longs = this.items.filter(item => item.type !== 'fragment');
-      if (!longs.length) return this;
+      this.adopterContenusDistants();
+      if (!this.blocs().length) return this;
 
       const bouton = document.createElement('button');
       bouton.className = 'contenu-invite';
@@ -57,19 +74,25 @@
       fermer.setAttribute('data-t', 'contenu.fermer');
       feuille.appendChild(fermer);
 
-      longs.forEach(item => {
-        const article = document.createElement('article');
-        article.className = 'contenu-bloc contenu-bloc--' + item.type;
-        if (item.title) {
-          const titre = document.createElement('h2');
-          titre.textContent = item.title;
-          article.appendChild(titre);
-        }
-        const texte = document.createElement(item.type === 'quote' ? 'blockquote' : 'p');
-        texte.textContent = item.value;
-        article.appendChild(texte);
-        feuille.appendChild(article);
-      });
+      /* redessiné à chaque réécriture : le bac à sable doit se voir */
+      const peindre = () => {
+        feuille.querySelectorAll('.contenu-bloc').forEach(n => n.remove());
+        this.blocs().forEach(([titre, valeur]) => {
+          const article = document.createElement('article');
+          article.className = 'contenu-bloc';
+          if (titre) {
+            const h = document.createElement('h2');
+            h.textContent = titre;
+            article.appendChild(h);
+          }
+          const p = document.createElement('p');
+          p.textContent = valeur;
+          article.appendChild(p);
+          feuille.appendChild(article);
+        });
+      };
+      peindre();
+      EARTH.T.surChangement(peindre);
 
       const basculer = ouvert => {
         feuille.classList.toggle('visible', ouvert);

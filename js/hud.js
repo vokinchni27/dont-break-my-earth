@@ -39,8 +39,17 @@
           '<span class="hud-faible" data-t="hud.aide1"></span>' +
           '<span class="hud-faible" data-t="hud.aide2"></span>' +
           '<span class="hud-faible" data-t="hud.aide3"></span>' +
+          '<span class="hud-touches hud-faible"></span>' +
         '</div>';
       EARTH.T.hydrater(el);
+
+      /* Les touches, dans le meme gris que les consignes de geste,
+         et la en permanence : une aide qui s'efface est une aide
+         que personne ne lit. Ce qu'elle montre vient de la cle
+         `apercuAide` — et le bac a sable n'y figure pas. */
+      this.touches = el.querySelector('.hud-touches');
+      this.majTouches();
+      EARTH.T.surChangement(() => this.majTouches());
 
       this.marquee = document.createElement('div');
       this.marquee.className = 'marquee';
@@ -64,6 +73,20 @@
 
       this.appliquer();
       return this;
+    },
+
+    majTouches() {
+      if (!this.touches) return;
+      const liste = EARTH.T('apercuAide');
+      this.touches.replaceChildren();
+      (Array.isArray(liste) ? liste : []).forEach(paire => {
+        const ligne = document.createElement('span');
+        ligne.className = 'hud-touche';
+        const touche = document.createElement('b');
+        touche.textContent = Array.isArray(paire) ? paire[0] : String(paire);
+        ligne.append(touche, ' ' + (Array.isArray(paire) ? paire[1] : ''));
+        this.touches.appendChild(ligne);
+      });
     },
 
     appliquer() {

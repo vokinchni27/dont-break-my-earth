@@ -271,21 +271,6 @@ body.depot .grille-toile { filter: contrast(3); }
 .coord-bandeau.visible { pointer-events: auto; cursor: copy; }
 .coord-bandeau.visible { opacity: 1; }
 
-/* les coordonnees imprimees a meme l'image */
-.coord-imprimee {
-  position: absolute;
-  left: 8px;
-  bottom: 7px;
-  z-index: 2;
-  font-size: 9.5px;
-  line-height: 1.4;
-  letter-spacing: .07em;
-  white-space: pre;
-  color: #fff;
-  mix-blend-mode: difference;
-  pointer-events: none;
-}
-
 /* l'inondation : toute l'archive, a sa vraie place */
 .coord-nappe { position: absolute; inset: 0; }
 .coord-nappe span {
@@ -628,8 +613,10 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
    ============================================================ */
 
 #contenus { position: fixed; inset: 0; z-index: 8; pointer-events: none; }
+/* en haut, au centre : la meme place sur un ecran et dans une main */
 .contenu-invite {
-  position: absolute; left: var(--marge); bottom: calc(var(--marge) + 62px);
+  position: absolute; left: 50%; top: var(--marge);
+  transform: translateX(-50%);
   padding: 7px 13px; border: 1px solid var(--encre); border-radius: 999px;
   background: var(--fond); color: var(--encre); pointer-events: auto;
   font: inherit; font-size: var(--micro); letter-spacing: var(--interlettre);
@@ -649,8 +636,7 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
 }
 .contenu-bloc { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(260px, 1.5fr); gap: 5vw; padding: 34px 0; border-top: 1px solid var(--encre); }
 .contenu-bloc h2 { font-size: clamp(28px, 6vw, 82px); line-height: .86; letter-spacing: -.05em; }
-.contenu-bloc p, .contenu-bloc blockquote { max-width: 780px; font-size: clamp(18px, 2.4vw, 34px); line-height: 1.17; white-space: pre-wrap; }
-.contenu-bloc--quote blockquote { font-style: normal; }
+.contenu-bloc p { max-width: 780px; font-size: clamp(18px, 2.4vw, 34px); line-height: 1.17; white-space: pre-wrap; }
 
 /* ============================================================
    LA WEBCAM, EN MOSAIQUE DE PAYSAGES
@@ -744,54 +730,16 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
 }
 .titre-note.efface { opacity: 0; }
 
-/* ============================================================
-   L'AIDE AU CENTRE
-   Elle parait une fois, se lit en trois secondes, s'efface.
-   Meme micro-typographie que l'appareillage, et la meme fusion
-   « difference » : elle traverse les images au lieu de les
-   recouvrir, donc elle ne gene jamais la lecture.
-   ============================================================ */
-
-#aide {
-  position: fixed;
-  left: 50%; top: 50%;
-  z-index: 12;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  mix-blend-mode: difference;
-  transition: opacity .9s ease, visibility .9s;
-}
-#aide.visible { opacity: 1; visibility: visible; }
-
-.aide-cadre {
+/* Les touches, dans le coin bas droit, sous les consignes de geste
+   et dans le meme gris : toujours la, jamais dans le chemin. Une
+   aide qui s'efface est une aide que personne ne lit. */
+.hud-touches {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 13px;
-  color: #fff;                            /* « difference » l'inverse */
-  text-align: center;
+  align-items: flex-end;
+  margin-top: 7px;
 }
-
-.aide-titre, .aide-note {
-  font-size: var(--micro);
-  letter-spacing: var(--interlettre);
-  text-transform: uppercase;
-  opacity: .45;
-}
-
-.aide-table {
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: baseline;
-  gap: 7px 16px;
-  font-size: var(--micro);
-  letter-spacing: var(--interlettre);
-  text-transform: uppercase;
-}
-.aide-table dt { justify-self: end; font-weight: 700; }
-.aide-table dd { justify-self: start; opacity: .68; }
+.hud-touche b { font-weight: 700; }
 
 /* ============================================================
    LE BAC A SABLE — brutaliste
@@ -939,7 +887,11 @@ body.panneau-ouvert #panneau { transform: none; }
 @media (max-width: 720px), (pointer: coarse) {
   :root { --marge: 10px; --micro: 9px; }
 
-  .hud-br { display: none; }              /* pas de legende clavier au doigt */
+  /* Les consignes de GESTE restent : au doigt, ce sont justement
+     elles qui manquaient. Seules les touches disparaissent — il n'y
+     a pas de clavier au bout d'un pouce. */
+  .hud-touches { display: none; }
+  .hud-br { bottom: calc(var(--marge) + 74px); }
   .hud-bl { bottom: calc(var(--marge) + 20px); }
   .coord-bandeau { width: 86vw; bottom: 58px; }
   .coord-curseur { display: none; }       /* le doigt cache deja l'endroit */
@@ -962,7 +914,6 @@ body.panneau-ouvert #panneau { transform: none; }
   .contrib-duo, .contrib-facultatif { grid-column: 1; }
   .contrib-duo { grid-template-columns: 1fr; gap: 16px; }
   .contrib-regle, .contrib-envoyer, .contrib-erreur { margin-left: 0; }
-  .contenu-invite { bottom: calc(var(--marge) + 82px); }
   .contenu-feuille { padding: 74px 14px 40px; }
   .contenu-bloc { grid-template-columns: 1fr; gap: 18px; }
 

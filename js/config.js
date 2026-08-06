@@ -136,7 +136,6 @@ EARTH.CONFIG = {
   coordonnees: {
     survol: true,
     curseur: true,
-    imprimees: 0.18,
     cartel: true,          // la vraie bande noire, agrandie
     lignes: true,
     taille: 11
@@ -193,15 +192,6 @@ EARTH.CONFIG = {
     fuseau: 'Europe/Paris'
   },
 
-  /* --- L’AIDE AU CENTRE ----------------------------------- */
-  /* Elle paraît une fois, se lit en trois secondes, s’efface.
-     « ? » la rappelle. Ce qu’elle montre : clé `apercuAide`. */
-  aide: {
-    actif: true,
-    retard: 1400,          // ms après le retrait du titre
-    duree: 7000            // ms avant l’effacement — 0 = elle reste
-  },
-
   webcam: {
     actif: false,
     colonnes: 26,
@@ -228,5 +218,26 @@ EARTH.CONFIG = {
     panneauOuvert: false,
     graine: null,
     journal: false
+  },
+
+  /* --- LE TÉLÉPHONE --------------------------------------- */
+  /* On ne regarde pas un écran de poche comme un grand écran :
+     on y donne dix secondes, pas dix minutes. Les valeurs
+     ci-dessous REMPLACENT celles du dessus quand l'écran est
+     petit ou tactile — appliquées une fois, au démarrage. */
+  telephone: {
+    actif: true,
+    'rythme.tenue': 5200,          // au lieu de 11000 : ça change plus souvent
+    'rythme.tenueVariation': 2000,
+    'rythme.cascade': 200,         // au lieu de 420 : ça arrive plus vite
+    'rythme.cascadeVariation': 140,
+    'mouvement.dureeEntree': 900,  // au lieu de 1500
+    'mouvement.dureeSortie': 600,
+    'geste.seuilMaintien': 260,    // le doigt obtient plus tôt sa récompense
+    'geste.creuseCadence': 200,
+    'geste.immobilite': 4500,
+    'titre.attente': 7000,         // le seuil ne retient pas au bout du pouce
+    'evenements.rarete': 0.1,
+    'plongee.vitesse': 0.0034      // un doigt parcourt moins qu'une molette
   }
 };
