@@ -96,6 +96,22 @@ autorisée dans la base.
 
 ---
 
+## Rendre le site public — le réglage qui bloque tout
+
+Par défaut, Vercel protège **toutes** les adresses `.vercel.app` par une
+connexion : un visiteur tombe sur une page de login Vercel au lieu du site.
+Tant que ce réglage est actif, le site est invisible pour le public, même si
+le déploiement a parfaitement réussi.
+
+**Vercel → projet `dont-break-my-earth` → Settings → Deployment Protection →
+Vercel Authentication → `Disabled` → Save.**
+
+C'est gratuit et c'est le seul geste qui rende le site accessible à tout le
+monde sur `.vercel.app`. (Vérifié le 06/08 : `ssoProtection` était activé en
+mode `all_except_custom_domains`.)
+
+---
+
 ## Le domaine — à lire avant d'y retoucher
 
 Un domaine, ça **s'achète**. L'ajouter dans Vercel ne le crée pas.
