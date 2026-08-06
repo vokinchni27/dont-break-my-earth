@@ -23,8 +23,8 @@
       this.el = el;
       el.innerHTML =
         '<div class="hud-coin hud-tl">' +
-          `<b>${EARTH.T('hud.marque')}<sup>®</sup></b>` +
-          `<span class="hud-faible">${EARTH.T('hud.sousTitre')}</span>` +
+          '<b><span data-t="hud.marque"></span><sup>®</sup></b>' +
+          '<span class="hud-faible" data-t="hud.sousTitre"></span>' +
         '</div>' +
         '<div class="hud-coin hud-tr">' +
           '<span id="hud-heure">--:--</span>' +
@@ -33,13 +33,14 @@
         '</div>' +
         '<div class="hud-coin hud-bl">' +
           '<span id="hud-partition">—</span>' +
-          `<span class="hud-faible">${EARTH.T('hud.etatJamaisTermine')}</span>` +
+          '<span class="hud-faible" data-t="hud.etatJamaisTermine"></span>' +
         '</div>' +
         '<div class="hud-coin hud-br">' +
-          `<span class="hud-faible">${EARTH.T('hud.aide1')}</span>` +
-          `<span class="hud-faible">${EARTH.T('hud.aide2')}</span>` +
-          `<span class="hud-faible">${EARTH.T('hud.aide3')}</span>` +
+          '<span class="hud-faible" data-t="hud.aide1"></span>' +
+          '<span class="hud-faible" data-t="hud.aide2"></span>' +
+          '<span class="hud-faible" data-t="hud.aide3"></span>' +
         '</div>';
+      EARTH.T.hydrater(el);
 
       this.marquee = document.createElement('div');
       this.marquee.className = 'marquee';
@@ -56,26 +57,13 @@
       EARTH.bus.sur('pointeur', p => this.bougerCurseur(p));
       EARTH.Director.surChangement(() => { this.majEtat(); this.majMarquee(); });
 
+      /* Les libelles fixes sont reposes d'office par
+         EARTH.T.hydrater. Seul le compte, compose de plusieurs
+         textes, demande d'etre recalcule. */
+      EARTH.T.surChangement(() => this.majEtat());
+
       this.appliquer();
       return this;
-    },
-
-    /* Les libellés statiques peuvent changer en direct depuis le
-       bac à sable : on les repose sans reconstruire les écouteurs. */
-    rafraichirLibelles() {
-      const q = (sel, cle) => {
-        const e = this.el.querySelector(sel);
-        if (e) e.textContent = EARTH.T(cle);
-      };
-      const marque = this.el.querySelector('.hud-tl b');
-      if (marque) marque.innerHTML = EARTH.T('hud.marque') + '<sup>\u00ae</sup>';
-      q('.hud-tl .hud-faible', 'hud.sousTitre');
-      q('.hud-bl .hud-faible', 'hud.etatJamaisTermine');
-      const aides = this.el.querySelectorAll('.hud-br .hud-faible');
-      ['hud.aide1', 'hud.aide2', 'hud.aide3'].forEach((cle, i) => {
-        if (aides[i]) aides[i].textContent = EARTH.T(cle);
-      });
-      this.majEtat();
     },
 
     appliquer() {

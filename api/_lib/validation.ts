@@ -13,8 +13,10 @@ export const submissionCreateSchema = z.object({
   sizeBytes: z.number().int().positive().max(8_388_608),
   width: z.number().int().positive().max(20_000).nullable().optional(),
   height: z.number().int().positive().max(20_000).nullable().optional(),
-  latitude: z.number().min(-90).max(90),
-  longitude: z.number().min(-180).max(180),
+  // Seul le fichier est obligatoire : la Terre se dépose même sans
+  // coordonnées. La modération peut les renseigner plus tard.
+  latitude: z.number().min(-90).max(90).nullable().optional(),
+  longitude: z.number().min(-180).max(180).nullable().optional(),
   locationLabel: z.string().trim().max(120).nullable().optional(),
   comment: z.string().trim().max(1000).nullable().optional(),
   authorName: z.string().trim().max(80).nullable().optional(),

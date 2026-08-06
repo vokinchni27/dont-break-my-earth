@@ -41,18 +41,20 @@
       const bouton = document.createElement('button');
       bouton.className = 'contenu-invite';
       bouton.type = 'button';
-      bouton.textContent = EARTH.T('contenu.invite');
+      bouton.setAttribute('data-t', 'contenu.invite');
       bouton.setAttribute('aria-expanded', 'false');
 
       const feuille = document.createElement('section');
       feuille.className = 'contenu-feuille';
+      /* on y lit un texte long : la molette doit y defiler */
+      feuille.setAttribute('data-interface', 'feuillet');
       feuille.setAttribute('aria-hidden', 'true');
-      feuille.setAttribute('aria-label', EARTH.T('contenu.aria'));
+      feuille.setAttribute('data-t-aria', 'contenu.aria');
 
       const fermer = document.createElement('button');
       fermer.className = 'contenu-fermer';
       fermer.type = 'button';
-      fermer.textContent = EARTH.T('contenu.fermer');
+      fermer.setAttribute('data-t', 'contenu.fermer');
       feuille.appendChild(fermer);
 
       longs.forEach(item => {
@@ -82,6 +84,7 @@
 
       el.appendChild(bouton);
       el.appendChild(feuille);
+      EARTH.T.hydrater(el);
       return this;
     }
   };

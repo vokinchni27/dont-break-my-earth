@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { HttpError } from './errors.js';
 
 const serverSchema = z.object({
   SUPABASE_URL: z.string().url(),
@@ -16,8 +17,27 @@ export type ServerEnv = z.infer<typeof serverSchema>;
 
 let cached: ServerEnv | undefined;
 
+/**
+ * Une variable Vercel absente n'est pas une donnée utilisateur
+ * invalide : c'est le service qui n'est pas configuré. Sans cette
+ * distinction, le visiteur lit « Données invalides » alors qu'il
+ * n'a rien fait de mal, et personne ne pense à regarder Vercel.
+ */
 export function env(): ServerEnv {
-  cached ??= serverSchema.parse(process.env);
+  if (cached) return cached;
+  const parsed = serverSchema.safeParse(process.env);
+  if (!parsed.success) {
+    const manquantes = parsed.error.issues
+      .map((issue) => issue.path.join('.'))
+      .filter((nom, index, tout) => nom && tout.indexOf(nom) === index);
+    console.error('[api] configuration incomplète :', manquantes.join(', '));
+    throw new HttpError(
+      503,
+      'Le dépôt collectif n’est pas encore configuré sur le serveur.',
+      'service_unconfigured'
+    );
+  }
+  cached = parsed.data;
   return cached;
 }
 

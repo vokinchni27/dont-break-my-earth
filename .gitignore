@@ -26,3 +26,6 @@ coverage/
 # NOTE : images/ est volontairement suivi — l'archive EST l'oeuvre.
 # images/manifest.json et manifest.js sont generes mais suivis aussi :
 # ils permettent d'ouvrir index.html en double-clic, sans rien lancer.
+
+# reglages de l atelier local (serveur de previsualisation)
+.claude/

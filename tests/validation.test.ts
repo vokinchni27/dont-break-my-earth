@@ -22,6 +22,33 @@ test('valide une proposition image complète', () => {
   assert.equal(extensionFor(parsed.mimeType), 'jpg');
 });
 
+test('accepte une capture sans la moindre métadonnée', () => {
+  // Le contrat du dépôt : seul le fichier est obligatoire.
+  const parsed = submissionCreateSchema.parse({
+    filename: 'sans-titre.png',
+    mimeType: 'image/png',
+    sizeBytes: 4_096,
+    formStartedAt: Date.now() - 2_000
+  });
+  assert.equal(parsed.latitude ?? null, null);
+  assert.equal(parsed.longitude ?? null, null);
+  assert.equal(parsed.locationLabel ?? null, null);
+  assert.equal(parsed.authorName ?? null, null);
+});
+
+test('refuse une coordonnée écrite mais hors limites', () => {
+  // Facultatif ne veut pas dire non vérifié : ce qui est fourni
+  // doit rester une coordonnée terrestre.
+  assert.throws(() => submissionCreateSchema.parse({
+    filename: 'ma-terre.jpg',
+    mimeType: 'image/jpeg',
+    sizeBytes: 2_048,
+    latitude: 120,
+    longitude: 2.3522,
+    formStartedAt: Date.now() - 2_000
+  }));
+});
+
 test('refuse les coordonnées et formats hors limites', () => {
   assert.throws(() => submissionCreateSchema.parse({
     filename: 'payload.svg',

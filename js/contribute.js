@@ -8,12 +8,16 @@
    d'avoir été validée — pas même à celui qui vient de l'envoyer.
    Elle part dans un bucket privé, en statut « pending », et n'entre
    dans l'œuvre qu'une fois passée en « approved ».
+
+   SECONDE RÈGLE : seul le fichier est obligatoire. Les coordonnées,
+   le lieu, le mot et la signature sont offerts, jamais exigés — on
+   dépose un morceau de Terre en deux gestes, ou en dix si on veut.
    ============================================================ */
 
 (function (EARTH) {
   'use strict';
 
-  const { clamp, lerp, Rand, dms } = EARTH.utils;
+  const { dms } = EARTH.utils;
   const TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
 
   const Contribution = {
@@ -36,8 +40,9 @@
       const invite = document.createElement('button');
       invite.className = 'invite';
       invite.type = 'button';
-      invite.innerHTML = `<span class="invite-signe">${EARTH.T('contribution.inviteSigne')}</span>` +
-        `<span class="invite-texte">${EARTH.T('contribution.invite')}</span>`;
+      invite.innerHTML =
+        '<span class="invite-signe" data-t="contribution.inviteSigne"></span>' +
+        '<span class="invite-texte" data-t="contribution.invite"></span>';
       invite.onclick = () => this.ouvrir();
       document.body.appendChild(invite);
       this.invite = invite;
@@ -56,51 +61,60 @@
 
       const voile = document.createElement('div');
       voile.className = 'depot-voile';
-      voile.innerHTML = `<div class="depot-mot">${EARTH.T('contribution.voileTitre')}</div>` +
-        `<div class="depot-note">${EARTH.T('contribution.voileNote')}</div>`;
+      voile.innerHTML =
+        '<div class="depot-mot" data-t-html="contribution.voileTitre"></div>' +
+        '<div class="depot-note" data-t="contribution.voileNote"></div>';
       this.el.appendChild(voile);
       this.voile = voile;
 
       this.dialogue = this.creerDialogue();
       this.el.appendChild(this.dialogue);
+      EARTH.T.hydrater(this.el);
+      EARTH.T.hydrater(invite);
     },
 
+    /* Le formulaire ne porte que des clés : c'est EARTH.T.hydrater
+       qui y pose les mots, et qui les repose à chaque réécriture
+       depuis le bac à sable. Aucune chaîne visible ici. */
     creerDialogue() {
       const fond = document.createElement('div');
       fond.className = 'contrib-dialogue';
+      fond.setAttribute('data-interface', 'depot');
       fond.setAttribute('aria-hidden', 'true');
       fond.innerHTML = `
         <form class="contrib-forme" novalidate>
-          <button type="button" class="contrib-fermer" aria-label="${EARTH.T('contribution.fermerAria')}">${EARTH.T('contribution.fermer')}</button>
+          <button type="button" class="contrib-fermer" data-t="contribution.fermer" data-t-aria="contribution.fermerAria"></button>
           <div class="contrib-entete">
-            <span class="contrib-index">${EARTH.T('contribution.formeIndex')}</span>
-            <h2>${EARTH.T('contribution.formeTitre')}</h2>
+            <span class="contrib-index" data-t="contribution.formeIndex"></span>
+            <h2 data-t-html="contribution.formeTitre"></h2>
           </div>
           <section class="contrib-etape">
-            <span class="contrib-index">${EARTH.T('contribution.etape1Index')}</span>
-            <p>${EARTH.T('contribution.etape1Texte')}</p>
-            <a class="contrib-google" target="_blank" rel="noopener noreferrer">${EARTH.T('contribution.etape1Lien')}</a>
+            <span class="contrib-index" data-t="contribution.etape1Index"></span>
+            <p data-t="contribution.etape1Texte"></p>
+            <a class="contrib-google" target="_blank" rel="noopener noreferrer" data-t="contribution.etape1Lien"></a>
           </section>
           <section class="contrib-etape">
-            <span class="contrib-index">${EARTH.T('contribution.etape2Index')}</span>
-            <button type="button" class="contrib-fichier">${EARTH.T('contribution.etape2Bouton')}</button>
-            <div class="contrib-apercu" hidden><img alt="${EARTH.T('contribution.apercuAria')}"><span></span></div>
+            <span class="contrib-index" data-t="contribution.etape2Index"></span>
+            <button type="button" class="contrib-fichier" data-t="contribution.etape2Bouton"></button>
+            <div class="contrib-apercu" hidden><img data-t-aria="contribution.apercuAria" alt=""><span></span></div>
           </section>
           <section class="contrib-etape contrib-champs">
-            <span class="contrib-index">${EARTH.T('contribution.etape3Index')}</span>
+            <span class="contrib-index" data-t="contribution.etape3Index"></span>
+            <p class="contrib-facultatif" data-t="contribution.etape3Texte"></p>
             <div class="contrib-duo">
-              <label>${EARTH.T('contribution.champLatitude')}<input name="latitude" inputmode="decimal" placeholder="${EARTH.T('contribution.placeholderLatitude')}" required></label>
-              <label>${EARTH.T('contribution.champLongitude')}<input name="longitude" inputmode="decimal" placeholder="${EARTH.T('contribution.placeholderLongitude')}" required></label>
+              <label><span data-t="contribution.champLatitude"></span><input name="latitude" inputmode="decimal" data-t-place="contribution.placeholderLatitude"></label>
+              <label><span data-t="contribution.champLongitude"></span><input name="longitude" inputmode="decimal" data-t-place="contribution.placeholderLongitude"></label>
             </div>
-            <label>${EARTH.T('contribution.champLieu')}<input name="locationLabel" maxlength="120" placeholder="${EARTH.T('contribution.placeholderLieu')}"></label>
-            <label>${EARTH.T('contribution.champMot')}<textarea name="comment" maxlength="1000" rows="3"></textarea></label>
-            <label>${EARTH.T('contribution.champSignature')}<input name="authorName" maxlength="80"></label>
+            <label><span data-t="contribution.champLieu"></span><input name="locationLabel" maxlength="120" data-t-place="contribution.placeholderLieu"></label>
+            <label><span data-t="contribution.champMot"></span><textarea name="comment" maxlength="1000" rows="3"></textarea></label>
+            <label><span data-t="contribution.champSignature"></span><input name="authorName" maxlength="80"></label>
             <label class="contrib-piege" aria-hidden="true">site<input name="website" tabindex="-1" autocomplete="off"></label>
           </section>
-          <p class="contrib-regle">${EARTH.T('contribution.regle')}</p>
-          <button class="contrib-envoyer" type="submit" disabled>${EARTH.T('contribution.envoyer')}</button>
+          <p class="contrib-regle" data-t="contribution.regle"></p>
+          <button class="contrib-envoyer" type="submit" data-t="contribution.envoyer" disabled></button>
           <div class="contrib-erreur" role="status"></div>
         </form>`;
+      EARTH.T.hydrater(fond);
 
       this.forme = fond.querySelector('form');
       this.apercu = fond.querySelector('.contrib-apercu');
@@ -176,9 +190,13 @@
     async soumettre() {
       if (!this.fichier) return this.signaler(EARTH.T('contribution.choisisDabord'));
       const data = new FormData(this.forme);
+
+      /* Une coordonnée absente est un choix, pas une erreur. On ne
+         refuse que ce qui a été écrit et qu'on n'arrive pas à lire :
+         un champ vide passe, un champ illisible se signale. */
       const latitude = coordonnee(data.get('latitude'), 'lat');
       const longitude = coordonnee(data.get('longitude'), 'lon');
-      if (latitude == null || longitude == null) {
+      if (latitude === false || longitude === false) {
         return this.signaler(EARTH.T('contribution.coordonneesIllisibles'));
       }
 
@@ -247,7 +265,7 @@
           collectiveId: l.id,
           src: l.image_url,
           path: l.storage_path,
-          place: l.location_label || 'COLLECTIF',
+          place: l.location_label || EARTH.T('contribution.lieuCollectif'),
           name: (l.original_filename || '').replace(/\.[^.]+$/, ''),
           type: 'image',
           collective: true,
@@ -295,13 +313,18 @@
     return propre || null;
   }
 
+  /* trois réponses possibles, et il faut les distinguer :
+       null   rien n'a été écrit — c'est permis
+       false  quelque chose a été écrit, mais illisible
+       nombre la coordonnée, en degrés décimaux */
   function coordonnee(brut, axe) {
     if (typeof brut !== 'string') return null;
     const normalise = brut.trim().replace(',', '.').replace(/[′’]/g, "'").replace(/[″]/g, '"');
+    if (!normalise) return null;
     let n = Number(normalise);
     if (!Number.isFinite(n)) n = dms(normalise);
     const limite = axe === 'lat' ? 90 : 180;
-    return Number.isFinite(n) && Math.abs(n) <= limite ? Math.round(n * 1e6) / 1e6 : null;
+    return Number.isFinite(n) && Math.abs(n) <= limite ? Math.round(n * 1e6) / 1e6 : false;
   }
 
   function mesurer(fichier) {
@@ -317,6 +340,5 @@
     });
   }
 
-  Contribution.coordonnee = coordonnee;
   EARTH.Contribution = Contribution;
 })(window.EARTH = window.EARTH || {});

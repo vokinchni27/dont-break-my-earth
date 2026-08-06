@@ -51,6 +51,16 @@ body {
   transition: background .7s ease;
 }
 
+/* ...sauf sur les surfaces d'interface. Le formulaire de depot, le
+   bac a sable, le feuillet : on y lit, on y ecrit, on y defile
+   comme sur n'importe quelle page. La molette y est rendue au
+   navigateur (voir js/plongee.js), le doigt y glisse en vertical,
+   et le rebond ne remonte pas jusqu'a l'oeuvre. */
+[data-interface] {
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
 /* le curseur devient un instrument : une croix, pas une fleche */
 @media (pointer: fine) {
   body.instrument, body.instrument * { cursor: none; }
@@ -501,7 +511,9 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
 .contrib-dialogue {
   position: fixed;
   inset: 0;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;      /* l'elan du doigt, sur iOS */
   padding: 20px;
   background: rgba(255,255,255,.97);
   opacity: 0;
@@ -537,7 +549,15 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
 .contrib-apercu { grid-column: 2; width: min(620px, 100%); }
 .contrib-apercu img { display: block; width: 100%; max-height: 340px; object-fit: cover; filter: grayscale(.15); }
 .contrib-apercu span { display: block; margin-top: 7px; color: var(--gris); font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase; }
-.contrib-champs > label, .contrib-duo { grid-column: 2; }
+.contrib-champs > label, .contrib-duo, .contrib-facultatif { grid-column: 2; }
+/* rien n'est exige ici, et il faut que ca se voie */
+.contrib-facultatif {
+  margin-bottom: 6px;
+  color: var(--gris);
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+}
 .contrib-champs label { display: flex; flex-direction: column; gap: 5px; color: var(--gris); font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase; }
 .contrib-champs input, .contrib-champs textarea {
   width: 100%; padding: 9px 0; border: 0; border-bottom: 1px solid var(--encre);
@@ -704,12 +724,15 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
   user-select: none;
 }
 .titre-mot { display: inline-flex; }
-.titre-lettre {
-  display: inline-block;
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
+.titre-lettre { display: inline-block; }   /* immobile : on doit pouvoir lire */
 .titre-espace { display: inline-block; }
+
+/* la couche des signes qui s'echappent des lettres */
+.titre-grains {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 
 .titre-note {
   margin-top: 5vh;
@@ -720,6 +743,55 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
   transition: opacity 1s ease;
 }
 .titre-note.efface { opacity: 0; }
+
+/* ============================================================
+   L'AIDE AU CENTRE
+   Elle parait une fois, se lit en trois secondes, s'efface.
+   Meme micro-typographie que l'appareillage, et la meme fusion
+   « difference » : elle traverse les images au lieu de les
+   recouvrir, donc elle ne gene jamais la lecture.
+   ============================================================ */
+
+#aide {
+  position: fixed;
+  left: 50%; top: 50%;
+  z-index: 12;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  mix-blend-mode: difference;
+  transition: opacity .9s ease, visibility .9s;
+}
+#aide.visible { opacity: 1; visibility: visible; }
+
+.aide-cadre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+  color: #fff;                            /* « difference » l'inverse */
+  text-align: center;
+}
+
+.aide-titre, .aide-note {
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+  opacity: .45;
+}
+
+.aide-table {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  gap: 7px 16px;
+  font-size: var(--micro);
+  letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+}
+.aide-table dt { justify-self: end; font-weight: 700; }
+.aide-table dd { justify-self: start; opacity: .68; }
 
 /* ============================================================
    LE BAC A SABLE — brutaliste
@@ -886,7 +958,8 @@ body.panneau-ouvert #panneau { transform: none; }
   .contrib-entete, .contrib-etape { grid-template-columns: 1fr; }
   .contrib-entete { gap: 12px; margin-bottom: 42px; }
   .contrib-entete h2 { font-size: clamp(46px, 18vw, 90px); }
-  .contrib-etape .contrib-google, .contrib-apercu, .contrib-champs > label, .contrib-duo { grid-column: 1; }
+  .contrib-etape .contrib-google, .contrib-apercu, .contrib-champs > label,
+  .contrib-duo, .contrib-facultatif { grid-column: 1; }
   .contrib-duo { grid-template-columns: 1fr; gap: 16px; }
   .contrib-regle, .contrib-envoyer, .contrib-erreur { margin-left: 0; }
   .contenu-invite { bottom: calc(var(--marge) + 82px); }

@@ -7,7 +7,7 @@ Une ligne de la table `site_content` dont la colonne `key` vaut exactement
 une clé ci-dessous **remplace** le texte statique au chargement, sans toucher
 au code ni redéployer. C’est le CMS.
 
-> 156 textes. Régénérer avec `node tools/lister-textes.mjs`.
+> 183 textes. Régénérer avec `node tools/lister-textes.mjs`.
 
 ---
 
@@ -18,6 +18,7 @@ au code ni redéployer. C’est le CMS.
 | `titre.mot` | DON’T BREAK MY HEART |
 | `titre.echo` | DON’T BREAK MY EARTH |
 | `titre.invitation` | passe la main |
+| `titre.symboles` | · • + × ° ′ ″ N S E W 0 1 4 7 |
 
 ## L’appareillage
 
@@ -54,9 +55,10 @@ au code ni redéployer. C’est le CMS.
 | `contribution.etape2Index` | 02 · déposer |
 | `contribution.etape2Bouton` | choisir la capture |
 | `contribution.apercuAria` | Aperçu de la capture |
-| `contribution.etape3Index` | 03 · situer |
-| `contribution.champLatitude` | latitude |
-| `contribution.champLongitude` | longitude |
+| `contribution.etape3Index` | 03 · situer, si tu veux |
+| `contribution.etape3Texte` | Rien n’est obligatoire ici. Une capture seule suffit. |
+| `contribution.champLatitude` | latitude, si tu veux |
+| `contribution.champLongitude` | longitude, si tu veux |
 | `contribution.champLieu` | lieu, si tu veux |
 | `contribution.champMot` | un mot, si tu veux |
 | `contribution.champSignature` | signer, si tu veux |
@@ -75,6 +77,15 @@ au code ni redéployer. C’est le CMS.
 | `contribution.coordonneesIllisibles` | coordonnées illisibles ou hors limites |
 | `contribution.envoiImpossible` | envoi impossible — réessaie dans un instant |
 | `contribution.archiveInjoignable` | archive collective injoignable |
+| `contribution.lieuCollectif` | COLLECTIF |
+
+## raccourcis
+
+| clé | texte actuel |
+|---|---|
+| `raccourcis.titre` | QUELQUES TOUCHES |
+| `raccourcis.note` | ? pour revoir |
+| `raccourcis.rappel` | ? |
 
 ## Le feuillet « à propos »
 
@@ -93,8 +104,13 @@ au code ni redéployer. C’est le CMS.
 | `panneau.echelle` | ÉCHELLE |
 | `panneau.rythme` | RYTHME |
 | `panneau.grille` | GRILLE |
+| `panneau.seuil` | SEUIL |
 | `panneau.geste` | GESTE |
 | `panneau.regard` | REGARD |
+| `panneau.particules` | signes |
+| `panneau.naissance` | fréquence |
+| `panneau.opaciteSignes` | présence |
+| `panneau.montee` | montée |
 | `panneau.plusPetite` | plus petite |
 | `panneau.plusGrande` | plus grande |
 | `panneau.tenue` | tenue |
@@ -130,11 +146,17 @@ au code ni redéployer. C’est le CMS.
 | `panneau.curseurGrille` | sous la main |
 | `panneau.absences` | lignes absentes |
 
+## apercuAide
+
+| clé | texte actuel |
+|---|---|
+| `apercuAide` | X — pause · ← → — image précédente / suivante · W — webcam · P — bac à sable |
+
 ## Les consignes de geste
 
 | clé | texte actuel |
 |---|---|
-| `aide` | MOLETTE — descendre dans la grille · CLIC — détacher une image · MAINTENIR — creuser · NE RIEN FAIRE — une image immense · DÉPOSER — contribuer · ESPACE — suivante · ← → — naviguer · R — rejouer · X — pause · 1-9 — partition · ENTRÉE — aligner · RETOUR — effacer · G — grille · H — appareillage · N — gris · C — recadrage · T — texte · A — ajouter · E — événement · W — webcam · P — panneau |
+| `aide` | MOLETTE — descendre dans la grille · CLIC — détacher une image · MAINTENIR — creuser · NE RIEN FAIRE — une image immense · DÉPOSER — contribuer · ESPACE — suivante · ← → — naviguer · R — rejouer · X — pause · 1-9 — partition · ENTRÉE — aligner · RETOUR — effacer · G — grille · H — appareillage · N — gris · C — recadrage · T — texte · A — ajouter · E — événement · W — webcam · P — panneau · ? — cette aide |
 
 ## Les fragments vivants
 
@@ -191,15 +213,30 @@ au code ni redéployer. C’est le CMS.
 | `admin.capture` | Capture proposée |
 | `admin.aucuneProposition` | Rien ici pour l’instant. |
 | `admin.aucunContenu` | Aucun contenu. |
+| `admin.chargement` | chargement… |
 | `admin.valider` | valider |
 | `admin.refuser` | refuser |
 | `admin.supprimer` | supprimer |
-| `admin.restaurer` | remettre en attente |
+| `admin.modifier` | modifier |
 | `admin.confirmerSuppression` | Supprimer le fichier et passer la ligne en « supprimée » ? Le fichier ne sera pas récupérable. |
+| `admin.confirmerSuppressionContenu` | Supprimer définitivement ce contenu ? |
 | `admin.coordonneesInvalides` | coordonnées invalides |
+| `admin.captureValidee` | capture validée |
+| `admin.captureRefusee` | capture refusée |
 | `admin.captureSupprimee` | capture supprimée |
+| `admin.contenuAjoute` | contenu ajouté |
+| `admin.contenuModifie` | contenu modifié |
 | `admin.contenuSupprime` | contenu supprimé |
 | `admin.enregistrement` | enregistrement… |
+| `admin.champLieu` | lieu |
+| `admin.champLatitude` | latitude |
+| `admin.champLongitude` | longitude |
+| `admin.champCommentaire` | commentaire |
+| `admin.sansCoordonnees` | sans coordonnées |
+| `admin.signeePar` | signée : |
+| `admin.nonSignee` | non signée |
+| `admin.nonPublie` | non publié |
+| `admin.ordreCourt` | ordre |
 | `admin.statut.pending` | en attente |
 | `admin.statut.approved` | validée |
 | `admin.statut.rejected` | refusée |

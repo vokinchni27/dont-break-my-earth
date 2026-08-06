@@ -59,6 +59,7 @@
     /* 6. le titre tient la porte : la composition ne commence
           qu'une fois la matiere liquefiee, ou le visiteur pressé */
     EARTH.Titre.init(document.getElementById('titre'));
+    EARTH.Aide.init();
     EARTH.bus.sur('titre-fini', () => {
       if (cfg.rythme.demarrageAuto) EARTH.Director.demarrer();
     });

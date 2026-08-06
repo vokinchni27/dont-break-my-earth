@@ -14,39 +14,45 @@
   const { get, set } = EARTH.utils;
 
   /* type : range | bascule
-     Fonction et non constante : les libelles doivent pouvoir venir
-     du CMS, qui repond apres le chargement du script. */
-  function reglages() { return [
-    [EARTH.T('panneau.echelle'), [
-      { p: 'echelle.min', l: EARTH.T('panneau.plusPetite'), min: 0.01, max: 0.6, pas: 0.005 },
-      { p: 'echelle.max', l: EARTH.T('panneau.plusGrande'), min: 0.2, max: 2.5, pas: 0.01 }
+     `l` est une CLÉ, pas un mot : le libellé est posé par
+     EARTH.T.hydrater et reposé à chaque réécriture. */
+  const REGLAGES = [
+    ['panneau.echelle', [
+      { p: 'echelle.min', l: 'panneau.plusPetite', min: 0.01, max: 0.6, pas: 0.005 },
+      { p: 'echelle.max', l: 'panneau.plusGrande', min: 0.2, max: 2.5, pas: 0.01 }
     ]],
-    [EARTH.T('panneau.rythme'), [
-      { p: 'rythme.tenue', l: EARTH.T('panneau.tenue'), min: 800, max: 30000, pas: 100, u: 'ms',
+    ['panneau.rythme', [
+      { p: 'rythme.tenue', l: 'panneau.tenue', min: 800, max: 30000, pas: 100, u: 'ms',
         apres: () => EARTH.Director.programmer() },
-      { p: 'rythme.cascade', l: EARTH.T('panneau.cascade'), min: 0, max: 2500, pas: 10, u: 'ms' }
+      { p: 'rythme.cascade', l: 'panneau.cascade', min: 0, max: 2500, pas: 10, u: 'ms' }
     ]],
-    [EARTH.T('panneau.grille'), [
-      { p: 'grille.visible', l: EARTH.T('panneau.visible'), type: 'bascule', apres: () => EARTH.Grille.appliquer() },
-      { p: 'grille.souffle', l: EARTH.T('panneau.souffle'), min: 0, max: 4, pas: 0.05 },
-      { p: 'grille.attraction', l: EARTH.T('panneau.attraction'), min: 0, max: 4, pas: 0.05 },
-      { p: 'grille.obeissance', l: EARTH.T('panneau.obeissance'), min: 0, max: 1, pas: 0.05 },
-      { p: 'grille.vibration', l: EARTH.T('panneau.vibration'), min: 0, max: 2, pas: 0.05 },
-      { p: 'grille.curseur', l: EARTH.T('panneau.curseurGrille'), min: 0, max: 3, pas: 0.05 },
-      { p: 'grille.absences', l: EARTH.T('panneau.absences'), min: 0, max: 0.5, pas: 0.01 }
+    ['panneau.grille', [
+      { p: 'grille.visible', l: 'panneau.visible', type: 'bascule', apres: () => EARTH.Grille.appliquer() },
+      { p: 'grille.souffle', l: 'panneau.souffle', min: 0, max: 4, pas: 0.05 },
+      { p: 'grille.attraction', l: 'panneau.attraction', min: 0, max: 4, pas: 0.05 },
+      { p: 'grille.obeissance', l: 'panneau.obeissance', min: 0, max: 1, pas: 0.05 },
+      { p: 'grille.vibration', l: 'panneau.vibration', min: 0, max: 2, pas: 0.05 },
+      { p: 'grille.curseur', l: 'panneau.curseurGrille', min: 0, max: 3, pas: 0.05 },
+      { p: 'grille.absences', l: 'panneau.absences', min: 0, max: 0.5, pas: 0.01 }
     ]],
-    [EARTH.T('panneau.geste'), [
-      { p: 'geste.parallaxe', l: EARTH.T('panneau.respiration'), min: 0, max: 3, pas: 0.05 },
-      { p: 'geste.dispersion', l: EARTH.T('panneau.dispersion'), min: 0, max: 3, pas: 0.05 }
+    ['panneau.seuil', [
+      { p: 'titre.particules', l: 'panneau.particules', min: 0, max: 90, pas: 1 },
+      { p: 'titre.naissance', l: 'panneau.naissance', min: 0, max: 0.4, pas: 0.005 },
+      { p: 'titre.opacite', l: 'panneau.opaciteSignes', min: 0, max: 1, pas: 0.05 },
+      { p: 'titre.montee', l: 'panneau.montee', min: 0, max: 3, pas: 0.05 }
     ]],
-    [EARTH.T('panneau.regard'), [
-      { p: 'regard.grisaille', l: EARTH.T('panneau.gris'), min: 0, max: 1, pas: 0.05,
+    ['panneau.geste', [
+      { p: 'geste.parallaxe', l: 'panneau.respiration', min: 0, max: 3, pas: 0.05 },
+      { p: 'geste.dispersion', l: 'panneau.dispersion', min: 0, max: 3, pas: 0.05 }
+    ]],
+    ['panneau.regard', [
+      { p: 'regard.grisaille', l: 'panneau.gris', min: 0, max: 1, pas: 0.05,
         apres: () => EARTH.Stage.rafraichirRegard() },
-      { p: 'regard.melangeChance', l: EARTH.T('panneau.conflit'), min: 0, max: 1, pas: 0.05 },
-      { p: 'texte.frequence', l: EARTH.T('panneau.texte'), min: 0, max: 1, pas: 0.05 },
-      { p: 'evenements.rarete', l: EARTH.T('panneau.evenements'), min: 0, max: 0.6, pas: 0.01 }
+      { p: 'regard.melangeChance', l: 'panneau.conflit', min: 0, max: 1, pas: 0.05 },
+      { p: 'texte.frequence', l: 'panneau.texte', min: 0, max: 1, pas: 0.05 },
+      { p: 'evenements.rarete', l: 'panneau.evenements', min: 0, max: 0.6, pas: 0.01 }
     ]]
-  ]; }
+  ];
 
   const Panel = {
     el: null,
@@ -55,33 +61,35 @@
     init() {
       const el = document.createElement('aside');
       el.id = 'panneau';
-      el.innerHTML = `<div class="pan-tete"><span>${EARTH.T('panneau.titre')}</span>` +
+      el.setAttribute('data-interface', 'bac-a-sable');
+      el.innerHTML = '<div class="pan-tete"><span data-t="panneau.titre"></span>' +
                      '<span class="pan-fermer" title="P">×</span></div>';
 
       const etat = document.createElement('div');
       etat.className = 'pan-etat';
       el.appendChild(etat);
 
-      el.appendChild(bloc(EARTH.T('panneau.partitions'), partitions()));
+      el.appendChild(bloc('panneau.partitions', partitions()));
 
-      reglages().forEach(([titre, liste]) => {
+      REGLAGES.forEach(([cle, liste]) => {
         const corps = document.createElement('div');
         liste.forEach(r => corps.appendChild(controle(r)));
-        el.appendChild(bloc(titre, corps));
+        el.appendChild(bloc(cle, corps));
       });
 
-      el.appendChild(bloc(EARTH.T('panneau.textes'), redaction()));
+      el.appendChild(bloc('panneau.textes', redaction()));
 
       const actions = document.createElement('div');
       actions.className = 'pan-actions';
-      actions.appendChild(bouton(EARTH.T('panneau.rejouer'), () => EARTH.Director.relancer()));
-      actions.appendChild(bouton(EARTH.T('panneau.pause'), () => EARTH.Director.bascule()));
-      actions.appendChild(bouton(EARTH.T('panneau.copier'), copierConfig));
+      actions.appendChild(bouton('panneau.rejouer', () => EARTH.Director.relancer()));
+      actions.appendChild(bouton('panneau.pause', () => EARTH.Director.bascule()));
+      actions.appendChild(bouton('panneau.copier', copierConfig));
       el.appendChild(actions);
       el.appendChild(aide());
 
       document.body.appendChild(el);
       this.el = el;
+      EARTH.T.hydrater(el);
       el.querySelector('.pan-fermer').onclick = () => this.basculer();
 
       const majEtat = () => {
@@ -107,11 +115,11 @@
     appliquer() { document.body.classList.toggle('panneau-ouvert', this.ouvert); }
   };
 
-  function bloc(titre, corps) {
+  function bloc(cle, corps) {
     const d = document.createElement('section');
     d.className = 'pan-bloc';
     const h = document.createElement('h2');
-    h.textContent = titre;
+    h.setAttribute('data-t', cle);
     d.appendChild(h);
     d.appendChild(corps);
     return d;
@@ -128,7 +136,7 @@
       const coche = document.createElement('input');
       coche.type = 'checkbox';
       coche.checked = cfg.compositions.actives.includes(nom);
-      coche.title = EARTH.T('panneau.gardeRotation');
+      coche.setAttribute('data-t-titre', 'panneau.gardeRotation');
       coche.onchange = () => {
         const a = cfg.compositions.actives;
         const j = a.indexOf(nom);
@@ -155,7 +163,7 @@
     ligne.className = 'pan-ligne';
     const nom = document.createElement('span');
     nom.className = 'pan-nom';
-    nom.textContent = r.l;
+    nom.setAttribute('data-t', r.l);
     ligne.appendChild(nom);
 
     if (r.type === 'bascule') {
@@ -190,9 +198,20 @@
   /* ==========================================================
      LA RÉDACTION
      Changer ce qui est écrit, la police et les corps, sans
-     toucher au code. Les essais sont gardés dans le navigateur ;
-     le bouton « copier » sort un bloc à coller dans js/textes.js
-     ou dans le mini-CMS pour les figer pour tout le monde.
+     toucher au code. TOUS les textes passent par ici : le titre,
+     les angles de l'appareillage, le formulaire de dépôt, l'aide,
+     les fragments, les messages — la liste vient de js/textes.js
+     et se met à jour toute seule si on y ajoute une clé.
+
+     Ce qu'on écrit s'applique à l'écran immédiatement : EARTH.T
+     prévient tout ce qui affiche un texte. Les essais sont gardés
+     dans le navigateur ; le bouton « copier » sort un bloc à
+     coller dans js/textes.js ou dans le mini-CMS pour les figer
+     pour tout le monde.
+
+     Les listes — l'aide, les fragments — s'écrivent une entrée
+     par ligne. Une paire touche/sens se sépare d'une tabulation
+     ou de deux espaces.
      ========================================================== */
 
   const POLICES = [
@@ -214,33 +233,62 @@
     });
   }
 
+  /* une liste ↔ du texte, une entrée par ligne */
+  function listeVersTexte(liste) {
+    return liste.map(e => Array.isArray(e) ? e.join('\t') : String(e)).join('\n');
+  }
+  function texteVersListe(texte, enPaires) {
+    const lignes = texte.split('\n').map(l => l.trim()).filter(Boolean);
+    if (!enPaires) return lignes;
+    return lignes.map(l => {
+      const coupe = l.split(/\t|\s{2,}/);
+      return coupe.length > 1
+        ? [coupe[0].trim(), coupe.slice(1).join(' ').trim()]
+        : [l, ''];
+    });
+  }
+
   function redaction() {
     const wrap = document.createElement('div');
     wrap.className = 'pan-redaction';
 
-    /* quel texte réécrire */
+    /* quel texte réécrire — toutes les clés, sans exception,
+       y compris les listes */
     const choix = document.createElement('select');
     const plat = EARTH.T.toutes();
-    Object.keys(plat)
-      .filter(k => typeof plat[k] === 'string')
-      .forEach(k => {
-        const o = document.createElement('option');
-        o.value = k;
-        o.textContent = k;
-        choix.appendChild(o);
-      });
+    const cles = Object.keys(plat).sort();
+    cles.forEach(k => {
+      const o = document.createElement('option');
+      o.value = k;
+      o.textContent = k + (Array.isArray(plat[k]) ? ' […]' : '');
+      choix.appendChild(o);
+    });
 
     const champ = document.createElement('textarea');
-    champ.rows = 2;
+    champ.rows = 3;
     champ.spellcheck = false;
 
-    const montrer = () => { champ.value = EARTH.T(choix.value); };
+    const estListe = () => Array.isArray(plat[choix.value]);
+    const estPaires = () => {
+      const modele = plat[choix.value];
+      return Array.isArray(modele) && Array.isArray(modele[0]);
+    };
+
+    const montrer = () => {
+      const valeur = EARTH.T(choix.value);
+      champ.value = Array.isArray(valeur) ? listeVersTexte(valeur) : String(valeur);
+      champ.rows = estListe() ? 8 : 3;
+    };
     choix.onchange = montrer;
+
+    /* Une seule ligne : EARTH.T prévient lui-même tout ce qui
+       affiche ce texte — l'appareillage, le formulaire, l'aide,
+       le titre. Rien à rafraîchir à la main ici. */
     champ.oninput = () => {
-      EARTH.T.definir(choix.value, champ.value);
-      EARTH.HUD.rafraichirLibelles();
-      const inv = document.querySelector('.invite-texte');
-      if (inv) inv.textContent = EARTH.T('contribution.invite');
+      EARTH.T.definir(
+        choix.value,
+        estListe() ? texteVersListe(champ.value, estPaires()) : champ.value
+      );
     };
     montrer();
 
@@ -252,7 +300,7 @@
     police.className = 'pan-ligne';
     const nomPolice = document.createElement('span');
     nomPolice.className = 'pan-nom';
-    nomPolice.textContent = EARTH.T('panneau.police');
+    nomPolice.setAttribute('data-t', 'panneau.police');
     const selPolice = document.createElement('select');
     POLICES.forEach(([nom, pile]) => {
       const o = document.createElement('option');
@@ -266,22 +314,21 @@
     wrap.appendChild(police);
 
     [
-      { p: 'typo.micro', l: EARTH.T('panneau.corps'), min: 6, max: 20, pas: 0.5, u: 'px' },
-      { p: 'typo.interlettre', l: EARTH.T('panneau.interlettre'), min: 0, max: 0.5, pas: 0.01 },
-      { p: 'typo.titre', l: EARTH.T('panneau.corpsTitre'), min: 4, max: 24, pas: 0.5, u: 'vw' },
-      { p: 'texte.taille', l: EARTH.T('panneau.corpsFragment'), min: 10, max: 90, pas: 1, u: 'px' }
+      { p: 'typo.micro', l: 'panneau.corps', min: 6, max: 20, pas: 0.5, u: 'px' },
+      { p: 'typo.interlettre', l: 'panneau.interlettre', min: 0, max: 0.5, pas: 0.01 },
+      { p: 'typo.titre', l: 'panneau.corpsTitre', min: 4, max: 24, pas: 0.5, u: 'vw' },
+      { p: 'texte.taille', l: 'panneau.corpsFragment', min: 10, max: 90, pas: 1, u: 'px' }
     ].forEach(r => wrap.appendChild(controle(Object.assign({ apres: appliquerTypo }, r))));
 
-    const remise = bouton(EARTH.T('panneau.remiseTextes'), () => {
+    const remise = bouton('panneau.remiseTextes', () => {
       EARTH.T.oublier();
-      EARTH.HUD.rafraichirLibelles();
       montrer();
       EARTH.HUD.souffler(EARTH.T('panneau.textesRemis'));
     });
     remise.style.marginTop = '8px';
     wrap.appendChild(remise);
 
-    const sortir = bouton(EARTH.T('panneau.copierTextes'), () => {
+    const sortir = bouton('panneau.copierTextes', () => {
       const locales = EARTH.T.locales();
       const texte = JSON.stringify(locales, null, 2);
       if (navigator.clipboard && window.isSecureContext) {
@@ -296,20 +343,31 @@
     return wrap;
   }
 
-  function bouton(texte, fn) {
+  function bouton(cle, fn) {
     const b = document.createElement('button');
     b.className = 'pan-bouton';
-    b.textContent = texte;
+    b.setAttribute('data-t', cle);
     b.onclick = fn;
     return b;
   }
 
+  /* la liste complète des touches — elle se réécrit comme le
+     reste, alors elle se redessine comme le reste */
   function aide() {
     const d = document.createElement('div');
     d.className = 'pan-aide';
-    d.innerHTML = EARTH.T('aide')
-      .map(paire => `<b>${paire[0]}</b> ${paire[1]}`)
-      .join('<br>');
+    const peindre = () => {
+      const liste = EARTH.T('aide');
+      d.replaceChildren();
+      (Array.isArray(liste) ? liste : []).forEach(paire => {
+        const touche = document.createElement('b');
+        touche.textContent = Array.isArray(paire) ? paire[0] : String(paire);
+        d.append(touche, ' ' + (Array.isArray(paire) ? paire[1] : ''),
+                 document.createElement('br'));
+      });
+    };
+    peindre();
+    EARTH.T.surChangement(peindre);
     return d;
   }
 

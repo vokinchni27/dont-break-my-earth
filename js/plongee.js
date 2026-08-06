@@ -14,7 +14,7 @@
 (function (EARTH) {
   'use strict';
 
-  const { clamp, lerp, Rand } = EARTH.utils;
+  const { clamp, lerp, Rand, interfaceSous } = EARTH.utils;
 
   const Plongee = {
     z: 0,                 // profondeur continue, en paliers
@@ -29,7 +29,11 @@
 
       window.addEventListener('wheel', e => {
         if (!EARTH.CONFIG.plongee.active) return;
-        if (e.target.closest && e.target.closest('#panneau')) return;
+        /* Sur une surface d'interface — le formulaire de dépôt, le
+           bac à sable, le feuillet — la molette fait ce qu'elle
+           fait partout ailleurs sur le web : elle défile. On ne
+           l'intercepte pas, et surtout on ne l'annule pas. */
+        if (interfaceSous(e.target)) return;
         e.preventDefault();
         this.vitesse += e.deltaY * EARTH.CONFIG.plongee.vitesse;
         this.centre.x = clamp(e.clientX / window.innerWidth, 0.1, 0.9);
@@ -41,6 +45,7 @@
       let pincee = null;
       window.addEventListener('touchmove', e => {
         if (!EARTH.CONFIG.plongee.active || e.touches.length !== 2) return;
+        if (interfaceSous(e.target)) return;
         const [a, b] = e.touches;
         const d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
         if (pincee != null) {

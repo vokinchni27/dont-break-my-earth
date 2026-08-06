@@ -21,7 +21,7 @@
 (function (EARTH) {
   'use strict';
 
-  const { vmin, clamp } = EARTH.utils;
+  const { vmin, clamp, interfaceSous } = EARTH.utils;
   const bus = EARTH.bus;
 
   const Gestes = {
@@ -101,7 +101,8 @@
 
       /* --- appui ------------------------------------------- */
       surface.addEventListener('pointerdown', e => {
-        if (e.target.closest && e.target.closest('#panneau')) return;
+        /* on ne creuse pas dans un formulaire */
+        if (interfaceSous(e.target)) return;
         const g = EARTH.CONFIG.geste;
         this.appuye = true;
         debutAppui = e.timeStamp || performance.now();

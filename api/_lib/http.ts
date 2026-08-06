@@ -1,15 +1,8 @@
 import type { VercelRequest, VercelResponse } from './vercel.js';
 import { env } from './env.js';
+import { HttpError } from './errors.js';
 
-export class HttpError extends Error {
-  constructor(
-    public readonly status: number,
-    message: string,
-    public readonly code = 'request_error'
-  ) {
-    super(message);
-  }
-}
+export { HttpError };
 
 export function json(res: VercelResponse, status: number, value: unknown): void {
   res.status(status).json(value);

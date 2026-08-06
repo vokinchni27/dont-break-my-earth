@@ -64,7 +64,7 @@
 
   async function chargerPropositions() {
     const liste = $('#liste-propositions');
-    liste.replaceChildren(texte('chargement…', 'vide'));
+    liste.replaceChildren(texte(EARTH.T('admin.chargement'), 'vide'));
     try {
       const data = await Supa.apiAdmin('/api/admin/submissions');
       etat.propositions = data.submissions || [];
@@ -99,16 +99,18 @@
     const meta = texte([
       new Date(ligne.created_at).toLocaleString('fr-FR'),
       `${ligne.width || '?'} × ${ligne.height || '?'} px · ${Math.round(Number(ligne.size_bytes || 0) / 1024)} ko`,
-      ligne.author_name ? `signée : ${ligne.author_name}` : 'non signée'
+      ligne.author_name
+        ? `${EARTH.T('admin.signeePar')} ${ligne.author_name}`
+        : EARTH.T('admin.nonSignee')
     ].join('\n'), 'proposition-meta');
     donnees.append(statut, meta);
 
-    const lieu = champ('lieu', ligne.location_label || '', 'locationLabel');
-    const latitude = champ('latitude', ligne.latitude == null ? '' : ligne.latitude, 'latitude');
-    const longitude = champ('longitude', ligne.longitude == null ? '' : ligne.longitude, 'longitude');
+    const lieu = champ(EARTH.T('admin.champLieu'), ligne.location_label || '', 'locationLabel');
+    const latitude = champ(EARTH.T('admin.champLatitude'), ligne.latitude == null ? '' : ligne.latitude, 'latitude');
+    const longitude = champ(EARTH.T('admin.champLongitude'), ligne.longitude == null ? '' : ligne.longitude, 'longitude');
     const duo = element('div', 'grille-forme');
     duo.append(latitude.label, longitude.label);
-    const commentaire = zone('commentaire', ligne.comment || '', 'comment');
+    const commentaire = zone(EARTH.T('admin.champCommentaire'), ligne.comment || '', 'comment');
     donnees.append(lieu.label, duo, commentaire.label);
 
     const actions = element('div', 'proposition-actions');
@@ -141,7 +143,7 @@
           comment: carte.querySelector('[data-champ="comment"]').value
         }
       });
-      notifier(action === 'approve' ? 'capture validée' : 'capture refusée');
+      notifier(EARTH.T(action === 'approve' ? 'admin.captureValidee' : 'admin.captureRefusee'));
       await chargerPropositions();
     } catch (e) {
       notifier(e.message);
@@ -180,14 +182,16 @@
     if (!etat.contenus.length) { liste.appendChild(texte(EARTH.T('admin.aucunContenu'), 'vide')); return; }
     etat.contenus.forEach(item => {
       const ligne = element('article', 'contenu-item');
-      const cle = texte(`${item.key}\n${item.type} · ordre ${item.sort_order}`, 'contenu-cle micro');
+      const cle = texte(
+        `${item.key}\n${item.type} · ${EARTH.T('admin.ordreCourt')} ${item.sort_order}`,
+        'contenu-cle micro');
       const corps = element('div', 'contenu-texte');
       if (item.title) corps.appendChild(texte(item.title, 'contenu-titre', 'h3'));
       corps.appendChild(texte(item.value));
-      if (!item.is_published) corps.appendChild(texte('non publié', 'non-publie micro'));
+      if (!item.is_published) corps.appendChild(texte(EARTH.T('admin.nonPublie'), 'non-publie micro'));
       const actions = element('div', 'contenu-actions');
-      const modifier = bouton('modifier', 'bouton');
-      const supprimer = bouton('supprimer', 'bouton');
+      const modifier = bouton(EARTH.T('admin.modifier'), 'bouton');
+      const supprimer = bouton(EARTH.T('admin.supprimer'), 'bouton');
       modifier.onclick = () => remplirFormeContenu(item);
       supprimer.onclick = () => supprimerContenu(item);
       actions.append(modifier, supprimer);
@@ -213,7 +217,7 @@
     try {
       await Supa.apiAdmin('/api/admin/content', { method: id ? 'PATCH' : 'POST', body: corps });
       $('#contenu-message').textContent = '';
-      notifier(id ? 'contenu modifié' : 'contenu ajouté');
+      notifier(EARTH.T(id ? 'admin.contenuModifie' : 'admin.contenuAjoute'));
       viderFormeContenu();
       await chargerContenus();
     } catch (err) {
@@ -245,7 +249,7 @@
   }
 
   async function supprimerContenu(item) {
-    if (!confirm(`Supprimer définitivement « ${item.key} » ?`)) return;
+    if (!confirm(`${EARTH.T('admin.confirmerSuppressionContenu')}\n\n${item.key}`)) return;
     try {
       await Supa.apiAdmin('/api/admin/content', { method: 'DELETE', body: { id: item.id } });
       notifier(EARTH.T('admin.contenuSupprime'));
@@ -274,19 +278,10 @@
   function desactiver(carte, oui) { carte.querySelectorAll('button,input,textarea').forEach(e => { e.disabled = oui; }); }
   function libelleStatut(statut) { return EARTH.T('admin.statut.' + statut, statut); }
   /* Les libelles vivent dans js/textes.js : le HTML ne porte que
-     des cles. Un seul endroit a reecrire pour changer la langue. */
+     des cles, et EARTH.T.hydrater y pose les mots. Un seul endroit
+     a reecrire pour changer la langue — ici comme sur l'oeuvre. */
   function hydraterTextes() {
-    document.querySelectorAll('[data-t]').forEach(el => {
-      el.textContent = EARTH.T(el.dataset.t);
-    });
-    document.querySelectorAll('[data-t-html]').forEach(el => {
-      el.innerHTML = EARTH.T(el.datasetTHtml || el.getAttribute('data-t-html'));
-    });
-    document.querySelectorAll('[data-t-aria]').forEach(el => {
-      el.setAttribute('aria-label', EARTH.T(el.getAttribute('data-t-aria')));
-    });
-    const cle = document.getElementById('contenu-cle');
-    if (cle) cle.placeholder = EARTH.T('admin.placeholderCle');
+    EARTH.T.hydrater(document);
     const titre = document.getElementById('contenu-forme-titre');
     if (titre && !titre.textContent) titre.textContent = EARTH.T('admin.ajouterContenu');
   }

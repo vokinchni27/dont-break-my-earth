@@ -181,7 +181,8 @@ nouvelle adresse, puis **Redeploy**.
 ## Vérifier que tout marche
 
 1. ouvre le site, clique **ajouter votre morceau de Terre**
-2. dépose une capture, remplis latitude et longitude, envoie
+2. dépose une capture et envoie — **sans rien remplir d’autre** :
+   seul le fichier est obligatoire, tout le reste est facultatif
 3. le message doit dire « reçue — elle attend d’être validée »
 4. **elle ne doit apparaître nulle part sur le site** — c’est voulu
 5. va sur `/admin`, connecte-toi : la capture est là

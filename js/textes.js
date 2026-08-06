@@ -28,7 +28,9 @@
     titre: {
       mot: 'DON’T BREAK MY HEART',
       echo: 'DON’T BREAK MY EARTH',
-      invitation: 'passe la main'
+      invitation: 'passe la main',
+      /* ce qui s’échappe des lettres : des signes de coordonnées */
+      symboles: '· • + × ° ′ ″ N S E W 0 1 4 7'
     },
 
     /* --- L’APPAREILLAGE ------------------------------------ */
@@ -67,9 +69,10 @@
       etape2Bouton: 'choisir la capture',
       apercuAria: 'Aperçu de la capture',
 
-      etape3Index: '03 · situer',
-      champLatitude: 'latitude',
-      champLongitude: 'longitude',
+      etape3Index: '03 · situer, si tu veux',
+      etape3Texte: 'Rien n’est obligatoire ici. Une capture seule suffit.',
+      champLatitude: 'latitude, si tu veux',
+      champLongitude: 'longitude, si tu veux',
       champLieu: 'lieu, si tu veux',
       champMot: 'un mot, si tu veux',
       champSignature: 'signer, si tu veux',
@@ -89,7 +92,17 @@
       choisisDabord: 'choisis d’abord une capture',
       coordonneesIllisibles: 'coordonnées illisibles ou hors limites',
       envoiImpossible: 'envoi impossible — réessaie dans un instant',
-      archiveInjoignable: 'archive collective injoignable'
+      archiveInjoignable: 'archive collective injoignable',
+      lieuCollectif: 'COLLECTIF'      // quand personne n’a nommé le lieu
+    },
+
+    /* --- L’AIDE AU CENTRE ---------------------------------- */
+    /* Elle paraît, elle se lit, elle s’efface. On la rappelle
+       avec « ? ». La liste des touches est plus bas : `aide`. */
+    raccourcis: {
+      titre: 'QUELQUES TOUCHES',
+      note: '? pour revoir',
+      rappel: '?'
     },
 
     /* --- LE FEUILLET « À PROPOS » -------------------------- */
@@ -106,8 +119,13 @@
       echelle: 'ÉCHELLE',
       rythme: 'RYTHME',
       grille: 'GRILLE',
+      seuil: 'SEUIL',
       geste: 'GESTE',
       regard: 'REGARD',
+      particules: 'signes',
+      naissance: 'fréquence',
+      opaciteSignes: 'présence',
+      montee: 'montée',
       plusPetite: 'plus petite',
       plusGrande: 'plus grande',
       tenue: 'tenue',
@@ -144,6 +162,16 @@
       absences: 'lignes absentes'
     },
 
+    /* --- CE QUE MONTRE L’AIDE DU CENTRE -------------------- */
+    /* Court exprès : on n’apprend pas un clavier, on en retient
+       trois touches. La liste complète reste dans le bac à sable. */
+    apercuAide: [
+      ['X', 'pause'],
+      ['← →', 'image précédente / suivante'],
+      ['W', 'webcam'],
+      ['P', 'bac à sable']
+    ],
+
     /* --- LES CONSIGNES DE GESTE ---------------------------- */
     aide: [
       ['MOLETTE', 'descendre dans la grille'],
@@ -166,7 +194,8 @@
       ['A', 'ajouter'],
       ['E', 'événement'],
       ['W', 'webcam'],
-      ['P', 'panneau']
+      ['P', 'panneau'],
+      ['?', 'cette aide']
     ],
 
     /* --- LES FRAGMENTS VIVANTS ----------------------------- */
@@ -234,16 +263,31 @@
       capture: 'Capture proposée',
       aucuneProposition: 'Rien ici pour l’instant.',
       aucunContenu: 'Aucun contenu.',
+      chargement: 'chargement…',
       valider: 'valider',
       refuser: 'refuser',
       supprimer: 'supprimer',
-      restaurer: 'remettre en attente',
+      modifier: 'modifier',
       confirmerSuppression:
         'Supprimer le fichier et passer la ligne en « supprimée » ? Le fichier ne sera pas récupérable.',
+      confirmerSuppressionContenu: 'Supprimer définitivement ce contenu ?',
       coordonneesInvalides: 'coordonnées invalides',
+      captureValidee: 'capture validée',
+      captureRefusee: 'capture refusée',
       captureSupprimee: 'capture supprimée',
+      contenuAjoute: 'contenu ajouté',
+      contenuModifie: 'contenu modifié',
       contenuSupprime: 'contenu supprimé',
       enregistrement: 'enregistrement…',
+      champLieu: 'lieu',
+      champLatitude: 'latitude',
+      champLongitude: 'longitude',
+      champCommentaire: 'commentaire',
+      sansCoordonnees: 'sans coordonnées',
+      signeePar: 'signée :',
+      nonSignee: 'non signée',
+      nonPublie: 'non publié',
+      ordreCourt: 'ordre',
 
       statut: {
         pending: 'en attente',
@@ -329,11 +373,13 @@
     const gardees = magasin.lire();
     gardees[cle] = valeur;
     magasin.ecrire(gardees);
+    prevenir();
   };
 
   T.oublier = function () {
     magasin.vider();
     Object.keys(surcharges).forEach(k => delete surcharges[k]);
+    prevenir();
   };
 
   T.locales = function () { return magasin.lire(); };
@@ -350,6 +396,7 @@
         if (lire(TEXTES, ligne.key) != null) surcharges[ligne.key] = ligne.value;
       }
     });
+    prevenir();
   };
 
   T.toutes = function () {
@@ -363,6 +410,67 @@
       });
     })(TEXTES, '');
     return plat;
+  };
+
+  /* ----------------------------------------------------------
+     QUI PRÉVENIR QUAND UN TEXTE CHANGE
+     Le bac à sable réécrit une clé ; tout ce qui l’affiche doit
+     se remettre à jour sans qu’on recharge la page.
+     ---------------------------------------------------------- */
+
+  const temoins = [];
+  let silence = false;
+
+  T.surChangement = function (fn) { temoins.push(fn); return T; };
+
+  /* Plusieurs écritures d’affilée (une frappe au clavier, le CMS
+     qui répond) ne déclenchent qu’un seul rafraîchissement.
+
+     On groupe dans une micro-tâche et non dans une image
+     d’animation : requestAnimationFrame ne s’exécute pas du tout
+     dans un onglet caché ou ralenti, et les textes resteraient
+     alors figés jusqu’au retour du visiteur. Une promesse, elle,
+     tient toujours. */
+  function prevenir() {
+    if (silence) return;
+    silence = true;
+    const jouer = () => {
+      silence = false;
+      T.hydrater(document);
+      temoins.forEach(fn => {
+        try { fn(); } catch (e) { console.error('[EARTH] texte', e); }
+      });
+    };
+    if (typeof Promise === 'function') Promise.resolve().then(jouer);
+    else setTimeout(jouer, 0);
+  }
+
+  /* ----------------------------------------------------------
+     L’HYDRATATION
+     Le HTML ne porte que des clés ; c’est ici qu’elles
+     deviennent des mots. Un seul passage remet tout à jour.
+
+       <h2 data-t="contribution.formeTitre"></h2>
+       <p  data-t-html="hud.marque"></p>       texte avec balises
+       <input data-t-place="contribution.placeholderLieu">
+       <button data-t-aria="contribution.fermerAria">
+
+     Appelée automatiquement à chaque réécriture.
+     ---------------------------------------------------------- */
+
+  T.hydrater = function (racine) {
+    const ou = racine || (typeof document !== 'undefined' ? document : null);
+    if (!ou || !ou.querySelectorAll) return;
+    const pose = (attribut, appliquer) => {
+      ou.querySelectorAll('[' + attribut + ']').forEach(el => {
+        appliquer(el, T(el.getAttribute(attribut)));
+      });
+    };
+    pose('data-t', (el, v) => { el.textContent = v; });
+    pose('data-t-html', (el, v) => { el.innerHTML = v; });
+    pose('data-t-place', (el, v) => { el.setAttribute('placeholder', v); });
+    pose('data-t-aria', (el, v) => { el.setAttribute('aria-label', v); });
+    pose('data-t-titre', (el, v) => { el.setAttribute('title', v); });
   };
 
   EARTH.TEXTES = TEXTES;

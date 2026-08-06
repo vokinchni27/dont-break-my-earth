@@ -9,8 +9,9 @@ modération, un mini-CMS et la publication automatique des captures validées.
 
 ## Ce qui est inclus
 
-- parcours public guidé vers Google Earth, puis dépôt image + coordonnées + lieu
-  + commentaire + signature facultative ;
+- parcours public guidé vers Google Earth, puis dépôt d’une capture ;
+  **seul le fichier est obligatoire** — coordonnées, lieu, commentaire et
+  signature sont offerts, jamais exigés, et la modération peut les compléter ;
 - fichiers JPG, PNG, WebP ou AVIF limités à 8 Mo ;
 - bucket Supabase **privé** : aucune image en attente n’a d’URL publique ;
 - statut `pending`, `approved` ou `rejected` ;
@@ -37,6 +38,9 @@ modération, un mini-CMS et la publication automatique des captures validées.
 │   ├── content.js                 chargement et rendu du mini-CMS
 │   ├── supabase.js                auth navigateur + passerelle API
 │   ├── admin.js                   dashboard
+│   ├── textes.js                  TOUS les textes + l’hydratation par clés
+│   ├── titre.js                   le seuil : texte stable, signes qui s’échappent
+│   ├── aide.js                    l’aide clavier au centre, rappelable par « ? »
 │   └── …                          moteur visuel historique, inchangé
 ├── api/
 │   ├── config.ts                  configuration publique non secrète
@@ -90,13 +94,29 @@ l'adresse est dans l'allowlist.
 ## Les textes
 
 Tous les textes visibles vivent dans **`js/textes.js`**, et nulle part ailleurs.
-Le HTML de l'administration ne porte que des clés (`data-t="admin.entrer"`).
+Aucun module n'écrit de chaîne visible : le HTML ne porte que des clés, et
+`EARTH.T.hydrater()` y pose les mots.
 
-- la liste complète, prête à être réécrite : **`TEXTES.md`** (144 textes) ;
-- la régénérer après modification : `node tools/lister-textes.mjs` ;
-- une ligne de `site_content` dont la `key` vaut exactement une clé de
-  `textes.js` **remplace** le texte statique au chargement, sans redéployer.
-  C'est l'abstraction CMS : le statique est le défaut, la base est la surcharge.
+```html
+<h2 data-t="contribution.formeTitre"></h2>       <!-- texte simple -->
+<h1 data-t-html="admin.enteteTitre"></h1>        <!-- texte avec balises -->
+<input data-t-place="contribution.placeholderLieu">
+<button data-t-aria="contribution.fermerAria">
+```
+
+Trois façons de réécrire, de la plus locale à la plus définitive :
+
+| où | portée | comment |
+|---|---|---|
+| **bac à sable** (touche P) | ce navigateur | section `TEXTES` : les 183 clés, listes comprises. L'écran se met à jour à la frappe. |
+| **mini-CMS** | tout le monde | une ligne de `site_content` dont la `key` vaut exactement une clé remplace le texte statique, sans redéployer |
+| **`js/textes.js`** | tout le monde, pour de bon | on édite, on pousse |
+
+Les listes — `aide`, `apercuAide`, `fragments` — s'écrivent une entrée par
+ligne ; une paire touche/sens se sépare d'une tabulation.
+
+- la liste complète, prête à être réécrite : **`TEXTES.md`** (183 textes) ;
+- la régénérer après modification : `node tools/lister-textes.mjs`.
 
 ## Installation locale
 

@@ -9,11 +9,19 @@ window.EARTH = window.EARTH || {};
 
 EARTH.CONFIG = {
 
+  /* --- LE SEUIL ------------------------------------------- */
+  /* Le texte ne bouge pas : il se lit. Ce qui vit, ce sont les
+     quelques signes qui s’en échappent — discrets, lents, rares.
+     Les mots eux-mêmes vivent dans js/textes.js. */
   titre: {
-    /* les mots vivent dans js/textes.js — ici, seuls les réglages */
-    liquide: 1,            // amplitude de la déformation au curseur
-    viscosite: 0.9,        // 0 = revient sec, 1 = revient très lentement
-    sortie: 2200           // ms de silence avant que le titre s’efface
+    particules: 22,        // signes présents au maximum, en même temps
+    naissance: 0.06,       // chance qu’un signe naisse à chaque image
+    montee: 1,             // vitesse de la remontée — 0 = ils flottent
+    derive: 1,             // amplitude du balancement latéral
+    duree: 5200,           // ms de vie d’un signe, apparition comprise
+    opacite: 0.5,          // jamais franc : on doit presque le manquer
+    encre: '#c9c9c9',
+    attente: 14000         // ms avant que le titre s’efface de lui-même
   },
 
   archive: {
@@ -183,6 +191,15 @@ EARTH.CONFIG = {
     marquee: true,
     curseur: true,
     fuseau: 'Europe/Paris'
+  },
+
+  /* --- L’AIDE AU CENTRE ----------------------------------- */
+  /* Elle paraît une fois, se lit en trois secondes, s’efface.
+     « ? » la rappelle. Ce qu’elle montre : clé `apercuAide`. */
+  aide: {
+    actif: true,
+    retard: 1400,          // ms après le retrait du titre
+    duree: 7000            // ms avant l’effacement — 0 = elle reste
   },
 
   webcam: {

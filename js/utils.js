@@ -72,6 +72,18 @@
     return Math.round(v * 1e6) / 1e6;
   }
 
+  /* Les surfaces d'interface : le panneau, le dialogue de depot,
+     le feuillet du CMS, l'aide. Elles se lisent et se remplissent
+     comme une page ordinaire — la molette y defile, le doigt y
+     glisse, l'appui long n'y creuse rien.
+
+     Tout element portant [data-interface] est une telle surface,
+     ainsi que tout ce qu'il contient. Un seul marqueur : les
+     modules qui ecoutent la main n'ont pas a connaitre la liste. */
+  function interfaceSous(cible) {
+    return !!(cible && cible.closest && cible.closest('[data-interface]'));
+  }
+
   /* un bus d'evenements minuscule : c'est par la que les gestes
      parlent aux interactions, sans que personne ne se connaisse */
   function Bus() {
@@ -86,7 +98,7 @@
     };
   }
 
-  EARTH.utils = { Rand, clamp, lerp, get, set, vmin, mobile, Bus, dms };
+  EARTH.utils = { Rand, clamp, lerp, get, set, vmin, mobile, Bus, dms, interfaceSous };
   EARTH.bus = Bus();
 
 })(window.EARTH = window.EARTH || {});
