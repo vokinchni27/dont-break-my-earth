@@ -11,10 +11,35 @@ Suis les étapes dans l’ordre. Tout ce qui pouvait être automatisé l’a ét
 
 ---
 
-## 1 · Base de données ✅ fait
+## 1 · Base de données — à faire dans TON projet
 
-Tables, sécurité, bucket privé, quotas, allowlist : tout est en place sur le
-projet Supabase `jhdwyiknkoqdxflafwmx`. Rien à faire.
+Le projet d'EARTH est **`ircojzlpirqtawaieofo`**. Il est vide : les tables,
+le bucket privé et les règles de sécurité n'y sont pas encore.
+
+Mon connecteur Supabase n'a pas les droits sur ce projet (il ne voit que
+l'organisation gabY SCRYPTS), donc ce copier-coller est à faire par toi.
+Une seule fois, deux minutes.
+
+1. ouvre le fichier de migration et copie **tout** son contenu :
+   https://github.com/vokinchni27/dont-break-my-earth/blob/main/supabase/migrations/202608060001_collaborative_platform.sql
+   (bouton **Copy raw file** en haut à droite du fichier)
+2. ouvre l'éditeur SQL de ton projet :
+   https://supabase.com/dashboard/project/ircojzlpirqtawaieofo/sql/new
+3. colle, puis **Run**
+
+Le script crée tout : `submissions` avec ses quatre états, le mini-CMS,
+les profils, le journal, le quota anti-spam, le bucket **privé** `earth`,
+et il inscrit déjà `kara.garnier27@gmail.com` comme administratrice.
+Il est relançable sans rien casser.
+
+Pour vérifier, colle ensuite ceci et lance :
+
+```sql
+select status, count(*) from public.submissions group by status;
+select id, public from storage.buckets where id = 'earth';
+```
+
+La colonne `public` du bucket doit valoir **false**.
 
 ---
 
@@ -50,11 +75,14 @@ Le reste a des valeurs par défaut : inutile de les poser.
 
 | Name | Value |
 |---|---|
-| `SUPABASE_URL` | l’URL de ton projet Supabase |
-| `SUPABASE_ANON_KEY` | la clé **anon / publishable** |
-| `SUPABASE_SERVICE_ROLE_KEY` | la clé **service_role** (bouton *Reveal*) |
-| `RATE_LIMIT_SECRET` | le premier secret que Claude t’a donné |
-| `UPLOAD_TOKEN_SECRET` | le second secret que Claude t’a donné |
+| `SUPABASE_URL` | `https://ircojzlpirqtawaieofo.supabase.co` |
+| `SUPABASE_ANON_KEY` | `sb_publishable_XRVgfFbkkHJujgrweLu6EA_N060F4gq` |
+| `SUPABASE_SERVICE_ROLE_KEY` | la clé **service_role** — bouton *Reveal* dans Supabase |
+| `RATE_LIMIT_SECRET` | `5a02d4d63f6cb67072a8cdc8c1330ec7858874215ebdc9d978cb55b749b4101b` |
+| `UPLOAD_TOKEN_SECRET` | `47b920f2acc7e9f922fad3dfe9319bb09028a79072faaad1b52fc78fd130965c` |
+
+Les clés se trouvent ici :
+https://supabase.com/dashboard/project/ircojzlpirqtawaieofo/settings/api-keys
 
 Si l’intégration Vercel–Supabase a déjà posé les trois premières,
 **il ne reste que les deux secrets à ajouter.**
@@ -84,7 +112,7 @@ de bord.
 
 Le compte avec lequel tu valideras les captures.
 
-1. Supabase → **Authentication** → **Users**
+1. https://supabase.com/dashboard/project/ircojzlpirqtawaieofo/auth/users
 2. **Add user** → **Create new user**
 3. Email : `kara.garnier27@gmail.com`
 4. Password : choisis-en un, note-le
