@@ -50,7 +50,11 @@ export function bodyOf(req: VercelRequest): unknown {
 
 export function handleError(res: VercelResponse, error: unknown): void {
   if (error instanceof HttpError) {
-    json(res, error.status, { error: error.code, message: error.message });
+    json(res, error.status, {
+      error: error.code,
+      message: error.message,
+      ...(error.indice ? { indice: error.indice } : {})
+    });
     return;
   }
   if (error && typeof error === 'object' && 'issues' in error) {

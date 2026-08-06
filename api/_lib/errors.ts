@@ -9,7 +9,17 @@ export class HttpError extends Error {
   constructor(
     public readonly status: number,
     message: string,
-    public readonly code = 'request_error'
+    public readonly code = 'request_error',
+    /**
+     * Un indice technique court pour les pannes d'INSTALLATION :
+     * le code d'erreur Postgres ou Storage, rien d'autre. Jamais un
+     * message brut, jamais une valeur, jamais un secret.
+     *
+     * Il existe parce que les journaux Vercel ne sont pas toujours
+     * a portee de main : sans lui, un 503 oblige a deviner lequel
+     * des trois etages a lache.
+     */
+    public readonly indice?: string
   ) {
     super(message);
   }

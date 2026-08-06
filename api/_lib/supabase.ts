@@ -46,7 +46,8 @@ export async function assurerBucket(nom = 'earth'): Promise<void> {
     throw new HttpError(
       503,
       'Le stockage des captures n’est pas prêt.',
-      'storage_unavailable'
+      'storage_unavailable',
+      creation.message.slice(0, 60)
     );
   }
   console.warn(`[api] bucket « ${nom} » créé (privé, 8 Mo, images seules)`);

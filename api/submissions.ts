@@ -119,7 +119,15 @@ async function prepareUpload(req: VercelRequest, res: VercelResponse): Promise<v
     status: 'pending',
     upload_token_hash: upload.hash
   });
-  if (insertError) throw insertError;
+  if (insertError) {
+    console.error('[api] insertion refusée :', insertError.code, insertError.message);
+    throw new HttpError(
+      503,
+      'La table des propositions n’accepte pas cette ligne (table submissions).',
+      'submission_insert_failed',
+      insertError.code || 'sans-code'
+    );
+  }
 
   const { data: signed, error: signedError } = await supabase.storage
     .from('earth')
@@ -133,7 +141,8 @@ async function prepareUpload(req: VercelRequest, res: VercelResponse): Promise<v
     throw new HttpError(
       503,
       'Le stockage des captures n’est pas prêt : le bucket « earth » manque dans Supabase.',
-      'storage_unavailable'
+      'storage_unavailable',
+      signedError?.message?.slice(0, 60) || 'sans-code'
     );
   }
 

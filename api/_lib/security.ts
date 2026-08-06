@@ -19,7 +19,17 @@ export async function consumeQuota(req: VercelRequest): Promise<void> {
   const { data, error } = await service().rpc('consume_submission_quota', {
     p_fingerprint: requestFingerprint(req)
   });
-  if (error) throw new Error(`rate limit: ${error.message}`);
+  if (error) {
+    // Une fonction absente ou un droit manquant est un defaut
+    // d'installation, pas un abus du visiteur : il doit se nommer.
+    console.error('[api] quota anti-spam indisponible :', error.code, error.message);
+    throw new HttpError(
+      503,
+      'Le contrôle anti-spam est indisponible (fonction consume_submission_quota).',
+      'quota_unavailable',
+      error.code || 'sans-code'
+    );
+  }
   if (data !== true) {
     throw new HttpError(429, 'Trop de propositions. Réessaie dans une heure.', 'rate_limited');
   }
