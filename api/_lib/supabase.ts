@@ -13,6 +13,46 @@ export function service(): SupabaseClient {
   return serviceClient;
 }
 
+/**
+ * Le bucket privé des captures, créé au besoin.
+ *
+ * La migration l'installe par `insert into storage.buckets`, mais
+ * Supabase interdit désormais cette écriture depuis l'éditeur SQL :
+ * le script s'arrête à sa dernière ligne, tout le reste est en place,
+ * et le dépôt échoue sans que rien ne l'explique. La clé service_role
+ * a le droit de le créer par l'API Storage, elle : on le fait ici, une
+ * fois, plutôt que de demander un geste manuel de plus.
+ *
+ * Idempotent : si le bucket existe, on n'y touche pas — surtout pas à
+ * `public`, qui doit rester false.
+ */
+let bucketVerifie = false;
+
+export async function assurerBucket(nom = 'earth'): Promise<void> {
+  if (bucketVerifie) return;
+  const supabase = service();
+
+  const { error: lecture } = await supabase.storage.getBucket(nom);
+  if (!lecture) { bucketVerifie = true; return; }
+
+  const { error: creation } = await supabase.storage.createBucket(nom, {
+    public: false,
+    fileSizeLimit: 8_388_608,
+    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+  });
+  // « existe déjà » = une autre requête l'a créé entre-temps : très bien.
+  if (creation && !/exist/i.test(creation.message)) {
+    console.error('[api] création du bucket impossible :', creation.message);
+    throw new HttpError(
+      503,
+      'Le stockage des captures n’est pas prêt.',
+      'storage_unavailable'
+    );
+  }
+  console.warn(`[api] bucket « ${nom} » créé (privé, 8 Mo, images seules)`);
+  bucketVerifie = true;
+}
+
 export async function requireAdmin(req: VercelRequest): Promise<User> {
   const authorization = header(req, 'authorization');
   const token = authorization?.match(/^Bearer\s+(.+)$/i)?.[1];

@@ -394,18 +394,35 @@ grant execute on function public.is_admin(uuid) to anon, authenticated, service_
 -- Storage privé
 -- --------------------------------------------------------------------------
 
-insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values (
-  'earth',
-  'earth',
-  false,
-  8388608,
-  array['image/jpeg', 'image/png', 'image/webp', 'image/avif']
-)
-on conflict (id) do update set
-  public = false,
-  file_size_limit = excluded.file_size_limit,
-  allowed_mime_types = excluded.allowed_mime_types;
+-- Supabase interdit desormais l'ecriture directe dans storage.buckets
+-- depuis l'editeur SQL. Sans ce garde-fou, la migration mourait ICI,
+-- a sa derniere ligne : tout le schema etait en place, le depot
+-- echouait, et rien ne le disait. On tente, et si c'est refuse on le
+-- signale sans faire echouer le reste.
+--
+-- Le bucket est de toute facon cree automatiquement par l'API au
+-- premier depot (api/_lib/supabase.ts, assurerBucket), ou a la main :
+-- Storage -> New bucket -> « earth », prive, 8 Mo.
+do $$
+begin
+  insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+  values (
+    'earth',
+    'earth',
+    false,
+    8388608,
+    array['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+  )
+  on conflict (id) do update set
+    public = false,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+  raise notice 'bucket « earth » en place';
+exception
+  when insufficient_privilege or others then
+    raise warning 'bucket « earth » non cree ici (%). Il le sera au premier depot, ou a la main dans Storage.', sqlerrm;
+end;
+$$;
 
 do $$
 begin

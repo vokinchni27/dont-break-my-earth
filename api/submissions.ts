@@ -12,7 +12,7 @@ import {
 } from './_lib/http.js';
 import { verifyStoredImage } from './_lib/media.js';
 import { consumeQuota, createUploadToken, verifyUploadToken } from './_lib/security.js';
-import { service } from './_lib/supabase.js';
+import { assurerBucket, service } from './_lib/supabase.js';
 import {
   ALLOWED_MIME_TYPES,
   extensionFor,
@@ -89,6 +89,8 @@ async function prepareUpload(req: VercelRequest, res: VercelResponse): Promise<v
     throw new HttpError(400, 'Proposition invalide.', 'invalid_submission');
   }
   await consumeQuota(req);
+  await assurerBucket();
+  const supabase = service();
 
   const now = new Date();
   const id = randomUUID();
@@ -99,7 +101,6 @@ async function prepareUpload(req: VercelRequest, res: VercelResponse): Promise<v
     `${id}.${extensionFor(input.mimeType)}`
   ].join('/');
   const upload = createUploadToken();
-  const supabase = service();
 
   const { error: insertError } = await supabase.from('submissions').insert({
     id,
@@ -125,7 +126,15 @@ async function prepareUpload(req: VercelRequest, res: VercelResponse): Promise<v
     .createSignedUploadUrl(path, { upsert: false });
   if (signedError || !signed?.signedUrl) {
     await supabase.from('submissions').delete().eq('id', id);
-    throw signedError ?? new Error('Signed upload URL missing.');
+    // Un 500 muet ici coûte une soirée : le seul moyen de savoir que
+    // le bucket manque était de lire les journaux Vercel. On nomme la
+    // panne — c'est un défaut d'installation, pas une faute du visiteur.
+    console.error('[api] bucket « earth » injoignable :', signedError?.message);
+    throw new HttpError(
+      503,
+      'Le stockage des captures n’est pas prêt : le bucket « earth » manque dans Supabase.',
+      'storage_unavailable'
+    );
   }
 
   json(res, 201, {
