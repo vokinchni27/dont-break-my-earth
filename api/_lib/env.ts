@@ -1,13 +1,18 @@
 import { z } from 'zod';
 import { HttpError } from './errors.js';
 
+// Un copier-coller depuis un tableau de bord ramène souvent un espace
+// ou un retour à la ligne invisible. On les enlève avant de juger :
+// une clé juste ne doit pas être refusée pour un caractère fantôme.
+const propre = () => z.string().transform((v) => v.trim());
+
 const serverSchema = z.object({
-  SUPABASE_URL: z.string().url(),
-  SUPABASE_ANON_KEY: z.string().min(20),
-  SUPABASE_SERVICE_ROLE_KEY: z.string().min(20),
-  PUBLIC_SITE_URL: z.string().url().optional(),
-  RATE_LIMIT_SECRET: z.string().min(32),
-  UPLOAD_TOKEN_SECRET: z.string().min(32),
+  SUPABASE_URL: propre().pipe(z.string().url()),
+  SUPABASE_ANON_KEY: propre().pipe(z.string().min(20)),
+  SUPABASE_SERVICE_ROLE_KEY: propre().pipe(z.string().min(20)),
+  PUBLIC_SITE_URL: propre().pipe(z.string().url()).optional(),
+  RATE_LIMIT_SECRET: propre().pipe(z.string().min(32)),
+  UPLOAD_TOKEN_SECRET: propre().pipe(z.string().min(32)),
   MAX_UPLOAD_BYTES: z.coerce.number().int().positive().max(8_388_608).default(8_388_608),
   SIGNED_URL_TTL_SECONDS: z.coerce.number().int().min(60).max(86_400).default(3_600),
   GOOGLE_EARTH_URL: z.string().url().default('https://earth.google.com/web/')
@@ -41,12 +46,37 @@ export function env(): ServerEnv {
   return cached;
 }
 
+/**
+ * Le NOM des variables qui bloquent, et la raison — jamais leur
+ * valeur, ni un extrait, ni une longueur exacte.
+ *
+ * Sans cela, « enabled: false » ne dit rien : les cinq variables
+ * peuvent être posées et une seule être refusée, sans qu'on sache
+ * laquelle. Les noms sont déjà publics (README, .env.example) ;
+ * ce sont les valeurs qui sont secrètes, et elles ne sortent pas.
+ */
+function diagnostic(erreur: z.ZodError): string[] {
+  const vues = new Set<string>();
+  for (const souci of erreur.issues) {
+    const nom = String(souci.path[0] ?? '?');
+    if (vues.has(nom)) continue;
+    vues.add(nom);
+  }
+  return [...vues].map((nom) => {
+    const brut = process.env[nom];
+    if (brut === undefined) return `${nom} : absente`;
+    if (brut.trim() === '') return `${nom} : vide`;
+    return `${nom} : valeur refusée (trop courte, ou ce n’est pas une URL)`;
+  });
+}
+
 export function publicConfig(): {
   enabled: boolean;
   supabaseUrl: string;
   supabaseAnonKey: string;
   maxUploadBytes: number;
   googleEarthUrl: string;
+  aCorriger?: string[];
 } {
   const parsed = serverSchema.safeParse(process.env);
   if (!parsed.success) {
@@ -55,7 +85,8 @@ export function publicConfig(): {
       supabaseUrl: '',
       supabaseAnonKey: '',
       maxUploadBytes: 8_388_608,
-      googleEarthUrl: 'https://earth.google.com/web/'
+      googleEarthUrl: 'https://earth.google.com/web/',
+      aCorriger: diagnostic(parsed.error)
     };
   }
   return {
