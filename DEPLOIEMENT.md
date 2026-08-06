@@ -51,7 +51,7 @@ déploiement. C’est la seule chose qui manque.
 | `SUPABASE_URL` | `https://jhdwyiknkoqdxflafwmx.supabase.co` |
 | `SUPABASE_ANON_KEY` | la clé **anon / public** — voir ci-dessous |
 | `SUPABASE_SERVICE_ROLE_KEY` | la clé **service_role** — voir ci-dessous |
-| `PUBLIC_SITE_URL` | `https://dontbreakmyearth.com` |
+| `PUBLIC_SITE_URL` | `https://dont-break-my-earth.vercel.app` |
 | `RATE_LIMIT_SECRET` | le premier secret que Claude t’a donné |
 | `UPLOAD_TOKEN_SECRET` | le second secret que Claude t’a donné |
 | `MAX_UPLOAD_BYTES` | `8388608` |
@@ -91,12 +91,39 @@ autorisée dans la base.
 
 ## Ensuite
 
-- le site public : l’URL `.vercel.app` donnée par Vercel
-- ton tableau de bord : la même URL suivie de **`/admin`**
+- le site public : **https://dont-break-my-earth.vercel.app**
+- ton tableau de bord : **https://dont-break-my-earth.vercel.app/admin**
 
-Pour le domaine `dontbreakmyearth.com` : Vercel → projet → **Settings** →
-**Domains** → ajouter le domaine, puis suivre les instructions DNS chez ton
-registrar.
+---
+
+## Le domaine — à lire avant d'y retoucher
+
+Un domaine, ça **s'achète**. L'ajouter dans Vercel ne le crée pas.
+
+`dont-break-my-earth.com` a été ajouté au projet mais n'a jamais été
+enregistré : il n'existe dans aucun DNS au monde. Vercel l'a quand même pris
+comme domaine principal, donc l'adresse `.vercel.app` **redirige vers le vide**
+et le site devient injoignable pour tout le monde.
+
+### Réparer maintenant (30 secondes, gratuit)
+
+Vercel → projet **dont-break-my-earth** → **Domains** → ligne
+`dont-break-my-earth.com` → **Edit** → **Remove**.
+
+Le `.vercel.app` cesse aussitôt de rediriger et sert le site.
+
+### Avoir un vrai nom plus tard (~12 €/an)
+
+Les deux orthographes sont libres à ce jour :
+`dontbreakmyearth.com` et `dont-break-my-earth.com`.
+
+Le plus simple est d'acheter depuis Vercel — **Domains** → **Buy** — car Vercel
+est alors à la fois vendeur et hébergeur : aucun réglage DNS à faire, le site
+bascule tout seul. Passer par un autre registrar marche aussi, mais il faut
+alors créer soi-même l'enregistrement `A` vers `216.198.79.1`.
+
+Après l'achat, change `PUBLIC_SITE_URL` dans les variables Vercel pour la
+nouvelle adresse, puis **Redeploy**.
 
 ---
 
