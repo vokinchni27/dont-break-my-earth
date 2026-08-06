@@ -386,8 +386,16 @@ revoke all on public.submission_rate_limits from anon, authenticated;
 revoke all on public.admin_audit_logs from anon, authenticated;
 grant select, insert, update, delete on public.admin_audit_logs to service_role;
 grant usage, select on sequence public.admin_audit_logs_id_seq to service_role;
-revoke all on function public.consume_submission_quota(text) from public, anon, authenticated;
-grant execute on function public.consume_submission_quota(text) to service_role;
+-- ATTENTION a l'ordre : le revoke retire les droits a tout le monde, le grant
+-- les rend au backend. Si le script s'interrompt ENTRE les deux, le depot
+-- repond « quota_unavailable · 42501 » et plus rien n'entre. Les deux tiennent
+-- donc dans un seul bloc, indivisible.
+do $$
+begin
+  revoke all on function public.consume_submission_quota(text) from public, anon, authenticated;
+  grant execute on function public.consume_submission_quota(text) to service_role;
+end;
+$$;
 grant execute on function public.is_admin(uuid) to anon, authenticated, service_role;
 
 -- --------------------------------------------------------------------------
