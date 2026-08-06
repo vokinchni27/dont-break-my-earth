@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="same-origin">
-  <title>EARTH — administration</title>
+  <title data-t="admin.titrePage"></title>
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
   <main>
     <section id="connexion" class="connexion" aria-labelledby="connexion-titre">
-      <p class="micro">archive collective · accès privé</p>
-      <h1 id="connexion-titre">EARTH<sup>®</sup></h1>
+      <p class="micro" data-t="admin.accesPrive"></p>
+      <h1 id="connexion-titre"><span data-t="admin.marque"></span><sup>®</sup></h1>
       <form id="connexion-forme">
-        <label>adresse email<input id="courriel" type="email" autocomplete="username" required></label>
-        <label>mot de passe<input id="mot-de-passe" type="password" autocomplete="current-password" required></label>
-        <button class="bouton bouton--plein" type="submit">entrer</button>
+        <label><span data-t="admin.champEmail"></span><input id="courriel" type="email" autocomplete="username" required></label>
+        <label><span data-t="admin.champMotDePasse"></span><input id="mot-de-passe" type="password" autocomplete="current-password" required></label>
+        <button class="bouton bouton--plein" type="submit" data-t="admin.entrer"></button>
         <p id="connexion-erreur" class="message" role="status"></p>
       </form>
     </section>
@@ -24,29 +24,30 @@
     <section id="atelier" hidden>
       <header class="entete">
         <div>
-          <p class="micro">DON’T BREAK MY EARTH · administration</p>
-          <h1>ARCHIVE<br>COLLECTIVE</h1>
+          <p class="micro" data-t="admin.enteteSurTitre"></p>
+          <h1 data-t-html="admin.enteteTitre"></h1>
         </div>
         <div class="compte">
           <span id="identite" class="micro">—</span>
-          <button class="bouton" id="sortir" type="button">quitter</button>
+          <button class="bouton" id="sortir" type="button" data-t="admin.quitter"></button>
         </div>
       </header>
 
-      <nav class="onglets" aria-label="Sections d’administration">
-        <button class="onglet actif" data-vue="propositions" type="button">propositions <span id="nombre-propositions">0</span></button>
-        <button class="onglet" data-vue="contenus" type="button">contenus <span id="nombre-contenus">0</span></button>
+      <nav class="onglets" data-t-aria="admin.ongletsAria">
+        <button class="onglet actif" data-vue="propositions" type="button"><span data-t="admin.ongletPropositions"></span> <span id="nombre-propositions">0</span></button>
+        <button class="onglet" data-vue="contenus" type="button"><span data-t="admin.ongletContenus"></span> <span id="nombre-contenus">0</span></button>
       </nav>
 
       <section id="vue-propositions" class="vue-admin">
         <div class="barre">
-          <div class="filtres" role="group" aria-label="Filtrer les propositions">
-            <button class="filtre actif" data-statut="all" type="button">toutes</button>
-            <button class="filtre" data-statut="pending" type="button">en attente</button>
-            <button class="filtre" data-statut="approved" type="button">validées</button>
-            <button class="filtre" data-statut="rejected" type="button">refusées</button>
+          <div class="filtres" role="group" data-t-aria="admin.filtresAria">
+            <button class="filtre actif" data-statut="all" type="button" data-t="admin.filtreToutes"></button>
+            <button class="filtre" data-statut="pending" type="button" data-t="admin.filtreEnAttente"></button>
+            <button class="filtre" data-statut="approved" type="button" data-t="admin.filtreValidees"></button>
+            <button class="filtre" data-statut="rejected" type="button" data-t="admin.filtreRefusees"></button>
+            <button class="filtre" data-statut="deleted" type="button" data-t="admin.filtreSupprimees"></button>
           </div>
-          <button class="bouton" id="rafraichir" type="button">actualiser</button>
+          <button class="bouton" id="rafraichir" type="button" data-t="admin.actualiser"></button>
         </div>
         <div id="liste-propositions" class="liste-propositions"></div>
       </section>
@@ -56,29 +57,29 @@
           <input id="contenu-id" type="hidden">
           <div class="contenu-forme-entete">
             <div>
-              <p class="micro">mini-CMS</p>
-              <h2 id="contenu-forme-titre">AJOUTER UN CONTENU</h2>
+              <p class="micro" data-t="admin.cms"></p>
+              <h2 id="contenu-forme-titre"></h2>
             </div>
-            <button class="bouton" id="contenu-annuler" type="button" hidden>annuler</button>
+            <button class="bouton" id="contenu-annuler" type="button" hidden data-t="admin.annuler"></button>
           </div>
           <div class="grille-forme">
-            <label>clé technique<input id="contenu-cle" required pattern="[a-z0-9][a-z0-9._-]{1,79}" placeholder="section.manifeste"></label>
-            <label>type
+            <label><span data-t="admin.cleTechnique"></span><input id="contenu-cle" required pattern="[a-z0-9][a-z0-9._-]{1,79}" placeholder="section.manifeste"></label>
+            <label><span data-t="admin.type"></span>
               <select id="contenu-type">
-                <option value="intro">introduction</option>
-                <option value="paragraph">paragraphe</option>
-                <option value="quote">citation</option>
-                <option value="section">section</option>
-                <option value="fragment">fragment vivant</option>
+                <option value="intro" data-t="admin.typeIntro"></option>
+                <option value="paragraph" data-t="admin.typeParagraphe"></option>
+                <option value="quote" data-t="admin.typeCitation"></option>
+                <option value="section" data-t="admin.typeSection"></option>
+                <option value="fragment" data-t="admin.typeFragment"></option>
               </select>
             </label>
-            <label>titre<input id="contenu-titre" maxlength="160"></label>
-            <label>ordre<input id="contenu-ordre" type="number" value="0" min="-10000" max="10000"></label>
+            <label><span data-t="admin.titreContenu"></span><input id="contenu-titre" maxlength="160"></label>
+            <label><span data-t="admin.ordre"></span><input id="contenu-ordre" type="number" value="0" min="-10000" max="10000"></label>
           </div>
-          <label>texte<textarea id="contenu-valeur" rows="6" maxlength="12000" required></textarea></label>
-          <label class="publie"><input id="contenu-publie" type="checkbox" checked> publié sur le site</label>
+          <label><span data-t="admin.texteContenu"></span><textarea id="contenu-valeur" rows="6" maxlength="12000" required></textarea></label>
+          <label class="publie"><input id="contenu-publie" type="checkbox" checked> <span data-t="admin.publie"></span></label>
           <div class="actions-forme">
-            <button class="bouton bouton--plein" type="submit">enregistrer</button>
+            <button class="bouton bouton--plein" type="submit" data-t="admin.enregistrer"></button>
             <span id="contenu-message" class="message" role="status"></span>
           </div>
         </form>
@@ -89,6 +90,7 @@
 
   <div id="notification" role="status"></div>
 
+  <script src="js/textes.js"></script>
   <script src="js/config.js"></script>
   <script src="js/supabase.js"></script>
   <script src="js/admin.js"></script>

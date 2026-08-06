@@ -43,7 +43,7 @@
 
     construire() {
       const cfg = EARTH.CONFIG.titre;
-      const mots = cfg.mot.split(/\s+/);
+      const mots = EARTH.T('titre.mot').split(/\s+/);
       /* trois lignes : premier mot, le milieu, le dernier */
       const lignes = mots.length >= 3
         ? [[mots[0]], mots.slice(1, -1), [mots[mots.length - 1]]]
@@ -81,7 +81,7 @@
 
       const note = document.createElement('div');
       note.className = 'titre-note';
-      note.textContent = 'passe la main';
+      note.textContent = EARTH.T('titre.invitation');
       this.el.appendChild(note);
       this.note = note;
     },

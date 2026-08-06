@@ -32,7 +32,7 @@
 
     /* 2. l'archive locale */
     const n = await EARTH.Archive.charger(cfg);
-    if (!n) { note(EARTH.Archive.erreur || 'aucune image trouvée dans images/'); return; }
+    if (!n) { note(EARTH.Archive.erreur || EARTH.T('panne.archiveVide')); return; }
     console.log(
       `[EARTH] ${n} captures · ${EARTH.Archive.lieux.length} lieux · ` +
       `${EARTH.Archive.situees.length} situees`
@@ -72,8 +72,8 @@
     const d = document.createElement('div');
     d.className = 'note';
     d.innerHTML = message +
-      '<br><br>ouvre un terminal dans le dossier du projet et lance :' +
-      '<br><code>node tools/index-images.mjs</code>';
+      `<br><br>${EARTH.T('panne.relance')}` +
+      `<br><code>${EARTH.T('panne.commande')}</code>`;
     document.body.appendChild(d);
   }
 

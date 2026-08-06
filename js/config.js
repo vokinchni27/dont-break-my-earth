@@ -10,10 +10,7 @@ window.EARTH = window.EARTH || {};
 EARTH.CONFIG = {
 
   titre: {
-    mot: 'DON’T BREAK MY HEART',
-    /* HEART est l’anagramme d’EARTH : quand la matière se
-       liquéfie, le mot peut retrouver l’autre. */
-    echo: 'DON’T BREAK MY EARTH',
+    /* les mots vivent dans js/textes.js — ici, seuls les réglages */
     liquide: 1,            // amplitude de la déformation au curseur
     viscosite: 0.9,        // 0 = revient sec, 1 = revient très lentement
     sortie: 2200           // ms de silence avant que le titre s’efface
@@ -142,21 +139,7 @@ EARTH.CONFIG = {
     frequence: 0.28,
     taille: 22,
     duree: 9000,
-    fragments: [
-      'tu regardes',
-      'personne n’a jamais marché ici',
-      'cette rivière ne connaît pas ton nom',
-      'il pleut quelque part sur cette image',
-      'la lumière que tu vois est déjà partie',
-      'ce n’est pas une carte',
-      'ce lieu existe maintenant',
-      'rien ici n’a été retouché',
-      'reste encore un peu',
-      'plus lentement',
-      'quelqu’un a tracé cette ligne droite',
-      'la Terre ne pose pas',
-      'tu es dedans aussi'
-    ]
+    fragments: (EARTH.TEXTES ? EARTH.TEXTES.fragments.slice() : [])
   },
 
   evenements: {

@@ -170,7 +170,7 @@
       const c = item && item.coord;
       if (!c) return;
       const texte = `${c.lat} ${c.lon}`;
-      const dire = () => EARTH.HUD && EARTH.HUD.souffler('coordonnées copiées');
+      const dire = () => EARTH.HUD && EARTH.HUD.souffler(EARTH.T('hud.coordonneesCopiees'));
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(texte).then(dire, () => repli(texte, dire));
       } else repli(texte, dire);

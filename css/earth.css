@@ -358,11 +358,15 @@ body.depot .grille-toile { filter: contrast(3); }
 .hud-tl { top: var(--marge); left: var(--marge); }
 .hud-tr { top: var(--marge); right: var(--marge); text-align: right; align-items: flex-end; }
 .hud-bl { bottom: calc(var(--marge) + 18px); left: var(--marge); }
+/* Les consignes se rangent AU-DESSUS de la pastille d'ajout, avec
+   un vrai intervalle. Rien ne doit jamais se superposer dans ce
+   coin : la pastille est un bouton, les consignes sont du texte. */
 .hud-br {
-  bottom: calc(var(--marge) + 18px);
+  bottom: calc(var(--marge) + 86px);
   right: var(--marge);
   text-align: right;
   align-items: flex-end;
+  max-width: 46vw;
 }
 
 /* le bandeau defilant : les coordonnees de ce qui est a l'ecran */
@@ -605,7 +609,7 @@ body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
 
 #contenus { position: fixed; inset: 0; z-index: 8; pointer-events: none; }
 .contenu-invite {
-  position: absolute; left: var(--marge); bottom: calc(var(--marge) + 46px);
+  position: absolute; left: var(--marge); bottom: calc(var(--marge) + 62px);
   padding: 7px 13px; border: 1px solid var(--encre); border-radius: 999px;
   background: var(--fond); color: var(--encre); pointer-events: auto;
   font: inherit; font-size: var(--micro); letter-spacing: var(--interlettre);

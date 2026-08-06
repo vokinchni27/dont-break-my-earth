@@ -13,35 +13,37 @@
 
   const { get, set } = EARTH.utils;
 
-  /* type : range | bascule */
-  const REGLAGES = [
-    ['ÉCHELLE', [
-      { p: 'echelle.min', l: 'plus petite', min: 0.01, max: 0.6, pas: 0.005 },
-      { p: 'echelle.max', l: 'plus grande', min: 0.2, max: 2.5, pas: 0.01 }
+  /* type : range | bascule
+     Fonction et non constante : les libelles doivent pouvoir venir
+     du CMS, qui repond apres le chargement du script. */
+  function reglages() { return [
+    [EARTH.T('panneau.echelle'), [
+      { p: 'echelle.min', l: EARTH.T('panneau.plusPetite'), min: 0.01, max: 0.6, pas: 0.005 },
+      { p: 'echelle.max', l: EARTH.T('panneau.plusGrande'), min: 0.2, max: 2.5, pas: 0.01 }
     ]],
-    ['RYTHME', [
-      { p: 'rythme.tenue', l: 'tenue', min: 800, max: 30000, pas: 100, u: 'ms',
+    [EARTH.T('panneau.rythme'), [
+      { p: 'rythme.tenue', l: EARTH.T('panneau.tenue'), min: 800, max: 30000, pas: 100, u: 'ms',
         apres: () => EARTH.Director.programmer() },
-      { p: 'rythme.cascade', l: 'cascade', min: 0, max: 2500, pas: 10, u: 'ms' }
+      { p: 'rythme.cascade', l: EARTH.T('panneau.cascade'), min: 0, max: 2500, pas: 10, u: 'ms' }
     ]],
-    ['GRILLE', [
-      { p: 'grille.visible', l: 'visible', type: 'bascule', apres: () => EARTH.Grille.appliquer() },
-      { p: 'grille.souffle', l: 'souffle', min: 0, max: 4, pas: 0.05 },
-      { p: 'grille.attraction', l: 'attraction', min: 0, max: 4, pas: 0.05 },
-      { p: 'grille.obeissance', l: 'obéissance', min: 0, max: 1, pas: 0.05 }
+    [EARTH.T('panneau.grille'), [
+      { p: 'grille.visible', l: EARTH.T('panneau.visible'), type: 'bascule', apres: () => EARTH.Grille.appliquer() },
+      { p: 'grille.souffle', l: EARTH.T('panneau.souffle'), min: 0, max: 4, pas: 0.05 },
+      { p: 'grille.attraction', l: EARTH.T('panneau.attraction'), min: 0, max: 4, pas: 0.05 },
+      { p: 'grille.obeissance', l: EARTH.T('panneau.obeissance'), min: 0, max: 1, pas: 0.05 }
     ]],
-    ['GESTE', [
-      { p: 'geste.parallaxe', l: 'respiration', min: 0, max: 3, pas: 0.05 },
-      { p: 'geste.dispersion', l: 'dispersion', min: 0, max: 3, pas: 0.05 }
+    [EARTH.T('panneau.geste'), [
+      { p: 'geste.parallaxe', l: EARTH.T('panneau.respiration'), min: 0, max: 3, pas: 0.05 },
+      { p: 'geste.dispersion', l: EARTH.T('panneau.dispersion'), min: 0, max: 3, pas: 0.05 }
     ]],
-    ['REGARD', [
-      { p: 'regard.grisaille', l: 'gris', min: 0, max: 1, pas: 0.05,
+    [EARTH.T('panneau.regard'), [
+      { p: 'regard.grisaille', l: EARTH.T('panneau.gris'), min: 0, max: 1, pas: 0.05,
         apres: () => EARTH.Stage.rafraichirRegard() },
-      { p: 'regard.melangeChance', l: 'conflit', min: 0, max: 1, pas: 0.05 },
-      { p: 'texte.frequence', l: 'texte', min: 0, max: 1, pas: 0.05 },
-      { p: 'evenements.rarete', l: 'événements', min: 0, max: 0.6, pas: 0.01 }
+      { p: 'regard.melangeChance', l: EARTH.T('panneau.conflit'), min: 0, max: 1, pas: 0.05 },
+      { p: 'texte.frequence', l: EARTH.T('panneau.texte'), min: 0, max: 1, pas: 0.05 },
+      { p: 'evenements.rarete', l: EARTH.T('panneau.evenements'), min: 0, max: 0.6, pas: 0.01 }
     ]]
-  ];
+  ]; }
 
   const Panel = {
     el: null,
@@ -50,16 +52,16 @@
     init() {
       const el = document.createElement('aside');
       el.id = 'panneau';
-      el.innerHTML = '<div class="pan-tete"><span>BAC À SABLE</span>' +
+      el.innerHTML = `<div class="pan-tete"><span>${EARTH.T('panneau.titre')}</span>` +
                      '<span class="pan-fermer" title="P">×</span></div>';
 
       const etat = document.createElement('div');
       etat.className = 'pan-etat';
       el.appendChild(etat);
 
-      el.appendChild(bloc('PARTITIONS', partitions()));
+      el.appendChild(bloc(EARTH.T('panneau.partitions'), partitions()));
 
-      REGLAGES.forEach(([titre, liste]) => {
+      reglages().forEach(([titre, liste]) => {
         const corps = document.createElement('div');
         liste.forEach(r => corps.appendChild(controle(r)));
         el.appendChild(bloc(titre, corps));
@@ -67,9 +69,9 @@
 
       const actions = document.createElement('div');
       actions.className = 'pan-actions';
-      actions.appendChild(bouton('REJOUER', () => EARTH.Director.relancer()));
-      actions.appendChild(bouton('PAUSE', () => EARTH.Director.bascule()));
-      actions.appendChild(bouton('COPIER LES RÉGLAGES', copierConfig));
+      actions.appendChild(bouton(EARTH.T('panneau.rejouer'), () => EARTH.Director.relancer()));
+      actions.appendChild(bouton(EARTH.T('panneau.pause'), () => EARTH.Director.bascule()));
+      actions.appendChild(bouton(EARTH.T('panneau.copier'), copierConfig));
       el.appendChild(actions);
       el.appendChild(aide());
 
@@ -82,10 +84,10 @@
         const s = EARTH.Director.courante || {};
         const vivants = EARTH.Stage.plans.filter(p => !p.sorti).length;
         etat.innerHTML =
-          `<b>${s.nom || '—'}</b> — ${vivants} plans<br>` +
-          `graine ${s.graine != null ? s.graine : '—'}<br>` +
-          `${EARTH.Archive.taille} captures / ${EARTH.Archive.situees.length} situées` +
-          (EARTH.Director.enPause ? '<br><b>EN PAUSE</b>' : '');
+          `<b>${s.nom || '—'}</b> — ${vivants} ${EARTH.T('panneau.plans')}<br>` +
+          `${EARTH.T('panneau.graine')} ${s.graine != null ? s.graine : '—'}<br>` +
+          `${EARTH.Archive.taille} ${EARTH.T('hud.captures')} / ${EARTH.Archive.situees.length} ${EARTH.T('panneau.situees')}` +
+          (EARTH.Director.enPause ? `<br><b>${EARTH.T('panneau.enPause')}</b>` : '');
       };
       EARTH.Director.surChangement(majEtat);
       setInterval(majEtat, 700);
@@ -121,7 +123,7 @@
       const coche = document.createElement('input');
       coche.type = 'checkbox';
       coche.checked = cfg.compositions.actives.includes(nom);
-      coche.title = 'garder dans la rotation';
+      coche.title = EARTH.T('panneau.gardeRotation');
       coche.onchange = () => {
         const a = cfg.compositions.actives;
         const j = a.indexOf(nom);
@@ -191,20 +193,9 @@
   function aide() {
     const d = document.createElement('div');
     d.className = 'pan-aide';
-    d.innerHTML = [
-      '<b>MOLETTE</b> descendre dans la grille',
-      '<b>CLIC</b> détacher une image',
-      '<b>MAINTENIR</b> creuser',
-      '<b>NE RIEN FAIRE</b> une image immense',
-      '<b>DÉPOSER</b> contribuer',
-      '',
-      '<b>ESPACE</b> suivante · <b>← →</b> naviguer',
-      '<b>R</b> rejouer · <b>X</b> pause · <b>1-9</b> partition',
-      '<b>ENTRÉE</b> aligner · <b>RETOUR</b> effacer',
-      '<b>G</b> grille · <b>H</b> appareillage · <b>N</b> gris',
-      '<b>C</b> recadrage · <b>T</b> texte · <b>A</b> ajouter',
-      '<b>E</b> événement · <b>W</b> webcam · <b>P</b> panneau'
-    ].join('<br>');
+    d.innerHTML = EARTH.T('aide')
+      .map(paire => `<b>${paire[0]}</b> ${paire[1]}`)
+      .join('<br>');
     return d;
   }
 
@@ -216,7 +207,7 @@
 
   function copierConfig() {
     const texte = 'EARTH.CONFIG = ' + JSON.stringify(EARTH.CONFIG, null, 2) + ';';
-    const fin = () => EARTH.HUD.souffler('réglages copiés');
+    const fin = () => EARTH.HUD.souffler(EARTH.T('hud.reglagesCopies'));
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(texte).then(fin, () => repli(texte, fin));
     } else repli(texte, fin);
@@ -229,7 +220,7 @@
     document.body.appendChild(t);
     t.select();
     try { document.execCommand('copy'); fin(); }
-    catch (e) { console.log(texte); EARTH.HUD.souffler('voir la console'); }
+    catch (e) { console.log(texte); EARTH.HUD.souffler(EARTH.T('hud.voirConsole')); }
     t.remove();
   }
 

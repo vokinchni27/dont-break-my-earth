@@ -61,8 +61,8 @@
           await this.video.play();
         } catch (e) {
           this.erreur = e && e.name === 'NotAllowedError'
-            ? 'caméra refusée'
-            : 'caméra indisponible — il faut https ou localhost';
+            ? EARTH.T('webcam.refusee')
+            : EARTH.T('webcam.indisponible');
           console.warn('[EARTH] ' + this.erreur, e);
           return false;
         }

@@ -6,8 +6,14 @@
 create extension if not exists pgcrypto;
 
 do $$ begin
-  create type public.submission_status as enum ('pending', 'approved', 'rejected');
+  create type public.submission_status as enum ('pending', 'approved', 'rejected', 'deleted');
 exception when duplicate_object then null;
+end $$;
+
+-- l'etat 'deleted' est arrive apres coup : on l'ajoute si l'enum existait deja
+do $$ begin
+  alter type public.submission_status add value if not exists 'deleted';
+exception when others then null;
 end $$;
 
 do $$ begin
@@ -152,10 +158,16 @@ create table if not exists public.submissions (
   updated_at timestamptz not null default now(),
   approved_at timestamptz,
   approved_by uuid references auth.users(id) on delete set null,
+  deleted_at timestamptz,
+  deleted_by uuid references auth.users(id) on delete set null,
   rejected_at timestamptz,
   rejected_by uuid references auth.users(id) on delete set null,
   source_legacy_id uuid unique
 );
+
+-- relançable : si la table existait avant l'etat 'deleted'
+alter table public.submissions add column if not exists deleted_at timestamptz;
+alter table public.submissions add column if not exists deleted_by uuid references auth.users(id) on delete set null;
 
 create index if not exists submissions_status_created_idx
   on public.submissions (status, created_at desc);

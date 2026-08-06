@@ -44,7 +44,7 @@
         EARTH.Stage.viderTout('fondu');
         EARTH.Texte.viderTout();
         setTimeout(() => {
-          EARTH.Texte.poser('il n’y a rien à voir pour l’instant', { x: 0.5, y: 0.5 },
+          EARTH.Texte.poser(EARTH.T('evenements.rienAVoir'), { x: 0.5, y: 0.5 },
             { taille: 15, duree: 2600, alignement: 'center' });
         }, 1400);
         setTimeout(fin, 4600);

@@ -23,8 +23,8 @@
       this.el = el;
       el.innerHTML =
         '<div class="hud-coin hud-tl">' +
-          '<b>EARTH<sup>®</sup></b>' +
-          '<span class="hud-faible">archive vivante</span>' +
+          `<b>${EARTH.T('hud.marque')}<sup>®</sup></b>` +
+          `<span class="hud-faible">${EARTH.T('hud.sousTitre')}</span>` +
         '</div>' +
         '<div class="hud-coin hud-tr">' +
           '<span id="hud-heure">--:--</span>' +
@@ -33,12 +33,12 @@
         '</div>' +
         '<div class="hud-coin hud-bl">' +
           '<span id="hud-partition">—</span>' +
-          '<span class="hud-faible">jamais terminé</span>' +
+          `<span class="hud-faible">${EARTH.T('hud.etatJamaisTermine')}</span>` +
         '</div>' +
         '<div class="hud-coin hud-br">' +
-          '<span class="hud-faible">maintiens pour creuser.</span>' +
-          '<span class="hud-faible">ne bouge plus.</span>' +
-          '<span class="hud-faible">attends.</span>' +
+          `<span class="hud-faible">${EARTH.T('hud.aide1')}</span>` +
+          `<span class="hud-faible">${EARTH.T('hud.aide2')}</span>` +
+          `<span class="hud-faible">${EARTH.T('hud.aide3')}</span>` +
         '</div>';
 
       this.marquee = document.createElement('div');
@@ -104,8 +104,8 @@
       const compte = document.getElementById('hud-compte');
       if (compte) {
         compte.textContent =
-          `${A.taille} captures · ${A.lieux.length} lieux` +
-          (collectives ? ` · ${collectives} reçues` : '');
+          `${A.taille} ${EARTH.T('hud.captures')} · ${A.lieux.length} ${EARTH.T('hud.lieux')}` +
+          (collectives ? ` · ${collectives} ${EARTH.T('hud.recues')}` : '');
       }
       const part = document.getElementById('hud-partition');
       const c = EARTH.Director.courante;

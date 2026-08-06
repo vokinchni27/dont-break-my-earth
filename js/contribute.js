@@ -2,8 +2,12 @@
    EARTH — js/contribute.js
    ------------------------------------------------------------
    Un parcours guidé : ouvrir Google Earth, capturer, renseigner
-   le lieu, puis déposer. L'image entre immédiatement dans l'œuvre
-   locale ; sa version distante reste privée jusqu'à validation.
+   le lieu, puis déposer.
+
+   RÈGLE ABSOLUE : une capture déposée n'apparaît NULLE PART avant
+   d'avoir été validée — pas même à celui qui vient de l'envoyer.
+   Elle part dans un bucket privé, en statut « pending », et n'entre
+   dans l'œuvre qu'une fois passée en « approved ».
    ============================================================ */
 
 (function (EARTH) {
@@ -32,8 +36,8 @@
       const invite = document.createElement('button');
       invite.className = 'invite';
       invite.type = 'button';
-      invite.innerHTML = '<span class="invite-signe">+</span>' +
-        '<span class="invite-texte">ajouter votre morceau de Terre</span>';
+      invite.innerHTML = `<span class="invite-signe">${EARTH.T('contribution.inviteSigne')}</span>` +
+        `<span class="invite-texte">${EARTH.T('contribution.invite')}</span>`;
       invite.onclick = () => this.ouvrir();
       document.body.appendChild(invite);
       this.invite = invite;
@@ -52,8 +56,8 @@
 
       const voile = document.createElement('div');
       voile.className = 'depot-voile';
-      voile.innerHTML = '<div class="depot-mot">DÉPOSE<br>TA TERRE</div>' +
-        '<div class="depot-note">elle restera privée jusqu’à validation</div>';
+      voile.innerHTML = `<div class="depot-mot">${EARTH.T('contribution.voileTitre')}</div>` +
+        `<div class="depot-note">${EARTH.T('contribution.voileNote')}</div>`;
       this.el.appendChild(voile);
       this.voile = voile;
 
@@ -67,34 +71,34 @@
       fond.setAttribute('aria-hidden', 'true');
       fond.innerHTML = `
         <form class="contrib-forme" novalidate>
-          <button type="button" class="contrib-fermer" aria-label="Fermer">fermer</button>
+          <button type="button" class="contrib-fermer" aria-label="${EARTH.T('contribution.fermerAria')}">${EARTH.T('contribution.fermer')}</button>
           <div class="contrib-entete">
-            <span class="contrib-index">01—03</span>
-            <h2>RAPPORTE<br>UN MORCEAU<br>DE TERRE</h2>
+            <span class="contrib-index">${EARTH.T('contribution.formeIndex')}</span>
+            <h2>${EARTH.T('contribution.formeTitre')}</h2>
           </div>
           <section class="contrib-etape">
-            <span class="contrib-index">01 · explorer</span>
-            <p>Choisis un lieu dans Google Earth et réalise une capture d’écran.</p>
-            <a class="contrib-google" target="_blank" rel="noopener noreferrer">ouvrir Google Earth ↗</a>
+            <span class="contrib-index">${EARTH.T('contribution.etape1Index')}</span>
+            <p>${EARTH.T('contribution.etape1Texte')}</p>
+            <a class="contrib-google" target="_blank" rel="noopener noreferrer">${EARTH.T('contribution.etape1Lien')}</a>
           </section>
           <section class="contrib-etape">
-            <span class="contrib-index">02 · déposer</span>
-            <button type="button" class="contrib-fichier">choisir la capture</button>
-            <div class="contrib-apercu" hidden><img alt="Aperçu de la capture"><span></span></div>
+            <span class="contrib-index">${EARTH.T('contribution.etape2Index')}</span>
+            <button type="button" class="contrib-fichier">${EARTH.T('contribution.etape2Bouton')}</button>
+            <div class="contrib-apercu" hidden><img alt="${EARTH.T('contribution.apercuAria')}"><span></span></div>
           </section>
           <section class="contrib-etape contrib-champs">
-            <span class="contrib-index">03 · situer</span>
+            <span class="contrib-index">${EARTH.T('contribution.etape3Index')}</span>
             <div class="contrib-duo">
-              <label>latitude<input name="latitude" inputmode="decimal" placeholder="48.8566 ou 48°51′24″N" required></label>
-              <label>longitude<input name="longitude" inputmode="decimal" placeholder="2.3522 ou 2°21′08″E" required></label>
+              <label>${EARTH.T('contribution.champLatitude')}<input name="latitude" inputmode="decimal" placeholder="${EARTH.T('contribution.placeholderLatitude')}" required></label>
+              <label>${EARTH.T('contribution.champLongitude')}<input name="longitude" inputmode="decimal" placeholder="${EARTH.T('contribution.placeholderLongitude')}" required></label>
             </div>
-            <label>lieu, si tu veux<input name="locationLabel" maxlength="120" placeholder="Paris, France"></label>
-            <label>un mot, si tu veux<textarea name="comment" maxlength="1000" rows="3"></textarea></label>
-            <label>signer, si tu veux<input name="authorName" maxlength="80"></label>
+            <label>${EARTH.T('contribution.champLieu')}<input name="locationLabel" maxlength="120" placeholder="${EARTH.T('contribution.placeholderLieu')}"></label>
+            <label>${EARTH.T('contribution.champMot')}<textarea name="comment" maxlength="1000" rows="3"></textarea></label>
+            <label>${EARTH.T('contribution.champSignature')}<input name="authorName" maxlength="80"></label>
             <label class="contrib-piege" aria-hidden="true">site<input name="website" tabindex="-1" autocomplete="off"></label>
           </section>
-          <p class="contrib-regle">JPG, PNG, WebP ou AVIF · 8 Mo maximum · jamais visible avant validation.</p>
-          <button class="contrib-envoyer" type="submit" disabled>envoyer ce morceau</button>
+          <p class="contrib-regle">${EARTH.T('contribution.regle')}</p>
+          <button class="contrib-envoyer" type="submit" disabled>${EARTH.T('contribution.envoyer')}</button>
           <div class="contrib-erreur" role="status"></div>
         </form>`;
 
@@ -135,9 +139,9 @@
 
     selectionner(fichier) {
       const cfg = EARTH.CONFIG.collectif;
-      if (!TYPES.includes(fichier.type)) return this.signaler('format non autorisé');
+      if (!TYPES.includes(fichier.type)) return this.signaler(EARTH.T('contribution.formatRefuse'));
       if (fichier.size > cfg.tailleMax) {
-        return this.signaler('trop lourde — ' + Math.ceil(fichier.size / 1048576) + ' Mo');
+        return this.signaler(EARTH.T('contribution.tropLourde') + ' — ' + Math.ceil(fichier.size / 1048576) + ' Mo');
       }
       if (!this.dialogue.classList.contains('visible')) this.ouvrir();
       if (this.fichierUrl) URL.revokeObjectURL(this.fichierUrl);
@@ -165,27 +169,26 @@
         document.body.classList.remove('depot');
         const fichier = Array.from(e.dataTransfer.files || []).find(f => TYPES.includes(f.type));
         if (fichier) this.ouvrir(fichier);
-        else this.dire('ce n’est pas une image autorisée');
+        else this.dire(EARTH.T('contribution.pasUneImage'));
       });
     },
 
     async soumettre() {
-      if (!this.fichier) return this.signaler('choisis d’abord une capture');
+      if (!this.fichier) return this.signaler(EARTH.T('contribution.choisisDabord'));
       const data = new FormData(this.forme);
       const latitude = coordonnee(data.get('latitude'), 'lat');
       const longitude = coordonnee(data.get('longitude'), 'lon');
       if (latitude == null || longitude == null) {
-        return this.signaler('coordonnées illisibles ou hors limites');
+        return this.signaler(EARTH.T('contribution.coordonneesIllisibles'));
       }
 
       this.envoyerBouton.disabled = true;
       this.envoyerBouton.dataset.encours = '1';
-      this.erreur.textContent = 'préparation…';
+      this.erreur.textContent = EARTH.T('contribution.preparation');
       EARTH.Director.suspendre(14000);
 
       const fichier = this.fichier;
       const dimensions = await mesurer(fichier);
-      this.poserLocale(fichier, dimensions);
 
       try {
         const prepare = await EARTH.Supa.api('/api/submissions', {
@@ -206,21 +209,21 @@
           }
         });
         await EARTH.Supa.televerserSigne(prepare.signedUrl, fichier, p => {
-          this.erreur.textContent = 'envoi ' + Math.round(p * 100) + '%';
+          this.erreur.textContent = EARTH.T('contribution.envoiEnCours') + ' ' + Math.round(p * 100) + '%';
         });
         await EARTH.Supa.api('/api/submissions', {
           method: 'PATCH',
           body: { submissionId: prepare.submissionId, uploadToken: prepare.uploadToken }
         });
         this.envois++;
-        this.dire('reçue — elle attend d’être validée');
+        this.dire(EARTH.T('contribution.recue'));
         this.forme.reset();
         this.fichier = null;
         this.apercu.hidden = true;
         this.fermerForcee();
       } catch (e) {
         console.warn('[EARTH] contribution', e);
-        this.signaler(e.message || 'envoi impossible — elle reste ici');
+        this.signaler(e.message || EARTH.T('contribution.envoiImpossible'));
         this.envoyerBouton.disabled = false;
       } finally {
         delete this.envoyerBouton.dataset.encours;
@@ -232,29 +235,6 @@
       this.dialogue.classList.remove('visible');
       this.dialogue.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('contribution-ouverte');
-    },
-
-    poserLocale(fichier, dimensions) {
-      const url = this.fichierUrl || URL.createObjectURL(fichier);
-      const item = {
-        src: url,
-        path: 'depot/' + fichier.name,
-        place: 'TOI',
-        name: fichier.name.replace(/\.[^.]+$/, ''),
-        type: 'image',
-        contribuee: true,
-        largeur: dimensions.width,
-        hauteur: dimensions.height
-      };
-      const rand = Rand();
-      const plan = EARTH.Stage.poser(item, {
-        x: rand.f(0.34, 0.66),
-        y: rand.f(0.34, 0.66),
-        w: lerp(EARTH.CONFIG.echelle.min, EARTH.CONFIG.echelle.max, 0.62),
-        z: 300,
-        libre: true
-      }, 'eclosion', 0);
-      if (plan) plan.el.classList.add('contribuee', 'envoyee');
     },
 
     async charger() {
@@ -288,7 +268,7 @@
         }
         return this.retenues.length;
       } catch (e) {
-        console.warn('[EARTH] archive collective injoignable', e.message);
+        console.warn('[EARTH] ' + EARTH.T('contribution.archiveInjoignable'), e.message);
         return 0;
       }
     },

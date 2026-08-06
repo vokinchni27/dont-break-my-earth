@@ -128,12 +128,24 @@ async function remove(
   if (rowError) throw rowError;
   if (!row) throw new HttpError(404, 'Proposition introuvable.', 'submission_not_found');
 
+  // Le fichier part vraiment du stockage, mais la ligne reste :
+  // « deleted » est un etat, pas un oubli. Le journal garde la trace
+  // et une suppression accidentelle reste lisible.
   const { error: storageError } = await supabase.storage
     .from(row.storage_bucket)
     .remove([row.storage_path]);
   if (storageError) throw storageError;
-  const { error: deleteError } = await supabase.from('submissions').delete().eq('id', id);
+  const { data, error: deleteError } = await supabase
+    .from('submissions')
+    .update({
+      status: 'deleted',
+      deleted_at: new Date().toISOString(),
+      deleted_by: user.id
+    })
+    .eq('id', id)
+    .select('id,status')
+    .maybeSingle();
   if (deleteError) throw deleteError;
   await audit(user, 'submission.delete', 'submission', id, { previousStatus: row.status });
-  json(res, 200, { deleted: true });
+  json(res, 200, { deleted: true, submission: data });
 }

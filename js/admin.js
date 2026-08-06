@@ -7,6 +7,7 @@
   const $ = selecteur => document.querySelector(selecteur);
 
   async function demarrer() {
+    hydraterTextes();
     await Supa.initialiser();
     Supa.reprendreSession();
     const utilisateur = await Supa.utilisateur();
@@ -22,12 +23,12 @@
     const bouton = e.currentTarget.querySelector('button');
     const erreur = $('#connexion-erreur');
     bouton.disabled = true;
-    erreur.textContent = 'connexion…';
+    erreur.textContent = EARTH.T('admin.connexionEnCours');
     try {
       const utilisateur = await Supa.connecter($('#courriel').value.trim(), $('#mot-de-passe').value);
       await ouvrir(utilisateur);
     } catch (err) {
-      erreur.textContent = 'Connexion impossible. Vérifie tes identifiants.';
+      erreur.textContent = EARTH.T('admin.connexionImpossible');
       bouton.disabled = false;
     }
   }
@@ -35,7 +36,7 @@
   async function ouvrir(utilisateur) {
     $('#connexion').hidden = true;
     $('#atelier').hidden = false;
-    $('#identite').textContent = utilisateur.email || 'administration';
+    $('#identite').textContent = utilisateur.email || EARTH.T('admin.marque');
     $('#sortir').onclick = () => { Supa.deconnecter(); location.reload(); };
     brancherNavigation();
     brancherContenu();
@@ -79,7 +80,7 @@
     const liste = $('#liste-propositions');
     const lignes = etat.propositions.filter(p => etat.filtre === 'all' || p.status === etat.filtre);
     liste.replaceChildren();
-    if (!lignes.length) { liste.appendChild(texte('Rien ici pour l’instant.', 'vide')); return; }
+    if (!lignes.length) { liste.appendChild(texte(EARTH.T('admin.aucuneProposition'), 'vide')); return; }
     lignes.forEach(ligne => liste.appendChild(carteProposition(ligne)));
   }
 
@@ -89,7 +90,7 @@
     const imageBloc = element('div', 'proposition-image');
     const image = document.createElement('img');
     image.src = ligne.image_url || '';
-    image.alt = ligne.location_label ? `Capture de ${ligne.location_label}` : 'Capture proposée';
+    image.alt = ligne.location_label ? `${EARTH.T('admin.capture')} — ${ligne.location_label}` : EARTH.T('admin.capture');
     image.loading = 'lazy';
     imageBloc.appendChild(image);
 
@@ -111,9 +112,9 @@
     donnees.append(lieu.label, duo, commentaire.label);
 
     const actions = element('div', 'proposition-actions');
-    const valider = bouton('valider', 'bouton bouton--plein');
-    const refuser = bouton('refuser', 'bouton');
-    const supprimer = bouton('supprimer définitivement', 'bouton danger');
+    const valider = bouton(EARTH.T('admin.valider'), 'bouton bouton--plein');
+    const refuser = bouton(EARTH.T('admin.refuser'), 'bouton');
+    const supprimer = bouton(EARTH.T('admin.supprimer'), 'bouton danger');
     valider.onclick = () => moderer(carte, ligne, 'approve');
     refuser.onclick = () => moderer(carte, ligne, 'reject');
     supprimer.onclick = () => supprimerProposition(carte, ligne);
@@ -126,7 +127,7 @@
   async function moderer(carte, ligne, action) {
     const latitude = nombreOuNull(carte.querySelector('[data-champ="latitude"]').value, -90, 90);
     const longitude = nombreOuNull(carte.querySelector('[data-champ="longitude"]').value, -180, 180);
-    if (latitude === false || longitude === false) return notifier('coordonnées invalides');
+    if (latitude === false || longitude === false) return notifier(EARTH.T('admin.coordonneesInvalides'));
     desactiver(carte, true);
     try {
       await Supa.apiAdmin('/api/admin/submissions', {
@@ -149,11 +150,11 @@
   }
 
   async function supprimerProposition(carte, ligne) {
-    if (!confirm('Supprimer définitivement la ligne et le fichier ? Cette action est irréversible.')) return;
+    if (!confirm(EARTH.T('admin.confirmerSuppression'))) return;
     desactiver(carte, true);
     try {
       await Supa.apiAdmin('/api/admin/submissions', { method: 'DELETE', body: { id: ligne.id } });
-      notifier('capture supprimée');
+      notifier(EARTH.T('admin.captureSupprimee'));
       await chargerPropositions();
     } catch (e) {
       notifier(e.message);
@@ -176,7 +177,7 @@
   function afficherContenus() {
     const liste = $('#liste-contenus');
     liste.replaceChildren();
-    if (!etat.contenus.length) { liste.appendChild(texte('Aucun contenu.', 'vide')); return; }
+    if (!etat.contenus.length) { liste.appendChild(texte(EARTH.T('admin.aucunContenu'), 'vide')); return; }
     etat.contenus.forEach(item => {
       const ligne = element('article', 'contenu-item');
       const cle = texte(`${item.key}\n${item.type} · ordre ${item.sort_order}`, 'contenu-cle micro');
@@ -208,7 +209,7 @@
       metadata: {}
     };
     if (id) corps.id = id;
-    $('#contenu-message').textContent = 'enregistrement…';
+    $('#contenu-message').textContent = EARTH.T('admin.enregistrement');
     try {
       await Supa.apiAdmin('/api/admin/content', { method: id ? 'PATCH' : 'POST', body: corps });
       $('#contenu-message').textContent = '';
@@ -228,7 +229,7 @@
     $('#contenu-valeur').value = item.value;
     $('#contenu-ordre').value = item.sort_order;
     $('#contenu-publie').checked = item.is_published;
-    $('#contenu-forme-titre').textContent = 'MODIFIER LE CONTENU';
+    $('#contenu-forme-titre').textContent = EARTH.T('admin.modifierContenu');
     $('#contenu-annuler').hidden = false;
     $('#contenu-forme').scrollIntoView({ behavior: 'smooth' });
   }
@@ -238,7 +239,7 @@
     $('#contenu-id').value = '';
     $('#contenu-ordre').value = '0';
     $('#contenu-publie').checked = true;
-    $('#contenu-forme-titre').textContent = 'AJOUTER UN CONTENU';
+    $('#contenu-forme-titre').textContent = EARTH.T('admin.ajouterContenu');
     $('#contenu-annuler').hidden = true;
     $('#contenu-message').textContent = '';
   }
@@ -247,7 +248,7 @@
     if (!confirm(`Supprimer définitivement « ${item.key} » ?`)) return;
     try {
       await Supa.apiAdmin('/api/admin/content', { method: 'DELETE', body: { id: item.id } });
-      notifier('contenu supprimé');
+      notifier(EARTH.T('admin.contenuSupprime'));
       await chargerContenus();
     } catch (e) { notifier(e.message); }
   }
@@ -271,7 +272,25 @@
     return Number.isFinite(n) && n >= min && n <= max ? n : false;
   }
   function desactiver(carte, oui) { carte.querySelectorAll('button,input,textarea').forEach(e => { e.disabled = oui; }); }
-  function libelleStatut(statut) { return ({ pending: 'en attente', approved: 'validée', rejected: 'refusée' })[statut] || statut; }
+  function libelleStatut(statut) { return EARTH.T('admin.statut.' + statut, statut); }
+  /* Les libelles vivent dans js/textes.js : le HTML ne porte que
+     des cles. Un seul endroit a reecrire pour changer la langue. */
+  function hydraterTextes() {
+    document.querySelectorAll('[data-t]').forEach(el => {
+      el.textContent = EARTH.T(el.dataset.t);
+    });
+    document.querySelectorAll('[data-t-html]').forEach(el => {
+      el.innerHTML = EARTH.T(el.datasetTHtml || el.getAttribute('data-t-html'));
+    });
+    document.querySelectorAll('[data-t-aria]').forEach(el => {
+      el.setAttribute('aria-label', EARTH.T(el.getAttribute('data-t-aria')));
+    });
+    const cle = document.getElementById('contenu-cle');
+    if (cle) cle.placeholder = EARTH.T('admin.placeholderCle');
+    const titre = document.getElementById('contenu-forme-titre');
+    if (titre && !titre.textContent) titre.textContent = EARTH.T('admin.ajouterContenu');
+  }
+
   function notifier(message) {
     const d = $('#notification'); d.textContent = message; d.classList.add('visible');
     clearTimeout(notifier._t); notifier._t = setTimeout(() => d.classList.remove('visible'), 3600);

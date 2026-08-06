@@ -1,8 +1,0 @@
--- DON'T BREAK MY EARTH — point d'entrée SQL
---
--- Le schéma versionné et idempotent se trouve dans :
---   supabase/migrations/202608060001_collaborative_platform.sql
---
--- Dans Supabase Dashboard > SQL Editor, ouvrir ce fichier de migration,
--- copier son contenu complet, puis l'exécuter. Le fichier conserve et migre
--- automatiquement les anciennes lignes de public.earth_contributions.

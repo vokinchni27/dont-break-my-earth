@@ -18,6 +18,9 @@
       try {
         const data = await EARTH.Supa.api('/api/content');
         this.items = Array.isArray(data.content) ? data.content : [];
+        /* toute ligne dont la cle correspond a une cle de textes.js
+           remplace le texte statique : c'est le CMS demande */
+        EARTH.T.surcharger(this.items);
         const fragments = this.items
           .filter(item => item.type === 'fragment' && item.value)
           .map(item => item.value);
@@ -38,18 +41,18 @@
       const bouton = document.createElement('button');
       bouton.className = 'contenu-invite';
       bouton.type = 'button';
-      bouton.textContent = 'à propos';
+      bouton.textContent = EARTH.T('contenu.invite');
       bouton.setAttribute('aria-expanded', 'false');
 
       const feuille = document.createElement('section');
       feuille.className = 'contenu-feuille';
       feuille.setAttribute('aria-hidden', 'true');
-      feuille.setAttribute('aria-label', 'À propos de Don’t Break My Earth');
+      feuille.setAttribute('aria-label', EARTH.T('contenu.aria'));
 
       const fermer = document.createElement('button');
       fermer.className = 'contenu-fermer';
       fermer.type = 'button';
-      fermer.textContent = 'fermer';
+      fermer.textContent = EARTH.T('contenu.fermer');
       feuille.appendChild(fermer);
 
       longs.forEach(item => {

@@ -68,6 +68,36 @@ de l’œuvre et qualité du backend.
 - un compte Vercel ;
 - un dépôt GitHub pour le déploiement continu.
 
+## État de la base — déjà fait
+
+La migration a été **appliquée le 06/08/2026** sur le projet Supabase
+`jhdwyiknkoqdxflafwmx` (gabY SCRYPTS). Vérifié :
+
+| élément | état |
+|---|---|
+| tables | `submissions`, `site_content`, `user_profiles`, `admin_allowlist`, `submission_rate_limits`, `admin_audit_logs` |
+| statuts | `pending`, `approved`, `rejected`, `deleted` |
+| bucket `earth` | **privé**, 8 Mo, images seules |
+| policies RLS | 8 sur les tables + 4 sur `storage.objects` |
+| allowlist admin | `kara.garnier27@gmail.com` |
+| contenus CMS | 3 lignes de départ |
+
+Il reste à **créer le compte administrateur** dans
+Supabase → Authentication → Users (email + mot de passe). Le déclencheur
+`on_auth_user_created` lui donnera le rôle `admin` automatiquement, puisque
+l'adresse est dans l'allowlist.
+
+## Les textes
+
+Tous les textes visibles vivent dans **`js/textes.js`**, et nulle part ailleurs.
+Le HTML de l'administration ne porte que des clés (`data-t="admin.entrer"`).
+
+- la liste complète, prête à être réécrite : **`TEXTES.md`** (144 textes) ;
+- la régénérer après modification : `node tools/lister-textes.mjs` ;
+- une ligne de `site_content` dont la `key` vaut exactement une clé de
+  `textes.js` **remplace** le texte statique au chargement, sans redéployer.
+  C'est l'abstraction CMS : le statique est le défaut, la base est la surcharge.
+
 ## Installation locale
 
 ```bash
@@ -166,6 +196,9 @@ select email, role from public.user_profiles order by created_at;
 La colonne `public` du bucket `earth` doit impérativement être `false`.
 
 ## Workflow d’un dépôt
+
+**Aucune capture n'apparaît nulle part avant validation** — pas même à celui
+qui vient de l'envoyer. Il n'y a plus d'affichage local optimiste.
 
 ```text
 visiteur
