@@ -270,7 +270,19 @@
   function plan_src_init(media, item, place) {
     const vm = Math.min(window.innerWidth, window.innerHeight);
     const largeur = (place.w || 0.3) * vm * (place.fouille ? (place.fouille.zoom || 1) : 1);
-    media.src = place.fouille ? item.src : EARTH.Stage.source(item, largeur);
+    const choisie = place.fouille ? item.src : EARTH.Stage.source(item, largeur);
+
+    /* Si la déclinaison manque — cache non régénéré, déploiement
+       partiel — on retombe sur l'original plutôt que d'afficher un
+       trou. Une seule tentative : pas de boucle si l'original manque
+       lui aussi. */
+    if (choisie !== item.src) {
+      media.addEventListener('error', function reprendre() {
+        media.removeEventListener('error', reprendre);
+        if (media.src !== item.src) media.src = item.src;
+      });
+    }
+    media.src = choisie;
   }
 
   function pret(media) {

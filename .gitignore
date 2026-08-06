@@ -2,9 +2,9 @@
 #   python tools/coord-sheets.py
 tools/_coords/
 
-# dérivées d'images : régénérables par
-#   python tools/derive-images.py
-images/_cache/
+# Les dérivées d'images SONT versionnées : le manifeste les référence,
+# et sans elles le site en ligne demanderait des fichiers absents.
+# Les régénérer après ajout : python tools/derive-images.py
 
 # scories systeme
 Thumbs.db
