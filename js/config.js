@@ -68,11 +68,11 @@ EARTH.CONFIG = {
     trait: 0.09,           // opacité du trait ordinaire
     traitFort: 0.24,       // opacité des bords
     obeissance: 0.5,       // part des compositions qui se calent dessus
-    souffle: 1,            // respiration lente
-    vibration: 0.35,       // frémissement
-    attraction: 1,         // déformation autour des captures
-    curseur: 1,            // déformation sous la main
-    absences: 0.08,        // part des lignes qui manquent, et changent
+    souffle: 0,            // respiration lente — 0 = grille immobile
+    vibration: 0,          // frémissement — 0 = aucun tremblement
+    attraction: 0,         // déformation autour des captures
+    curseur: 0,            // déformation sous la main
+    absences: 0,           // part des lignes qui manquent, et changent
     reperes: true
   },
 
@@ -167,6 +167,15 @@ EARTH.CONFIG = {
     filet: false,
     melange: 'normal',
     melangeChance: 0.2
+  },
+
+  /* --- LA TYPOGRAPHIE ------------------------------------- */
+  /* Réglable en direct depuis le bac à sable (touche P). */
+  typo: {
+    famille: '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif',
+    micro: 8.5,            // px — l'appareillage, les angles, le bandeau
+    interlettre: 0.2,      // em
+    titre: 13.5            // vw — la taille du grand mot d'accueil
   },
 
   hud: {

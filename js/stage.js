@@ -80,6 +80,11 @@
       pret(media).then(() => {
         this.recadrer(plan);
         if (plan.sorti) return;
+        /* Fichier absent — capture supprimée du disque, manifeste
+           pas encore régénéré : on retire le plan plutôt que de
+           laisser un rectangle blanc dans la composition. */
+        if (media.tagName !== 'VIDEO' && !media.naturalWidth) { this.retirer(plan, 'coupe'); return; }
+        if (media.tagName === 'VIDEO' && !media.videoWidth) { this.retirer(plan, 'coupe'); return; }
         if (media.tagName === 'VIDEO') {
           const p = media.play();
           if (p && p.catch) p.catch(() => {});

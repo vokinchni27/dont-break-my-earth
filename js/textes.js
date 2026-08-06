@@ -129,7 +129,19 @@
       plans: 'plans',
       graine: 'graine',
       situees: 'situées',
-      gardeRotation: 'garder dans la rotation'
+      gardeRotation: 'garder dans la rotation',
+      textes: 'TEXTES',
+      police: 'police',
+      corps: 'corps',
+      interlettre: 'interlettre',
+      corpsTitre: 'titre',
+      corpsFragment: 'fragments',
+      remiseTextes: 'REMETTRE LES TEXTES D\u2019ORIGINE',
+      copierTextes: 'COPIER MES TEXTES',
+      textesRemis: 'textes d\u2019origine remis',
+      vibration: 'frémissement',
+      curseurGrille: 'sous la main',
+      absences: 'lignes absentes'
     },
 
     /* --- LES CONSIGNES DE GESTE ---------------------------- */
@@ -282,6 +294,54 @@
     }
     return valeur;
   }
+
+  /* Réécriture depuis le bac à sable. Gardée dans le navigateur :
+     on peut fermer l'onglet sans perdre ses essais. Pour figer un
+     texte pour de bon, on le copie dans ce fichier ou dans le CMS. */
+  const LOCALES = 'earth_textes';
+
+  /* Le stockage n'existe pas partout : ni sous Node (outils), ni en
+     navigation privée stricte. On l'enveloppe pour que son absence
+     ne casse jamais rien. */
+  const magasin = {
+    lire() {
+      try {
+        if (typeof localStorage === 'undefined') return {};
+        return JSON.parse(localStorage.getItem(LOCALES) || '{}');
+      } catch (e) { return {}; }
+    },
+    ecrire(objet) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(LOCALES, JSON.stringify(objet));
+        }
+      } catch (e) { /* quota plein ou stockage refusé : tant pis */ }
+    },
+    vider() {
+      try {
+        if (typeof localStorage !== 'undefined') localStorage.removeItem(LOCALES);
+      } catch (e) { /* rien à faire */ }
+    }
+  };
+
+  T.definir = function (cle, valeur) {
+    surcharges[cle] = valeur;
+    const gardees = magasin.lire();
+    gardees[cle] = valeur;
+    magasin.ecrire(gardees);
+  };
+
+  T.oublier = function () {
+    magasin.vider();
+    Object.keys(surcharges).forEach(k => delete surcharges[k]);
+  };
+
+  T.locales = function () { return magasin.lire(); };
+
+  (function reprendre() {
+    const gardees = magasin.lire();
+    Object.keys(gardees).forEach(k => { surcharges[k] = gardees[k]; });
+  })();
 
   /* appelé par content.js quand le CMS a répondu */
   T.surcharger = function (lignes) {

@@ -7,7 +7,7 @@ Une ligne de la table `site_content` dont la colonne `key` vaut exactement
 une clé ci-dessous **remplace** le texte statique au chargement, sans toucher
 au code ni redéployer. C’est le CMS.
 
-> 144 textes. Régénérer avec `node tools/lister-textes.mjs`.
+> 156 textes. Régénérer avec `node tools/lister-textes.mjs`.
 
 ---
 
@@ -117,6 +117,18 @@ au code ni redéployer. C’est le CMS.
 | `panneau.graine` | graine |
 | `panneau.situees` | situées |
 | `panneau.gardeRotation` | garder dans la rotation |
+| `panneau.textes` | TEXTES |
+| `panneau.police` | police |
+| `panneau.corps` | corps |
+| `panneau.interlettre` | interlettre |
+| `panneau.corpsTitre` | titre |
+| `panneau.corpsFragment` | fragments |
+| `panneau.remiseTextes` | REMETTRE LES TEXTES D’ORIGINE |
+| `panneau.copierTextes` | COPIER MES TEXTES |
+| `panneau.textesRemis` | textes d’origine remis |
+| `panneau.vibration` | frémissement |
+| `panneau.curseurGrille` | sous la main |
+| `panneau.absences` | lignes absentes |
 
 ## Les consignes de geste
 

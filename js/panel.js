@@ -30,7 +30,10 @@
       { p: 'grille.visible', l: EARTH.T('panneau.visible'), type: 'bascule', apres: () => EARTH.Grille.appliquer() },
       { p: 'grille.souffle', l: EARTH.T('panneau.souffle'), min: 0, max: 4, pas: 0.05 },
       { p: 'grille.attraction', l: EARTH.T('panneau.attraction'), min: 0, max: 4, pas: 0.05 },
-      { p: 'grille.obeissance', l: EARTH.T('panneau.obeissance'), min: 0, max: 1, pas: 0.05 }
+      { p: 'grille.obeissance', l: EARTH.T('panneau.obeissance'), min: 0, max: 1, pas: 0.05 },
+      { p: 'grille.vibration', l: EARTH.T('panneau.vibration'), min: 0, max: 2, pas: 0.05 },
+      { p: 'grille.curseur', l: EARTH.T('panneau.curseurGrille'), min: 0, max: 3, pas: 0.05 },
+      { p: 'grille.absences', l: EARTH.T('panneau.absences'), min: 0, max: 0.5, pas: 0.01 }
     ]],
     [EARTH.T('panneau.geste'), [
       { p: 'geste.parallaxe', l: EARTH.T('panneau.respiration'), min: 0, max: 3, pas: 0.05 },
@@ -66,6 +69,8 @@
         liste.forEach(r => corps.appendChild(controle(r)));
         el.appendChild(bloc(titre, corps));
       });
+
+      el.appendChild(bloc(EARTH.T('panneau.textes'), redaction()));
 
       const actions = document.createElement('div');
       actions.className = 'pan-actions';
@@ -180,6 +185,115 @@
     ligne.appendChild(i);
     ligne.appendChild(valeur);
     return ligne;
+  }
+
+  /* ==========================================================
+     LA RÉDACTION
+     Changer ce qui est écrit, la police et les corps, sans
+     toucher au code. Les essais sont gardés dans le navigateur ;
+     le bouton « copier » sort un bloc à coller dans js/textes.js
+     ou dans le mini-CMS pour les figer pour tout le monde.
+     ========================================================== */
+
+  const POLICES = [
+    ['Helvetica', '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif'],
+    ['Arial', 'Arial, "Helvetica Neue", Helvetica, sans-serif'],
+    ['Système', 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'],
+    ['Times', '"Times New Roman", Times, serif'],
+    ['Mono', 'ui-monospace, "SFMono-Regular", Consolas, Menlo, monospace']
+  ];
+
+  function appliquerTypo() {
+    const t = EARTH.CONFIG.typo;
+    const r = document.documentElement.style;
+    r.setProperty('--grotesque', t.famille);
+    r.setProperty('--micro', t.micro + 'px');
+    r.setProperty('--interlettre', t.interlettre + 'em');
+    document.querySelectorAll('.titre-ligne').forEach(l => {
+      l.style.fontSize = `clamp(42px, ${t.titre}vw, 210px)`;
+    });
+  }
+
+  function redaction() {
+    const wrap = document.createElement('div');
+    wrap.className = 'pan-redaction';
+
+    /* quel texte réécrire */
+    const choix = document.createElement('select');
+    const plat = EARTH.T.toutes();
+    Object.keys(plat)
+      .filter(k => typeof plat[k] === 'string')
+      .forEach(k => {
+        const o = document.createElement('option');
+        o.value = k;
+        o.textContent = k;
+        choix.appendChild(o);
+      });
+
+    const champ = document.createElement('textarea');
+    champ.rows = 2;
+    champ.spellcheck = false;
+
+    const montrer = () => { champ.value = EARTH.T(choix.value); };
+    choix.onchange = montrer;
+    champ.oninput = () => {
+      EARTH.T.definir(choix.value, champ.value);
+      EARTH.HUD.rafraichirLibelles();
+      const inv = document.querySelector('.invite-texte');
+      if (inv) inv.textContent = EARTH.T('contribution.invite');
+    };
+    montrer();
+
+    wrap.appendChild(choix);
+    wrap.appendChild(champ);
+
+    /* la police */
+    const police = document.createElement('label');
+    police.className = 'pan-ligne';
+    const nomPolice = document.createElement('span');
+    nomPolice.className = 'pan-nom';
+    nomPolice.textContent = EARTH.T('panneau.police');
+    const selPolice = document.createElement('select');
+    POLICES.forEach(([nom, pile]) => {
+      const o = document.createElement('option');
+      o.value = pile; o.textContent = nom;
+      selPolice.appendChild(o);
+    });
+    selPolice.value = EARTH.CONFIG.typo.famille;
+    selPolice.onchange = () => { EARTH.CONFIG.typo.famille = selPolice.value; appliquerTypo(); };
+    police.appendChild(nomPolice);
+    police.appendChild(selPolice);
+    wrap.appendChild(police);
+
+    [
+      { p: 'typo.micro', l: EARTH.T('panneau.corps'), min: 6, max: 20, pas: 0.5, u: 'px' },
+      { p: 'typo.interlettre', l: EARTH.T('panneau.interlettre'), min: 0, max: 0.5, pas: 0.01 },
+      { p: 'typo.titre', l: EARTH.T('panneau.corpsTitre'), min: 4, max: 24, pas: 0.5, u: 'vw' },
+      { p: 'texte.taille', l: EARTH.T('panneau.corpsFragment'), min: 10, max: 90, pas: 1, u: 'px' }
+    ].forEach(r => wrap.appendChild(controle(Object.assign({ apres: appliquerTypo }, r))));
+
+    const remise = bouton(EARTH.T('panneau.remiseTextes'), () => {
+      EARTH.T.oublier();
+      EARTH.HUD.rafraichirLibelles();
+      montrer();
+      EARTH.HUD.souffler(EARTH.T('panneau.textesRemis'));
+    });
+    remise.style.marginTop = '8px';
+    wrap.appendChild(remise);
+
+    const sortir = bouton(EARTH.T('panneau.copierTextes'), () => {
+      const locales = EARTH.T.locales();
+      const texte = JSON.stringify(locales, null, 2);
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texte).then(
+          () => EARTH.HUD.souffler(EARTH.T('hud.reglagesCopies')),
+          () => console.log(texte));
+      } else console.log(texte);
+    });
+    wrap.appendChild(sortir);
+
+    appliquerTypo();
+    return wrap;
   }
 
   function bouton(texte, fn) {

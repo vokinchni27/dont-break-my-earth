@@ -60,6 +60,24 @@
       return this;
     },
 
+    /* Les libellés statiques peuvent changer en direct depuis le
+       bac à sable : on les repose sans reconstruire les écouteurs. */
+    rafraichirLibelles() {
+      const q = (sel, cle) => {
+        const e = this.el.querySelector(sel);
+        if (e) e.textContent = EARTH.T(cle);
+      };
+      const marque = this.el.querySelector('.hud-tl b');
+      if (marque) marque.innerHTML = EARTH.T('hud.marque') + '<sup>\u00ae</sup>';
+      q('.hud-tl .hud-faible', 'hud.sousTitre');
+      q('.hud-bl .hud-faible', 'hud.etatJamaisTermine');
+      const aides = this.el.querySelectorAll('.hud-br .hud-faible');
+      ['hud.aide1', 'hud.aide2', 'hud.aide3'].forEach((cle, i) => {
+        if (aides[i]) aides[i].textContent = EARTH.T(cle);
+      });
+      this.majEtat();
+    },
+
     appliquer() {
       const cfg = EARTH.CONFIG.hud;
       this.el.classList.toggle('cache', !cfg.actif);

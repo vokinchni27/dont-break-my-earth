@@ -1,7 +1,7 @@
 /* genere par tools/index-images.mjs — ne pas editer a la main */
 window.EARTH_MANIFEST = {
-  "generated": "2026-08-04T17:36:23.228Z",
-  "count": 130,
+  "generated": "2026-08-06T20:01:59.985Z",
+  "count": 129,
   "situees": 128,
   "places": [
     "AFRIQUE",
@@ -13,7 +13,7 @@ window.EARTH_MANIFEST = {
     "RUSSIE"
   ],
   "byPlace": {
-    "AFRIQUE": 27,
+    "AFRIQUE": 26,
     "CHINE": 33,
     "EUROPE": 50,
     "ILE": 2,
@@ -537,13 +537,6 @@ window.EARTH_MANIFEST = {
       "path": "AFRIQUE/opera_RTw16euOU8.mp4",
       "place": "AFRIQUE",
       "name": "opera_RTw16euOU8",
-      "type": "video"
-    },
-    {
-      "src": "images/AFRIQUE/opera_SKk8pKLwML.mp4",
-      "path": "AFRIQUE/opera_SKk8pKLwML.mp4",
-      "place": "AFRIQUE",
-      "name": "opera_SKk8pKLwML",
       "type": "video"
     },
     {
