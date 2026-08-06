@@ -1,0 +1,26 @@
+{
+  "name": "dont-break-my-earth",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Archive artistique collaborative de captures Google Earth.",
+  "type": "module",
+  "scripts": {
+    "check:js": "node tools/check-js.mjs",
+    "check:static": "node tools/check-static.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "build": "npm run check:js && npm run check:static && npm run typecheck && npm test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.55.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

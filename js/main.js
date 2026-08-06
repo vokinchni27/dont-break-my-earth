@@ -16,12 +16,18 @@
     const cfg = EARTH.CONFIG;
     document.documentElement.style.setProperty('--fond', cfg.scene.fond);
 
+    /* La configuration publique et le CMS enrichissent l'œuvre,
+       mais leur absence ne bloque jamais l'archive locale. */
+    await EARTH.Supa.initialiser();
+    await EARTH.Content.charger();
+
     /* 1. les surfaces */
     EARTH.Stage.init(document.getElementById('scene'));
     EARTH.Grille.init(document.getElementById('grille'));
     EARTH.Coords.init(document.getElementById('coordonnees'));
     EARTH.Texte.init(document.getElementById('textes'));
     EARTH.Webcam.init(document.getElementById('webcam'));
+    EARTH.Content.init(document.getElementById('contenus'));
     EARTH.Stage.rafraichirRegard();
 
     /* 2. l'archive locale */

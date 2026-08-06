@@ -205,12 +205,14 @@ EARTH.CONFIG = {
 
   collectif: {
     actif: true,
-    url: 'https://jhdwyiknkoqdxflafwmx.supabase.co',
-    cle: 'sb_publishable_oTGmFsH39Qe4Jxv2-C9S4Q_kGeL3twF',
+    /* Ces deux valeurs sont chargées depuis /api/config sur Vercel.
+       Elles restent vides en file:// : l'œuvre locale continue alors
+       de fonctionner sans sa couche collaborative. */
+    url: '',
+    cle: '',
     bucket: 'earth',
-    dossier: 'propositions',
     tailleMax: 8 * 1024 * 1024,
-    moderatrice: 'kara.garnier27@gmail.com'
+    googleEarth: 'https://earth.google.com/web/'
   },
 
   bacASable: {

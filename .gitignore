@@ -11,6 +11,18 @@ Thumbs.db
 desktop.ini
 .DS_Store
 
+# dépendances et secrets locaux
+node_modules/
+.vercel/
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# rapports temporaires
+coverage/
+*.log
+
 # NOTE : images/ est volontairement suivi — l'archive EST l'oeuvre.
 # images/manifest.json et manifest.js sont generes mais suivis aussi :
 # ils permettent d'ouvrir index.html en double-clic, sans rien lancer.

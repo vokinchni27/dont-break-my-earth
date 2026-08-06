@@ -56,6 +56,8 @@ body {
   body.instrument, body.instrument * { cursor: none; }
   body.instrument #panneau, body.instrument #panneau * { cursor: auto; }
   body.instrument .invite { cursor: none; }
+  body.instrument .contrib-dialogue, body.instrument .contrib-dialogue *,
+  body.instrument .contenu-feuille, body.instrument .contenu-feuille * { cursor: auto; }
 }
 
 /* la nuit tombe sur l'archive (evenement rare) */
@@ -486,6 +488,65 @@ body.depot .depot-voile { opacity: 1; }
 .invite-signe { font-size: 13px; line-height: 1; }
 .invite-fichier { position: fixed; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
+/* Le parcours de dépôt garde la langue de l'œuvre : blanc, noir,
+   grands mots et micro-typographie. Il se déroule dans la page,
+   sans chrome de tableau de bord. */
+body.contribution-ouverte #depot { z-index: 100; }
+body.contribution-ouverte .invite { opacity: 0; pointer-events: none; }
+
+.contrib-dialogue {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+  padding: 20px;
+  background: rgba(255,255,255,.97);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  touch-action: pan-y;
+  transition: opacity .28s ease, visibility .28s;
+}
+.contrib-dialogue.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+.contrib-forme { width: min(980px, 100%); min-height: 100%; margin: 0 auto; padding: 42px 0 70px; }
+.contrib-fermer {
+  position: fixed; top: 18px; right: 20px; z-index: 2;
+  padding: 7px 12px; border: 1px solid var(--encre); border-radius: 999px;
+  background: var(--fond); font: inherit; font-size: var(--micro);
+  letter-spacing: var(--interlettre); text-transform: uppercase;
+}
+.contrib-entete { display: grid; grid-template-columns: 100px 1fr; gap: 20px; margin-bottom: 64px; }
+.contrib-entete h2 {
+  font-size: clamp(48px, 10vw, 142px); font-weight: 700; line-height: .76;
+  letter-spacing: -.055em;
+}
+.contrib-index { font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase; color: var(--gris); }
+.contrib-etape { display: grid; grid-template-columns: 100px 1fr; gap: 20px; padding: 24px 0; border-top: 1px solid var(--encre); }
+.contrib-etape > p { max-width: 560px; font-size: clamp(16px, 2vw, 24px); line-height: 1.25; }
+.contrib-google, .contrib-fichier, .contrib-envoyer {
+  justify-self: start; padding: 10px 16px; border: 1px solid var(--encre);
+  border-radius: 999px; background: var(--fond); color: var(--encre);
+  font: inherit; font-size: var(--micro); letter-spacing: var(--interlettre);
+  text-decoration: none; text-transform: uppercase;
+}
+.contrib-google:hover, .contrib-fichier:hover, .contrib-envoyer:hover { background: var(--encre); color: var(--fond); }
+.contrib-etape .contrib-google { grid-column: 2; margin-top: 4px; }
+.contrib-apercu { grid-column: 2; width: min(620px, 100%); }
+.contrib-apercu img { display: block; width: 100%; max-height: 340px; object-fit: cover; filter: grayscale(.15); }
+.contrib-apercu span { display: block; margin-top: 7px; color: var(--gris); font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase; }
+.contrib-champs > label, .contrib-duo { grid-column: 2; }
+.contrib-champs label { display: flex; flex-direction: column; gap: 5px; color: var(--gris); font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase; }
+.contrib-champs input, .contrib-champs textarea {
+  width: 100%; padding: 9px 0; border: 0; border-bottom: 1px solid var(--encre);
+  border-radius: 0; outline: 0; resize: vertical; background: transparent;
+  color: var(--encre); font: inherit; font-size: 14px; letter-spacing: 0; text-transform: none;
+}
+.contrib-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.contrib-piege { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.contrib-regle { margin: 22px 0 12px 120px; color: var(--gris); font-size: var(--micro); letter-spacing: var(--interlettre); text-transform: uppercase; }
+.contrib-envoyer { margin-left: 120px; background: var(--encre); color: var(--fond); }
+.contrib-envoyer:disabled { opacity: .3; pointer-events: none; }
+.contrib-erreur { min-height: 22px; margin: 12px 0 0 120px; color: var(--gris); font-size: 11px; }
+
 /* la seule question posee au visiteur, et elle est facultative */
 .signature {
   position: fixed;
@@ -537,6 +598,35 @@ body.depot .depot-voile { opacity: 1; }
   pointer-events: none;
 }
 #contrib-mot.visible { opacity: 1; }
+
+/* ============================================================
+   LES CONTENUS DU MINI-CMS
+   ============================================================ */
+
+#contenus { position: fixed; inset: 0; z-index: 8; pointer-events: none; }
+.contenu-invite {
+  position: absolute; left: var(--marge); bottom: calc(var(--marge) + 46px);
+  padding: 7px 13px; border: 1px solid var(--encre); border-radius: 999px;
+  background: var(--fond); color: var(--encre); pointer-events: auto;
+  font: inherit; font-size: var(--micro); letter-spacing: var(--interlettre);
+  text-transform: uppercase;
+}
+.contenu-invite:hover { background: var(--encre); color: var(--fond); }
+.contenu-feuille {
+  position: fixed; inset: 0; z-index: 2; overflow: auto; padding: 9vh max(22px, 8vw);
+  background: rgba(255,255,255,.97); opacity: 0; visibility: hidden;
+  pointer-events: none; touch-action: pan-y; transition: opacity .3s ease, visibility .3s;
+}
+.contenu-feuille.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+.contenu-fermer {
+  position: fixed; top: 18px; right: 20px; padding: 7px 12px; border: 1px solid var(--encre);
+  border-radius: 999px; background: var(--fond); font: inherit; font-size: var(--micro);
+  letter-spacing: var(--interlettre); text-transform: uppercase;
+}
+.contenu-bloc { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(260px, 1.5fr); gap: 5vw; padding: 34px 0; border-top: 1px solid var(--encre); }
+.contenu-bloc h2 { font-size: clamp(28px, 6vw, 82px); line-height: .86; letter-spacing: -.05em; }
+.contenu-bloc p, .contenu-bloc blockquote { max-width: 780px; font-size: clamp(18px, 2.4vw, 34px); line-height: 1.17; white-space: pre-wrap; }
+.contenu-bloc--quote blockquote { font-style: normal; }
 
 /* ============================================================
    LA WEBCAM, EN MOSAIQUE DE PAYSAGES
@@ -776,6 +866,18 @@ body.panneau-ouvert #panneau { transform: none; }
     padding: 14px 22px 14px 18px;         /* ~44 px de haut : cible tactile */
   }
   .invite:hover { transform: translateX(-50%); }
+
+  .contrib-dialogue { padding: 12px; }
+  .contrib-forme { padding-top: 62px; }
+  .contrib-entete, .contrib-etape { grid-template-columns: 1fr; }
+  .contrib-entete { gap: 12px; margin-bottom: 42px; }
+  .contrib-entete h2 { font-size: clamp(46px, 18vw, 90px); }
+  .contrib-etape .contrib-google, .contrib-apercu, .contrib-champs > label, .contrib-duo { grid-column: 1; }
+  .contrib-duo { grid-template-columns: 1fr; gap: 16px; }
+  .contrib-regle, .contrib-envoyer, .contrib-erreur { margin-left: 0; }
+  .contenu-invite { bottom: calc(var(--marge) + 82px); }
+  .contenu-feuille { padding: 74px 14px 40px; }
+  .contenu-bloc { grid-template-columns: 1fr; gap: 18px; }
 
   .depot-mot { font-size: clamp(34px, 13vw, 84px); }
 
