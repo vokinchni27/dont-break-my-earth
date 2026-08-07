@@ -19,7 +19,7 @@
   /* quelle cause appelle quel evenement */
   const AFFINITES = {
     fouille:     { apparition: 3, inondation: 2, nuit: 1 },
-    dispersion:  { eclat: 4, effacement: 2, alignement: 2 },
+    dispersion:  { effacement: 2, alignement: 2 },
     naissance:   { alignement: 2, inondation: 1 },
     composition: { inondation: 1, nuit: 1, combustion: 1, alignement: 1 },
     contemplation: { apparition: 3, combustion: 2 }
@@ -65,13 +65,6 @@
           setTimeout(() => EARTH.Stage.replacer(p, G.caler(p.place), 900), i * 55);
         });
         setTimeout(fin, 1400 + vivants.length * 55);
-      },
-
-      /* la grille explose */
-      eclat(fin) {
-        if (!EARTH.CONFIG.grille.visible) { EARTH.CONFIG.grille.visible = true; EARTH.Grille.appliquer(); }
-        EARTH.Grille.exploser(2600);
-        setTimeout(fin, 2800);
       },
 
       /* une image immense, et rien d'autre */

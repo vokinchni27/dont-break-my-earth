@@ -1,19 +1,19 @@
 /* ============================================================
    EARTH — js/grid.js
    ------------------------------------------------------------
-   La grille vivante.
+   La grille.
 
-   Elle ne découpe plus : elle habite. Elle respire lentement,
-   elle frémit, certaines lignes manquent puis reviennent, elle
-   s’écarte sous la main, elle s’ouvre autour d’une image qu’on
-   regarde.
+   Une trame droite, derrière les images. Elle peut respirer,
+   frémir, s’écarter sous la main et se laisser tordre par la
+   position géographique des captures — la longitude donne la
+   direction, la latitude la force — mais TOUT cela passe par
+   `CONFIG.grille`, et tout y est à zéro.
 
-   Et surtout : chaque capture déforme localement les lignes
-   SELON SA POSITION GÉOGRAPHIQUE. La direction de la tension
-   vient de sa longitude, sa force de sa latitude. La structure
-   du site n’est donc pas arbitraire — elle émerge des lieux
-   photographiés. Presque personne ne le remarquera. C’est ce qui
-   donne à l’ensemble sa cohérence étrange.
+   C’est la règle : aucune déformation ne doit exister en dehors
+   de ces réglages. Deux en sortaient — le creusement autour
+   d’une image regardée, et l’« éclat » des événements rares —
+   et le quadrillage se muait alors en un semis de polygones
+   quoi qu’on règle. Elles sont supprimées.
 
    Canvas et non DOM : on ne peut pas tordre une bordure CSS.
    ============================================================ */
@@ -34,7 +34,6 @@
     t: 0,
     dpr: 1,
     pointeur: { x: -9999, y: -9999, force: 0 },
-    ouverture: null,            // { x, y, r } quand une image est regardée
     absentes: new Set(),
     boucle: null,
 
@@ -182,18 +181,6 @@
         dy += c.fy * k;
       }
 
-      /* une image ouverte repousse franchement les lignes */
-      const o = this.ouverture;
-      if (o) {
-        const ddx = x - o.x, ddy = y - o.y;
-        const d = Math.hypot(ddx, ddy);
-        if (d < o.r && d > 0.01) {
-          const k = (1 - d / o.r) ** 1.5 * o.r * 0.34;
-          dx += (ddx / d) * k;
-          dy += (ddy / d) * k;
-        }
-      }
-
       return [x + dx, y + dy];
     },
 
@@ -314,36 +301,15 @@
 
     /* --- états ---------------------------------------------- */
 
-    ouvrir(plan) {
-      if (!plan) { this.ouverture = null; return; }
-      const r = plan.frame.getBoundingClientRect();
-      this.ouverture = {
-        x: r.left + r.width / 2,
-        y: r.top + r.height / 2,
-        r: Math.max(r.width, r.height) * 0.85
-      };
-    },
-
-    refermer() { this.ouverture = null; },
-
-    /* l’éclat : les lignes partent, puis se remettent en place */
-    exploser(duree) {
-      const g = EARTH.CONFIG.grille;
-      const v0 = g.vibration, s0 = g.souffle;
-      const debut = performance.now();
-      const D = duree || 2600;
-      const pas = () => {
-        const k = (performance.now() - debut) / D;
-        if (k >= 1) { g.vibration = v0; g.souffle = s0; return; }
-        const courbe = Math.sin(k * Math.PI);
-        g.vibration = v0 + courbe * 42;
-        g.souffle = s0 + courbe * 14;
-        requestAnimationFrame(pas);
-      };
-      pas();
-    },
-
-    /* compatibilité : la respiration est désormais permanente */
+    /* La grille ne se creuse plus autour d'une image regardée, et
+       elle n'explose plus : ces deux effets ne passaient par aucun
+       réglage, donc les curseurs du bac à sable avaient beau être
+       à zéro, le quadrillage se tordait quand même en un semis de
+       polygones. Une trame droite derrière les images, toujours.
+       Les fonctions restent, vides, pour ne rien casser ailleurs. */
+    ouvrir() {},
+    refermer() {},
+    exploser() {},
     respirer() {}
   };
 

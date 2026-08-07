@@ -310,12 +310,13 @@ body.depot .grille-toile { filter: contrast(3); }
 }
 .texte-bloc.sortie { opacity: 0; }
 
+/* Les lettres ne bougent plus : plus de `will-change`, qui
+   reservait une couche graphique par lettre pour rien. */
 .texte-lettre {
   display: inline-block;
   white-space: pre;
   opacity: 0;
   animation: lettre-entre .5s ease forwards;
-  will-change: transform;
 }
 @keyframes lettre-entre { to { opacity: 1; } }
 

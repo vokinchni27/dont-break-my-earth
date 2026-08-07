@@ -153,7 +153,8 @@ EARTH.CONFIG = {
     actifs: true,
     rarete: 0.06,
     palier: 45000,
-    liste: ['inondation', 'effacement', 'nuit', 'alignement', 'apparition', 'eclat']
+    /* « eclat » retiré : il faisait exploser le quadrillage */
+    liste: ['inondation', 'effacement', 'nuit', 'alignement', 'apparition']
   },
 
   compositions: {
